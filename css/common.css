@@ -188,8 +188,23 @@ input, textarea { font-family: inherit; outline: none; border: none; background:
 }
 
 .tab-item .tab-icon {
-  font-size: 22px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   line-height: 1;
+  transition: transform .2s ease;
+}
+
+.tab-item .tab-icon svg {
+  width: 22px;
+  height: 22px;
+  display: block;
+}
+
+.tab-item.active .tab-icon {
+  transform: translateY(-1px);
 }
 
 .tab-item.active {
