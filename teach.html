@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>教学 - 竖店短剧</title>
+  <link rel="stylesheet" href="css/common.css">
+  <style>
+    .teach-header {
+      background: linear-gradient(135deg, #2C3E50 0%, #1A2530 100%);
+      padding: 0 16px 16px;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .teach-header::after {
+      content: '';
+      position: absolute;
+      top: -30%;
+      right: -10%;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(212, 162, 76, 0.2) 0%, transparent 70%);
+    }
+    .teach-status {
+      display: flex;
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .teach-status .stat {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: var(--r-md);
+      padding: 10px;
+      backdrop-filter: blur(10px);
+    }
+    .teach-status .stat .label {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.6);
+    }
+    .teach-status .stat .num {
+      font-size: 22px;
+      font-weight: 700;
+      color: #FCE6A2;
+      margin-top: 4px;
+    }
+    .teach-status .stat .unit {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.6);
+      font-weight: 400;
+      margin-left: 2px;
+    }
+    .credit-progress {
+      margin-top: 12px;
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: var(--r-md);
+      backdrop-filter: blur(10px);
+    }
+    .credit-progress .head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      margin-bottom: 8px;
+    }
+    .credit-progress .head .label {
+      color: rgba(255, 255, 255, 0.7);
+    }
+    .credit-progress .head .value {
+      color: #FCE6A2;
+      font-weight: 600;
+    }
+    .progress-track {
+      height: 6px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .progress-track .progress-inner {
+      height: 100%;
+      width: 42%;
+      background: linear-gradient(90deg, var(--gold), #FCE6A2);
+      border-radius: 3px;
+    }
+
+    /* Tab 切换 */
+    .teach-tab {
+      display: flex;
+      background: var(--bg-card);
+      position: sticky;
+      top: 0;
+      z-index: 5;
+    }
+    .teach-tab-item {
+      flex: 1;
+      padding: 14px 0;
+      text-align: center;
+      font-size: 14px;
+      color: var(--text-3);
+      position: relative;
+      font-weight: 500;
+    }
+    .teach-tab-item.active {
+      color: var(--text-1);
+      font-weight: 700;
+    }
+    .teach-tab-item.active::after {
+      content: '';
+      position: absolute;
+      bottom: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 24px;
+      height: 3px;
+      border-radius: 2px;
+      background: var(--primary);
+    }
+    .teach-tab-item .sub {
+      font-size: 10px;
+      color: var(--text-4);
+      font-weight: 400;
+      margin-top: 2px;
+    }
+
+    /* 子分类 */
+    .sub-cat-row {
+      background: var(--bg-card);
+      padding: 10px 16px;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      border-bottom: 0.5px solid var(--line-soft);
+    }
+    .sub-cat-row::-webkit-scrollbar { display: none; }
+    .sub-cat {
+      padding: 4px 12px;
+      border-radius: 14px;
+      font-size: 12px;
+      color: var(--text-2);
+      background: var(--bg);
+      white-space: nowrap;
+    }
+    .sub-cat.active {
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-weight: 500;
+    }
+
+    /* 课程卡片 */
+    .course-card {
+      background: var(--bg-card);
+      border-radius: var(--r-lg);
+      margin: 12px;
+      padding: 12px;
+      display: flex;
+      gap: 12px;
+      box-shadow: var(--shadow-card);
+    }
+    .course-thumb {
+      width: 120px;
+      height: 68px;
+      border-radius: var(--r-sm);
+      flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .course-thumb .play-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.5);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+    }
+    .course-thumb .duration {
+      position: absolute;
+      bottom: 4px;
+      right: 4px;
+      padding: 1px 4px;
+      background: rgba(0, 0, 0, 0.6);
+      color: #fff;
+      font-size: 9px;
+      border-radius: 2px;
+    }
+    .course-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .course-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-1);
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .course-meta {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .course-teacher {
+      font-size: 11px;
+      color: var(--text-3);
+    }
+    .course-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 4px;
+    }
+    .course-credit {
+      font-size: 11px;
+      color: var(--gold-dark);
+      background: var(--gold-soft);
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+    .course-price {
+      font-size: 14px;
+      color: var(--primary);
+      font-weight: 700;
+    }
+    .course-price.free { color: var(--success); }
+    .course-progress {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      color: var(--text-3);
+    }
+    .course-progress .bar {
+      width: 40px;
+      height: 3px;
+      background: var(--line);
+      border-radius: 2px;
+      position: relative;
+    }
+    .course-progress .bar::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: var(--p, 0%);
+      background: var(--primary);
+      border-radius: 2px;
+    }
+
+    /* 学习入口快捷 */
+    .quick-entry {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      padding: 16px 12px 8px;
+    }
+    .quick-item {
+      background: var(--bg-card);
+      border-radius: var(--r-md);
+      padding: 12px 4px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+    .quick-item .qi-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      color: #fff;
+    }
+    .quick-item .qi-label {
+      font-size: 11px;
+      color: var(--text-2);
+    }
+
+    .panel-hidden { display: none; }
+  </style>
+</head>
+<body>
+  <div class="phone-wrap">
+    <div class="status-bar" style="background:#2C3E50;color:#fff;">
+      <span class="time">9:41</span>
+      <span class="icons"><span style="margin-right:4px">●●●●</span><span style="margin-right:4px">📶</span><span>🔋</span></span>
+    </div>
+
+    <!-- 学习状态头部 -->
+    <div class="teach-header">
+      <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom:4px;">
+        <div style="font-size:18px; font-weight:700;">📚 在线学习</div>
+        <div style="display:flex; gap:12px; font-size:18px;">
+          <span>🔍</span>
+          <span>📖</span>
+        </div>
+      </div>
+      <div style="font-size:12px; color:rgba(255,255,255,0.6);">长沙铜官窑职业培训学校 · 学分制教学</div>
+
+      <div class="teach-status">
+        <div class="stat">
+          <div class="label">已修学分</div>
+          <div class="num">42<span class="unit">/100分</span></div>
+        </div>
+        <div class="stat">
+          <div class="label">学习时长</div>
+          <div class="num">36<span class="unit">小时</span></div>
+        </div>
+        <div class="stat">
+          <div class="label">完成课程</div>
+          <div class="num">8<span class="unit">/24门</span></div>
+        </div>
+      </div>
+
+      <div class="credit-progress">
+        <div class="head">
+          <span class="label">🎓 学历课程学分进度</span>
+          <span class="value">42%</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-inner"></div>
+        </div>
+        <div style="font-size:11px; color:rgba(255,255,255,0.5); margin-top:6px;">
+          距毕业还需 58 学分，加油！
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+      <!-- 学习快捷入口 -->
+      <div class="quick-entry">
+        <a class="quick-item" href="course-detail.html">
+          <div class="qi-icon" style="background:linear-gradient(135deg,#C8252C,#E84D54)">📖</div>
+          <div class="qi-label">继续学习</div>
+        </a>
+        <a class="quick-item" href="course-detail.html">
+          <div class="qi-icon" style="background:linear-gradient(135deg,#D4A24C,#B8862E)">🎒</div>
+          <div class="qi-label">我的课程</div>
+        </a>
+        <a class="quick-item" href="course-detail.html">
+          <div class="qi-icon" style="background:linear-gradient(135deg,#2BA471,#4FD896)">📜</div>
+          <div class="qi-label">学分证书</div>
+        </a>
+        <a class="quick-item" href="course-detail.html">
+          <div class="qi-icon" style="background:linear-gradient(135deg,#4FACFE,#00F2FE)">📋</div>
+          <div class="qi-label">学习计划</div>
+        </a>
+      </div>
+
+      <!-- 课程类型 Tab -->
+      <div class="teach-tab">
+        <div class="teach-tab-item active" data-tab="degree">
+          学历必修
+          <div class="sub">学分认证</div>
+        </div>
+        <div class="teach-tab-item" data-tab="skill">
+          技能拓展
+          <div class="sub">付费学习</div>
+        </div>
+      </div>
+
+      <!-- 学历课程面板 -->
+      <div id="panel-degree">
+        <div class="sub-cat-row">
+          <span class="sub-cat active">全部</span>
+          <span class="sub-cat">表演系</span>
+          <span class="sub-cat">导演系</span>
+          <span class="sub-cat">编剧系</span>
+          <span class="sub-cat">影视管理</span>
+        </div>
+
+        <a class="course-card" href="course-detail.html">
+          <div class="course-thumb cover-1">
+            <div class="play-icon">▶</div>
+            <div class="duration">42:18</div>
+          </div>
+          <div class="course-info">
+            <div>
+              <div class="course-name">表演基础：从观察到表达</div>
+              <div class="course-teacher" style="margin-top:4px;">👨‍🏫 王老师 · 国家二级演员</div>
+            </div>
+            <div class="course-bottom">
+              <span class="course-credit">🎓 6学分</span>
+              <div class="course-progress">
+                已学 60% <div class="bar" style="--p:60%"></div>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <a class="course-card" href="course-detail.html">
+          <div class="course-thumb cover-4">
+            <div class="play-icon">▶</div>
+            <div class="duration">38:25</div>
+          </div>
+          <div class="course-info">
+            <div>
+              <div class="course-name">影视导演艺术：从分镜到成片</div>
+              <div class="course-teacher" style="margin-top:4px;">👨‍🏫 李导演 · 金鸡奖提名</div>
+            </div>
+            <div class="course-bottom">
+              <span class="course-credit">🎓 8学分</span>
+              <div class="course-progress">
+                已学 25% <div class="bar" style="--p:25%"></div>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <a class="course-card" href="course-detail.html">
+          <div class="course-thumb cover-7">
+            <div class="play-icon">▶</div>
+            <div class="duration">45:00</div>
+          </div>
+          <div class="course-info">
+            <div>
+              <div class="course-name">短剧剧本创作实务</div>
+              <div class="course-teacher" style="margin-top:4px;">👩‍🏫 张编剧 · 资深编剧</div>
+            </div>
+            <div class="course-bottom">
+              <span class="course-credit">🎓 6学分</span>
+              <span style="font-size:11px;color:var(--text-3)">未开始</span>
+            </div>
+          </div>
+        </a>
+
+        <a class="course-card" href="course-detail.html">
+          <div class="course-thumb cover-8">
+            <div class="play-icon">▶</div>
+            <div class="duration">52:30</div>
+          </div>
+          <div class="course-info">
+            <div>
+              <div class="course-name">影视制片管理与项目运作</div>
+              <div class="course-teacher" style="margin-top:4px;">👨‍🏫 陈制片 · 行业资深</div>
+            </div>
+            <div class="course-bottom">
+              <span class="course-credit">🎓 8学分</span>
+              <span class="course-price free">✓ 已完成</span>
+            </div>
+          </div>
+        </a>
+
+        <a class="course-card" href="course-detail.html">
+          <div class="course-thumb cover-5">
+            <div class="play-icon">▶</div>
+            <div class="duration">40:12</div>
+          </div>
+          <div class="course-info">
+            <div>
+              <div class="course-name">镜头语言与画面构图</div>
+              <div class="course-teacher" style="margin-top:4px;">👨‍🏫 赵摄影师 · 电影摄影指导</div>
+            </div>
+            <div class="course-bottom">
+              <span class="course-credit">🎓 6学分</span>
+              <span style="font-size:11px;color:var(--text-3)">未开始</span>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <!-- 技能课程面板 -->
+      <div id="panel-skill" class="panel-hidden">
+        <div class="sub-cat-row">
+          <span class="sub-cat active">全部</span>
+          <span class="sub-cat">🎬 表演</span>
+          <span class="sub-cat">📷 摄影</span>
+          <span class="sub-cat">🎥 短剧拍摄</span>
+          <span class="sub-cat">🚁 无人机</span>
+          <span class="sub-cat">💄 化妆</span>
+        </div>
+
+        <a class="course-card" href="course-detail.html">
+          <div class="course-thumb cover-1">
+            <div class="play-icon">▶</div>
+            <div class="duration">25:30</div>
+          </div>
+          <div class="course-info">
+            <div>
+              <div class="course-name">短剧表演入门：30天成为短剧演员</div>
+              <div class="course-teacher" style="margin-top:4px;">⭐ 4.9 · 2.3万人学过</div>
+            </div>
+            <div class="course-bottom">
+              <span class="tag tag-gold">🎬 表演</span>
+              <span class="course-price">¥99</span>
+            </div>
+          </div>
+        </a>
+
+        <a class="course-card" href="course-detail.html">
+          <div class="course-thumb cover-3">
+            <div class="play-icon">▶</div>
+            <div class="duration">38:45</div>
+          </div>
+          <div class="course-info">
+            <div>
+              <div class="course-name">手机短视频拍摄完全攻略</div>
+              <div class="course-teacher" style="margin-top:4px;">⭐ 4.8 · 1.8万人学过</div>
+            </div>
+            <div class="course-bottom">
+              <span class="tag tag-gold">📷 摄影</span>
+              <span class="course-price">¥79</span>
+            </div>
+          </div>
+        </a>
+
+        <a class="course-card" href="course-detail.html">
+          <div class="course-thumb cover-6">
+            <div class="play-icon">▶</div>
+            <div class="duration">42:20</div>
+          </div>
+          <div class="course-info">
+            <div>
+              <div class="course-name">竖屏短剧制作全流程实战</div>
+              <div class="course-teacher" style="margin-top:4px;">⭐ 4.9 · 1.5万人学过</div>
+            </div>
+            <div class="course-bottom">
+              <span class="tag tag-gold">🎥 短剧</span>
+              <span class="course-price">¥129</span>
+            </div>
+          </div>
+        </a>
+
+        <a class="course-card" href="course-detail.html">
+          <div class="course-thumb cover-9">
+            <div class="play-icon">▶</div>
+            <div class="duration">30:15</div>
+          </div>
+          <div class="course-info">
+            <div>
+              <div class="course-name">无人机航拍技巧与后期处理</div>
+              <div class="course-teacher" style="margin-top:4px;">⭐ 4.7 · 0.9万人学过</div>
+            </div>
+            <div class="course-bottom">
+              <span class="tag tag-gold">🚁 无人机</span>
+              <span class="course-price">¥159</span>
+            </div>
+          </div>
+        </a>
+
+        <a class="course-card" href="course-detail.html">
+          <div class="course-thumb cover-10">
+            <div class="play-icon">▶</div>
+            <div class="duration">28:50</div>
+          </div>
+          <div class="course-info">
+            <div>
+              <div class="course-name">影视化妆造型基础</div>
+              <div class="course-teacher" style="margin-top:4px;">⭐ 4.8 · 0.7万人学过</div>
+            </div>
+            <div class="course-bottom">
+              <span class="tag tag-gold">💄 化妆</span>
+              <span class="course-price">¥89</span>
+            </div>
+          </div>
+        </a>
+
+        <div style="padding: 20px; text-align:center; color:var(--text-3); font-size:13px;">
+          — 已经到底啦 —
+        </div>
+      </div>
+    </div>
+
+    <!-- 底部 TabBar -->
+    <div class="tab-bar">
+      <a class="tab-item" href="index.html">
+        <span class="tab-icon">🏠</span><span>首页</span>
+      </a>
+      <a class="tab-item active" href="teach.html">
+        <span class="tab-icon">📚</span><span>教学</span>
+      </a>
+      <a class="tab-item" href="scenic.html">
+        <span class="tab-icon">🏞️</span><span>景区</span>
+      </a>
+      <a class="tab-item" href="profile.html">
+        <span class="tab-icon">👤</span><span>我的</span>
+      </a>
+    </div>
+  </div>
+
+  <script src="js/common.js"></script>
+  <script>
+    document.querySelectorAll('.teach-tab-item').forEach(tab => {
+      tab.addEventListener('click', function() {
+        document.querySelectorAll('.teach-tab-item').forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+        const target = this.dataset.tab;
+        document.querySelectorAll('[id^="panel-"]').forEach(p => p.classList.add('panel-hidden'));
+        document.getElementById('panel-' + target).classList.remove('panel-hidden');
+      });
+    });
+    document.querySelectorAll('.sub-cat').forEach(cat => {
+      cat.addEventListener('click', function() {
+        const siblings = this.parentNode.querySelectorAll('.sub-cat');
+        siblings.forEach(s => s.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

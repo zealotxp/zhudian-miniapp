@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>账户充值 - 竖店短剧</title>
+  <link rel="stylesheet" href="css/common.css">
+  <style>
+    .balance-card {
+      background: linear-gradient(135deg, #2C3E50 0%, #1A2530 100%);
+      margin: 12px;
+      border-radius: var(--r-lg);
+      padding: 20px 16px;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .balance-card::before {
+      content: '';
+      position: absolute;
+      top: -50%; right: -10%;
+      width: 180px; height: 180px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(212, 162, 76, 0.2) 0%, transparent 70%);
+    }
+    .balance-card .label {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.6);
+      position: relative; z-index: 2;
+    }
+    .balance-card .amount {
+      font-size: 32px;
+      font-weight: 800;
+      margin-top: 6px;
+      color: #FCE6A2;
+      position: relative; z-index: 2;
+    }
+    .balance-card .amount .unit {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.6);
+      font-weight: 400;
+      margin-right: 4px;
+    }
+    .balance-card .meta {
+      display: flex;
+      gap: 16px;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 0.5px solid rgba(255, 255, 255, 0.1);
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.6);
+      position: relative; z-index: 2;
+    }
+    .balance-card .meta .m-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .balance-card .meta .m-num {
+      font-size: 14px;
+      color: #fff;
+      font-weight: 600;
+    }
+
+    /* 充值金额选择 */
+    .section-title-recharge {
+      padding: 16px 16px 12px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-1);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .amount-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      padding: 0 12px 8px;
+    }
+    .amount-card {
+      background: var(--bg-card);
+      border: 1.5px solid var(--line);
+      border-radius: var(--r-md);
+      padding: 14px 6px;
+      text-align: center;
+      position: relative;
+      transition: all 0.2s;
+    }
+    .amount-card.selected {
+      border-color: var(--primary);
+      background: var(--primary-soft);
+    }
+    .amount-card .gift-tag {
+      position: absolute;
+      top: -8px; left: 50%;
+      transform: translateX(-50%);
+      background: var(--primary);
+      color: #fff;
+      padding: 1px 8px;
+      border-radius: 8px;
+      font-size: 10px;
+      white-space: nowrap;
+    }
+    .amount-card .a-num {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-1);
+    }
+    .amount-card .a-unit {
+      font-size: 12px;
+      color: var(--text-3);
+      margin-left: 2px;
+    }
+    .amount-card .a-gift {
+      font-size: 11px;
+      color: var(--primary);
+      margin-top: 4px;
+    }
+    .amount-card.selected .a-num,
+    .amount-card.selected .a-unit {
+      color: var(--primary);
+    }
+
+    /* 自定义金额 */
+    .custom-amount {
+      margin: 0 12px 12px;
+      background: var(--bg-card);
+      border-radius: var(--r-md);
+      padding: 14px;
+    }
+    .custom-amount .label {
+      font-size: 13px;
+      color: var(--text-2);
+      margin-bottom: 8px;
+    }
+    .custom-input-wrap {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 6px;
+    }
+    .custom-input-wrap .symbol {
+      font-size: 18px;
+      color: var(--text-1);
+      font-weight: 600;
+    }
+    .custom-input-wrap input {
+      flex: 1;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-1);
+    }
+    .custom-input-wrap input::placeholder {
+      color: var(--text-4);
+      font-weight: 400;
+    }
+    .custom-amount .hint {
+      font-size: 11px;
+      color: var(--text-3);
+      margin-top: 8px;
+    }
+
+    /* 充值说明 */
+    .recharge-rules {
+      margin: 8px 12px 16px;
+      padding: 14px;
+      background: var(--bg-card);
+      border-radius: var(--r-md);
+    }
+    .recharge-rules .title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-1);
+      margin-bottom: 10px;
+    }
+    .recharge-rules .rule-item {
+      font-size: 12px;
+      color: var(--text-3);
+      line-height: 1.7;
+      padding-left: 16px;
+      position: relative;
+    }
+    .recharge-rules .rule-item::before {
+      content: '·';
+      position: absolute;
+      left: 6px;
+      color: var(--text-3);
+    }
+
+    /* 底部支付 */
+    .pay-bar {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 64px;
+      background: var(--bg-card);
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      gap: 12px;
+      border-top: 0.5px solid var(--line);
+    }
+    .pay-bar .pay-info {
+      flex: 1;
+    }
+    .pay-bar .pay-info .label {
+      font-size: 11px;
+      color: var(--text-3);
+    }
+    .pay-bar .pay-info .price {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .pay-bar .pay-info .gift {
+      font-size: 11px;
+      color: var(--primary);
+      margin-top: 2px;
+    }
+    .pay-bar .pay-btn {
+      padding: 0 28px;
+      height: 44px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: #fff;
+      border-radius: 22px;
+      font-size: 15px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="phone-wrap">
+    <div class="status-bar">
+      <span class="time">9:41</span>
+      <span class="icons"><span style="margin-right:4px">●●●●</span><span style="margin-right:4px">📶</span><span>🔋</span></span>
+    </div>
+    <div class="nav-bar">
+      <div class="nav-back" onclick="goBack()">‹</div>
+      <div class="nav-title">账户充值</div>
+      <div class="nav-right"><span style="font-size:13px;color:var(--text-2);">充值记录</span></div>
+    </div>
+
+    <div class="page-content" style="padding-bottom: 80px;">
+      <!-- 余额卡片 -->
+      <div class="balance-card">
+        <div class="label">当前账户余额</div>
+        <div class="amount"><span class="unit">¥</span>128.00</div>
+        <div class="meta">
+          <div class="m-item">
+            <span>累计充值</span>
+            <span class="m-num">¥200</span>
+          </div>
+          <div class="m-item">
+            <span>累计消费</span>
+            <span class="m-num">¥72</span>
+          </div>
+          <div class="m-item">
+            <span>赠送金额</span>
+            <span class="m-num">¥28</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 充值金额选择 -->
+      <div class="section-title-recharge">💰 选择充值金额</div>
+      <div class="amount-grid">
+        <div class="amount-card" data-amount="30" data-pay="30" data-gift="0">
+          <div class="a-num">30<span class="a-unit">元</span></div>
+          <div class="a-gift" style="color:var(--text-3)">到账30元</div>
+        </div>
+        <div class="amount-card selected" data-amount="50" data-pay="50" data-gift="3">
+          <div class="gift-tag">+3元</div>
+          <div class="a-num">50<span class="a-unit">元</span></div>
+          <div class="a-gift">到账53元</div>
+        </div>
+        <div class="amount-card" data-amount="100" data-pay="100" data-gift="10">
+          <div class="gift-tag">+10元</div>
+          <div class="a-num">100<span class="a-unit">元</span></div>
+          <div class="a-gift">到账110元</div>
+        </div>
+        <div class="amount-card" data-amount="200" data-pay="200" data-gift="28">
+          <div class="gift-tag">+28元</div>
+          <div class="a-num">200<span class="a-unit">元</span></div>
+          <div class="a-gift">到账228元</div>
+        </div>
+        <div class="amount-card" data-amount="500" data-pay="500" data-gift="80">
+          <div class="gift-tag">+80元</div>
+          <div class="a-num">500<span class="a-unit">元</span></div>
+          <div class="a-gift">到账580元</div>
+        </div>
+        <div class="amount-card" data-amount="1000" data-pay="1000" data-gift="200">
+          <div class="gift-tag">+200元</div>
+          <div class="a-num">1000<span class="a-unit">元</span></div>
+          <div class="a-gift">到账1200元</div>
+        </div>
+      </div>
+
+      <!-- 自定义金额 -->
+      <div class="custom-amount">
+        <div class="label">📝 自定义金额（10-5000元）</div>
+        <div class="custom-input-wrap">
+          <span class="symbol">¥</span>
+          <input type="number" placeholder="请输入充值金额">
+        </div>
+        <div class="hint">💡 充值满 50 元赠送 3 元，满 100 元赠送 10 元，多充多送</div>
+      </div>
+
+      <!-- 充值说明 -->
+      <div class="recharge-rules">
+        <div class="title">📌 充值说明</div>
+        <div class="rule-item">充值金额可用于短剧点播、课程购买、会员开通等全场景消费</div>
+        <div class="rule-item">赠送金额实时到账，可在「我的-余额」查看明细</div>
+        <div class="rule-item">充值金额不支持退款、提现或转赠他人</div>
+        <div class="rule-item">如有疑问请联系客服：400-888-XXXX</div>
+        <div class="rule-item">本充值服务由长沙铜官窑古镇运营方提供</div>
+      </div>
+    </div>
+
+    <!-- 底部支付 -->
+    <div class="pay-bar">
+      <div class="pay-info">
+        <div class="label">实付金额 · 微信支付</div>
+        <div class="price">¥50.00</div>
+        <div class="gift">充值 50 元 + 赠送 3 元 = 到账 53 元</div>
+      </div>
+      <div class="pay-btn" onclick="showToast('请先登录')">确认充值</div>
+    </div>
+  </div>
+
+  <script src="js/common.js"></script>
+  <script>
+    document.querySelectorAll('.amount-card').forEach(card => {
+      card.addEventListener('click', function() {
+        document.querySelectorAll('.amount-card').forEach(c => c.classList.remove('selected'));
+        this.classList.add('selected');
+        const pay = this.dataset.pay;
+        const gift = this.dataset.gift;
+        const total = parseInt(pay) + parseInt(gift);
+        document.querySelector('.pay-bar .price').textContent = '¥' + pay + '.00';
+        document.querySelector('.pay-bar .gift').textContent = '充值 ' + pay + ' 元 + 赠赠 ' + gift + ' 元 = 到账 ' + total + ' 元';
+      });
+    });
+    document.querySelector('.custom-input-wrap input').addEventListener('input', function(e) {
+      const v = parseInt(e.target.value) || 0;
+      if (v > 0) {
+        document.querySelectorAll('.amount-card').forEach(c => c.classList.remove('selected'));
+        let gift = 0;
+        if (v >= 1000) gift = 200;
+        else if (v >= 500) gift = 80;
+        else if (v >= 200) gift = 28;
+        else if (v >= 100) gift = 10;
+        else if (v >= 50) gift = 3;
+        const total = v + gift;
+        document.querySelector('.pay-bar .price').textContent = '¥' + v + '.00';
+        document.querySelector('.pay-bar .gift').textContent = gift > 0 ? '充值 ' + v + ' 元 + 赠赠 ' + gift + ' 元 = 到账 ' + total + ' 元' : '充值 ' + v + ' 元（无赠送）';
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+# 依赖与构建
+node_modules/
+package-lock.json
+yarn.lock
+
+# 构建产物
+dist/
+build/
+out/
+
+# 编辑器与系统
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# 日志与临时文件
+*.log
+.cache/
+.temp/
+tmp/
+
+# 环境变量与密钥
+.env
+.env.local
+*.pem
+*.key
+
+# WorkBuddy 工作目录
+.workbuddy/

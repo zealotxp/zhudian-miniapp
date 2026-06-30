@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>资讯详情 - 竖店短剧</title>
+  <link rel="stylesheet" href="css/common.css">
+  <style>
+    .article-hero {
+      width: 100%;
+      height: 200px;
+      background: linear-gradient(135deg, #2C1810 0%, #C8252C 50%, #D4A24C 100%);
+      position: relative;
+    }
+    .article-hero .status-bar {
+      color: #fff; position: relative; z-index: 2;
+    }
+    .article-hero .nav-bar {
+      background: transparent; border: none; color: #fff;
+      position: relative; z-index: 2;
+    }
+    .article-hero .nav-bar .nav-back,
+    .article-hero .nav-bar .nav-right {
+      color: #fff;
+    }
+    .article-hero .hero-text {
+      position: absolute;
+      bottom: 20px; left: 16px; right: 16px;
+      color: #fff;
+      z-index: 2;
+    }
+    .article-hero .hero-text .pin-tag {
+      display: inline-block;
+      background: var(--primary);
+      color: #fff;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      margin-bottom: 8px;
+    }
+    .article-hero .hero-text .title {
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.4;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .article-meta {
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--bg-card);
+      border-bottom: 0.5px solid var(--line-soft);
+    }
+    .author-avatar {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--gold));
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 14px; font-weight: 600;
+    }
+    .author-info { flex: 1; }
+    .author-name {
+      font-size: 13px; color: var(--text-1); font-weight: 500;
+    }
+    .author-meta {
+      font-size: 11px; color: var(--text-3); margin-top: 2px;
+    }
+    .follow-btn {
+      padding: 4px 12px;
+      background: var(--primary);
+      color: #fff;
+      border-radius: 14px;
+      font-size: 12px;
+    }
+
+    .article-body {
+      padding: 16px;
+      background: var(--bg-card);
+      font-size: 15px;
+      color: var(--text-1);
+      line-height: 1.8;
+    }
+    .article-body p {
+      margin-bottom: 14px;
+    }
+    .article-body h3 {
+      font-size: 16px;
+      font-weight: 700;
+      margin: 18px 0 10px;
+      color: var(--text-1);
+    }
+    .article-body .quote {
+      background: var(--primary-soft);
+      border-left: 3px solid var(--primary);
+      padding: 10px 14px;
+      margin: 14px 0;
+      font-size: 14px;
+      color: var(--text-2);
+      border-radius: 0 6px 6px 0;
+    }
+    .article-body img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: var(--r-md);
+      margin: 12px 0;
+    }
+    .article-img {
+      width: 100%;
+      height: 180px;
+      border-radius: var(--r-md);
+      margin: 12px 0;
+      background: linear-gradient(135deg, #F0D9C2 0%, #C8252C 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 13px;
+    }
+    .article-tags {
+      padding: 0 16px 14px;
+      background: var(--bg-card);
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .article-tags .a-tag {
+      padding: 4px 10px;
+      background: var(--bg);
+      border-radius: 14px;
+      font-size: 12px;
+      color: var(--text-2);
+    }
+
+    .interact-bar {
+      display: flex;
+      justify-content: space-around;
+      padding: 14px 16px;
+      background: var(--bg-card);
+      margin-top: 8px;
+    }
+    .interact-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      color: var(--text-3);
+    }
+    .interact-item .icon {
+      font-size: 22px;
+    }
+    .interact-item.active {
+      color: var(--primary);
+    }
+    .interact-item.active .icon {
+      color: var(--primary);
+    }
+
+    .comment-section {
+      margin-top: 8px;
+      background: var(--bg-card);
+      padding: 14px 16px;
+    }
+    .comment-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-1);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .comment-item {
+      display: flex;
+      gap: 10px;
+      padding: 10px 0;
+      border-top: 0.5px solid var(--line-soft);
+    }
+    .comment-avatar {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .comment-content { flex: 1; }
+    .comment-name {
+      font-size: 13px;
+      color: var(--text-2);
+      font-weight: 500;
+    }
+    .comment-text {
+      font-size: 14px;
+      color: var(--text-1);
+      margin-top: 4px;
+      line-height: 1.5;
+    }
+    .comment-meta {
+      display: flex;
+      gap: 12px;
+      margin-top: 6px;
+      font-size: 11px;
+      color: var(--text-3);
+    }
+
+    .reply-input {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 56px;
+      background: var(--bg-card);
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      gap: 8px;
+      border-top: 0.5px solid var(--line);
+    }
+    .reply-input input {
+      flex: 1;
+      height: 36px;
+      background: var(--bg);
+      border-radius: 18px;
+      padding: 0 14px;
+      font-size: 13px;
+    }
+    .reply-input .icon-btn {
+      width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+      color: var(--text-2);
+    }
+  </style>
+</head>
+<body>
+  <div class="phone-wrap">
+    <!-- 文章头图 -->
+    <div class="article-hero">
+      <div class="status-bar">
+        <span class="time">9:41</span>
+        <span class="icons"><span style="margin-right:4px">●●●●</span><span style="margin-right:4px">📶</span><span>🔋</span></span>
+      </div>
+      <div class="nav-bar">
+        <div class="nav-back" onclick="goBack()">‹</div>
+        <div class="nav-title"></div>
+        <div class="nav-right">
+          <span style="margin-right:8px;">↗</span>
+          <span>⋯</span>
+        </div>
+      </div>
+      <div class="hero-text">
+        <span class="pin-tag">🔥 置顶</span>
+        <div class="title">《古镇重生》剧组开放日来啦！本周六可在铜官窑古镇探班拍摄现场</div>
+      </div>
+    </div>
+
+    <div class="page-content" style="padding-bottom: 70px;">
+      <!-- 作者信息 -->
+      <div class="article-meta">
+        <div class="author-avatar">竖</div>
+        <div class="author-info">
+          <div class="author-name">竖店短剧官方</div>
+          <div class="author-meta">2小时前 · 👁 3.2w 阅读 · 💬 286 评论</div>
+        </div>
+        <button class="follow-btn">+ 关注</button>
+      </div>
+
+      <!-- 文章正文 -->
+      <div class="article-body">
+        <p>各位竖店短剧的粉丝们！期待已久的《古镇重生：铜官风云》剧组开放日终于来啦！本周末，我们将开放铜官窑古镇古建筑片场，邀请大家走进剧组，近距离感受短剧拍摄的魅力。</p>
+
+        <h3>📅 活动时间</h3>
+        <p>2026年7月5日（周六）9:00 - 17:00</p>
+
+        <h3>📍 活动地点</h3>
+        <p>长沙市望城区新华联铜官窑古镇 · 古建筑片场区</p>
+
+        <div class="article-img">[ 活动场地示意图 ]</div>
+
+        <h3>🎬 活动内容</h3>
+        <p>1. <strong>剧组探班</strong>：参观《古镇重生》主场景拍摄，亲眼见证短剧诞生过程；</p>
+        <p>2. <strong>演员见面</strong>：主演沈玉珠、顾承琰等将现场互动，签名合影；</p>
+        <p>3. <strong>体验表演</strong>：在专业导演指导下，体验一段经典桥段的拍摄；</p>
+        <p>4. <strong>古风市集</strong>：片场周边设置古风主题市集，可购买剧中同款道具、汉服等。</p>
+
+        <div class="quote">
+          💡 温馨提示：本次活动为<strong>会员专享</strong>，黄金会员可免费参与，普通用户可凭 200 积分兑换入场资格。
+        </div>
+
+        <h3>🎁 专属福利</h3>
+        <p>到场参与打卡任务，即可获得 <strong>50 积分</strong>奖励，并有机会获得剧组签名剧照、定制周边等惊喜礼品。完成全部 4 项体验环节的参与者，还可获得"特约群演"资格证书，未来剧组招募群演时优先录用！</p>
+
+        <div class="article-img">[ 剧组拍摄场景预览 ]</div>
+
+        <h3>🎟 报名方式</h3>
+        <p>1. 黄金会员：在「我的 - 会员权益」中直接核销权益即可；</p>
+        <p>2. 普通用户：前往「景区 - 积分中心」用 200 积分兑换入场券；</p>
+        <p>3. 现场限流 500 人，先到先得，报满即止。</p>
+
+        <p>快来铜官窑古镇，和我们一起穿越千年，见证短剧的诞生吧！期待与您相见 ✨</p>
+      </div>
+
+      <!-- 标签 -->
+      <div class="article-tags">
+        <span class="a-tag">#剧组开放日</span>
+        <span class="a-tag">#铜官窑古镇</span>
+        <span class="a-tag">#古镇重生</span>
+        <span class="a-tag">#会员福利</span>
+        <span class="a-tag">#打卡任务</span>
+      </div>
+
+      <!-- 互动栏 -->
+      <div class="interact-bar">
+        <div class="interact-item active" onclick="this.classList.toggle('active'); showToast('已点赞')">
+          <span class="icon">❤️</span>
+          <span>1.2w</span>
+        </div>
+        <div class="interact-item">
+          <span class="icon">💬</span>
+          <span>286</span>
+        </div>
+        <div class="interact-item" onclick="showToast('已收藏')">
+          <span class="icon">⭐</span>
+          <span>收藏</span>
+        </div>
+        <div class="interact-item" onclick="showToast('分享链接已复制')">
+          <span class="icon">↗</span>
+          <span>分享</span>
+        </div>
+      </div>
+
+      <!-- 评论区 -->
+      <div class="comment-section">
+        <div class="comment-title">💬 精选评论 286</div>
+        <div class="comment-item">
+          <div class="comment-avatar" style="background:linear-gradient(135deg,#C8252C,#E84D54)">小</div>
+          <div class="comment-content">
+            <div class="comment-name">小沈玉珠粉丝</div>
+            <div class="comment-text">终于等到剧组开放日了！已经报名，周六见！</div>
+            <div class="comment-meta">
+              <span>1小时前</span>
+              <span>❤️ 86</span>
+              <span>回复</span>
+            </div>
+          </div>
+        </div>
+        <div class="comment-item">
+          <div class="comment-avatar" style="background:linear-gradient(135deg,#D4A24C,#B8862E)">古</div>
+          <div class="comment-content">
+            <div class="comment-name">古风爱好者</div>
+            <div class="comment-text">请问会员权益核销后还能带家属吗？想带家人一起去。</div>
+            <div class="comment-meta">
+              <span>2小时前</span>
+              <span>❤️ 42</span>
+              <span>回复</span>
+            </div>
+          </div>
+        </div>
+        <div class="comment-item">
+          <div class="comment-avatar" style="background:linear-gradient(135deg,#2BA471,#4FD896)">短</div>
+          <div class="comment-content">
+            <div class="comment-name">短剧新人</div>
+            <div class="comment-text">200积分刚好够兑换，已报名！第一次去片场，好激动！</div>
+            <div class="comment-meta">
+              <span>3小时前</span>
+              <span>❤️ 28</span>
+              <span>回复</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 底部评论输入 -->
+    <div class="reply-input">
+      <input type="text" placeholder="说点什么吧…">
+      <span class="icon-btn">😀</span>
+      <span class="icon-btn">📷</span>
+    </div>
+  </div>
+
+  <script src="js/common.js"></script>
+</body>
+</html>

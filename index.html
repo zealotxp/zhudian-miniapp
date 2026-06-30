@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>竖店短剧 - 首页</title>
+  <link rel="stylesheet" href="css/common.css">
+  <style>
+    .home-header {
+      background: linear-gradient(180deg, #C8252C 0%, #A81B22 100%);
+      padding: 0 12px 14px;
+      position: relative;
+    }
+    .home-header::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; bottom: -1px;
+      height: 16px;
+      background: var(--bg);
+      border-radius: 16px 16px 0 0;
+    }
+    .home-top {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 4px 12px;
+    }
+    .home-logo {
+      color: #fff;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .home-logo .logo-icon {
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+      background: #FCE6A2;
+      color: #A81B22;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 900;
+    }
+    .search-box {
+      flex: 1;
+      height: 32px;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      gap: 6px;
+      color: var(--text-3);
+      font-size: 13px;
+    }
+    .header-actions {
+      display: flex;
+      gap: 10px;
+      color: #fff;
+      font-size: 18px;
+    }
+
+    /* 轮播图 */
+    .banner-wrap {
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      position: relative;
+    }
+    .banner-slide {
+      width: 100%;
+      height: 150px;
+      background: linear-gradient(135deg, #2C1810 0%, #C8252C 50%, #D4A24C 100%);
+      position: relative;
+      color: #fff;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+    .banner-slide .banner-tag {
+      align-self: flex-start;
+      padding: 2px 8px;
+      background: rgba(255, 255, 255, 0.25);
+      border-radius: 10px;
+      font-size: 10px;
+      margin-bottom: 6px;
+    }
+    .banner-slide .banner-title {
+      font-size: 18px;
+      font-weight: 700;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    .banner-slide .banner-desc {
+      font-size: 12px;
+      opacity: 0.9;
+      margin-top: 4px;
+    }
+    .banner-dots {
+      position: absolute;
+      bottom: 8px;
+      right: 12px;
+      display: flex;
+      gap: 4px;
+    }
+    .banner-dots span {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.5);
+    }
+    .banner-dots span.active {
+      background: #fff;
+      width: 14px;
+      border-radius: 3px;
+    }
+
+    /* 分类导航 */
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      padding: 16px 12px 8px;
+    }
+    .category-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+    .category-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      color: #fff;
+    }
+    .category-name {
+      font-size: 11px;
+      color: var(--text-2);
+    }
+
+    /* 榜单 */
+    .rank-card {
+      margin: 0 12px;
+      background: linear-gradient(135deg, #FFF6E5 0%, #FFFFFF 100%);
+      border-radius: var(--r-lg);
+      padding: 12px;
+      border: 1px solid #FDF3E0;
+    }
+    .rank-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .rank-title {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--gold-dark);
+    }
+    .rank-list {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .rank-list::-webkit-scrollbar { display: none; }
+    .rank-item {
+      flex-shrink: 0;
+      width: 100px;
+    }
+    .rank-item .poster {
+      width: 100px;
+      height: 134px;
+      border-radius: var(--r-sm);
+      position: relative;
+      overflow: hidden;
+    }
+    .rank-item .poster .num {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 24px;
+      height: 28px;
+      background: var(--primary);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 13px;
+      border-radius: 0 0 8px 0;
+    }
+    .rank-item .poster .num.top1 { background: #FFD700; color: #5B3A00; }
+    .rank-item .poster .num.top2 { background: #C0C0C0; color: #fff; }
+    .rank-item .poster .num.top3 { background: #CD7F32; color: #fff; }
+    .rank-item .name {
+      font-size: 12px;
+      margin-top: 4px;
+      color: var(--text-1);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .rank-item .hot {
+      font-size: 10px;
+      color: var(--text-3);
+    }
+
+    /* 短剧网格 - 两列大图 */
+    .drama-section {
+      margin-top: 8px;
+    }
+    .filter-bar {
+      display: flex;
+      gap: 16px;
+      padding: 8px 16px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .filter-bar::-webkit-scrollbar { display: none; }
+    .filter-bar .filter-item {
+      font-size: 14px;
+      color: var(--text-3);
+      white-space: nowrap;
+      padding-bottom: 4px;
+      position: relative;
+    }
+    .filter-bar .filter-item.active {
+      color: var(--text-1);
+      font-weight: 600;
+    }
+    .filter-bar .filter-item.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 20px;
+      height: 3px;
+      border-radius: 2px;
+      background: var(--primary);
+    }
+
+    .drama-grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      padding: 8px 12px 16px;
+    }
+    .grid-card {
+      background: var(--bg-card);
+      border-radius: var(--r-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+    }
+    .grid-card .cover {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      position: relative;
+    }
+    .grid-card .cover .badge {
+      position: absolute;
+      top: 6px;
+      left: 6px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 10px;
+      color: #fff;
+    }
+    .grid-card .cover .badge.hot { background: rgba(200, 37, 44, 0.9); }
+    .grid-card .cover .badge.free { background: rgba(43, 164, 113, 0.9); }
+    .grid-card .cover .badge.new { background: rgba(255, 143, 31, 0.9); }
+    .grid-card .cover .episodes {
+      position: absolute;
+      bottom: 6px;
+      right: 6px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 10px;
+      color: #fff;
+      background: rgba(0, 0, 0, 0.6);
+    }
+    .grid-card .cover .title-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 18px 8px 8px;
+      background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .grid-card .info {
+      padding: 8px;
+    }
+    .grid-card .info .name {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-1);
+      margin-bottom: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .grid-card .info .meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+    }
+    .grid-card .info .meta .views {
+      color: var(--text-3);
+    }
+    .grid-card .info .meta .price {
+      color: var(--primary);
+      font-weight: 600;
+    }
+    .grid-card .info .meta .price.free {
+      color: var(--success);
+    }
+  </style>
+</head>
+<body>
+  <div class="phone-wrap">
+    <!-- 顶部红头 + 搜索 -->
+    <div class="home-header">
+      <div class="status-bar" style="color:#fff">
+        <span class="time">9:41</span>
+        <span class="icons"><span style="margin-right:4px">●●●●</span><span style="margin-right:4px">📶</span><span>🔋</span></span>
+      </div>
+      <div class="home-top">
+        <div class="home-logo">
+          <span class="logo-icon">竖</span>
+          <span>竖店短剧</span>
+        </div>
+        <a class="search-box" href="search.html">
+          <span>🔍</span>
+          <span>搜索短剧、演员、题材</span>
+        </a>
+        <div class="header-actions">
+          <span>📥</span>
+        </div>
+      </div>
+
+      <!-- 轮播图 -->
+      <div class="banner-wrap">
+        <div class="banner-slide">
+          <span class="banner-tag">🔥 限时首发</span>
+          <div class="banner-title">《古镇重生：铜官风云》</div>
+          <div class="banner-desc">铜官窑古镇年度巨制 · 古风逆袭 30 集</div>
+          <div class="banner-dots">
+            <span class="active"></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+      <!-- 题材分类导航 -->
+      <div class="category-grid">
+        <a class="category-item" href="search.html?cat=gufeng">
+          <div class="category-icon" style="background:linear-gradient(135deg,#C8252C,#E84D54)">🏯</div>
+          <div class="category-name">古风</div>
+        </a>
+        <a class="category-item" href="search.html?cat=bazong">
+          <div class="category-icon" style="background:linear-gradient(135deg,#2C3E50,#4CA1AF)">💼</div>
+          <div class="category-name">霸总</div>
+        </a>
+        <a class="category-item" href="search.html?cat=tianchong">
+          <div class="category-icon" style="background:linear-gradient(135deg,#FF9A9E,#FECFEF)">💕</div>
+          <div class="category-name">甜宠</div>
+        </a>
+        <a class="category-item" href="search.html?cat=nixi">
+          <div class="category-icon" style="background:linear-gradient(135deg,#FA709A,#FEE140)">⚡</div>
+          <div class="category-name">逆袭</div>
+        </a>
+        <a class="category-item" href="search.html?cat=xuanhuan">
+          <div class="category-icon" style="background:linear-gradient(135deg,#30CFD0,#330867)">🔮</div>
+          <div class="category-name">玄幻</div>
+        </a>
+        <a class="category-item" href="search.html?cat=xuanyi">
+          <div class="category-icon" style="background:linear-gradient(135deg,#1A1A28,#5B5B7A)">🌙</div>
+          <div class="category-name">悬疑</div>
+        </a>
+        <a class="category-item" href="search.html?cat=jiating">
+          <div class="category-icon" style="background:linear-gradient(135deg,#F6D365,#FDA085)">👨‍👩‍👧</div>
+          <div class="category-name">家庭</div>
+        </a>
+        <a class="category-item" href="search.html?cat=xiaoyuan">
+          <div class="category-icon" style="background:linear-gradient(135deg,#A1C4FD,#C2E9FB)">🎓</div>
+          <div class="category-name">校园</div>
+        </a>
+        <a class="category-item" href="search.html?cat=zhan shi">
+          <div class="category-icon" style="background:linear-gradient(135deg,#4FACFE,#00F2FE)">⚔️</div>
+          <div class="category-name">战争</div>
+        </a>
+        <a class="category-item" href="search.html?cat=all">
+          <div class="category-icon" style="background:linear-gradient(135deg,#888,#555)">⋯</div>
+          <div class="category-name">全部分类</div>
+        </a>
+      </div>
+
+      <!-- 热门榜单 -->
+      <div class="section-title">
+        <div class="title">🔥 钢官热榜</div>
+        <a class="more" href="search.html?tab=rank">查看全部 ›</a>
+      </div>
+      <div class="rank-card">
+        <div class="rank-header">
+          <div class="rank-title">🏆 周榜 TOP 6</div>
+          <span style="font-size:11px;color:var(--text-3)">每2小时更新</span>
+        </div>
+        <div class="rank-list">
+          <a class="rank-item" href="drama-detail.html">
+            <div class="poster cover-1">
+              <div class="num top1">1</div>
+            </div>
+            <div class="name">古镇重生</div>
+            <div class="hot">🔥 286.5w</div>
+          </a>
+          <a class="rank-item" href="drama-detail.html">
+            <div class="poster cover-2">
+              <div class="num top2">2</div>
+            </div>
+            <div class="name">千金归来</div>
+            <div class="hot">🔥 218.3w</div>
+          </a>
+          <a class="rank-item" href="drama-detail.html">
+            <div class="poster cover-7">
+              <div class="num top3">3</div>
+            </div>
+            <div class="name">总裁的秘密</div>
+            <div class="hot">🔥 192.7w</div>
+          </a>
+          <a class="rank-item" href="drama-detail.html">
+            <div class="poster cover-4">
+              <div class="num">4</div>
+            </div>
+            <div class="name">长安花录</div>
+            <div class="hot">🔥 168.1w</div>
+          </a>
+          <a class="rank-item" href="drama-detail.html">
+            <div class="poster cover-8">
+              <div class="num">5</div>
+            </div>
+            <div class="name">玄门诡事</div>
+            <div class="hot">🔥 145.9w</div>
+          </a>
+          <a class="rank-item" href="drama-detail.html">
+            <div class="poster cover-5">
+              <div class="num">6</div>
+            </div>
+            <div class="name">田园小医女</div>
+            <div class="hot">🔥 128.4w</div>
+          </a>
+        </div>
+      </div>
+
+      <!-- 限时免费 -->
+      <div class="section-title">
+        <div class="title">🎁 限时免费</div>
+        <a class="more" href="search.html?tab=free">更多 ›</a>
+      </div>
+      <div class="h-scroll" style="padding-bottom: 4px;">
+        <a class="drama-card" href="drama-detail.html" style="width:110px;flex-shrink:0;">
+          <div class="drama-cover cover-3" style="width:110px;height:146px;">
+            <span class="cover-tag free">免费</span>
+            <span class="cover-eps">30集</span>
+            <div class="cover-title">花间一壶酒</div>
+          </div>
+        </a>
+        <a class="drama-card" href="drama-detail.html" style="width:110px;flex-shrink:0;">
+          <div class="drama-cover cover-6" style="width:110px;height:146px;">
+            <span class="cover-tag free">免费</span>
+            <span class="cover-eps">24集</span>
+            <div class="cover-title">都市奇缘</div>
+          </div>
+        </a>
+        <a class="drama-card" href="drama-detail.html" style="width:110px;flex-shrink:0;">
+          <div class="drama-cover cover-9" style="width:110px;height:146px;">
+            <span class="cover-tag free">免费</span>
+            <span class="cover-eps">18集</span>
+            <div class="cover-title">校园初恋</div>
+          </div>
+        </a>
+        <a class="drama-card" href="drama-detail.html" style="width:110px;flex-shrink:0;">
+          <div class="drama-cover cover-10" style="width:110px;height:146px;">
+            <span class="cover-tag free">免费</span>
+            <span class="cover-eps">26集</span>
+            <div class="cover-title">凤求凰</div>
+          </div>
+        </a>
+      </div>
+
+      <!-- 编辑精选/全部短剧 -->
+      <div class="drama-section">
+        <div class="filter-bar">
+          <div class="filter-item active">推荐</div>
+          <div class="filter-item">最新</div>
+          <div class="filter-item">最热</div>
+          <div class="filter-item">完结</div>
+          <div class="filter-item">付费</div>
+          <div class="filter-item">免费</div>
+        </div>
+        <div class="drama-grid-2">
+          <a class="grid-card" href="drama-detail.html">
+            <div class="cover cover-1">
+              <span class="badge hot">🔥热</span>
+              <span class="episodes">更新至28集</span>
+              <div class="title-overlay">古镇重生：铜官风云</div>
+            </div>
+            <div class="info">
+              <div class="name">古镇重生：铜官风云</div>
+              <div class="meta">
+                <span class="views">📺 286.5w</span>
+                <span class="price">¥30 解锁</span>
+              </div>
+            </div>
+          </a>
+          <a class="grid-card" href="drama-detail.html">
+            <div class="cover cover-2">
+              <span class="badge new">🆕新</span>
+              <span class="episodes">30集全</span>
+              <div class="title-overlay">千金归来</div>
+            </div>
+            <div class="info">
+              <div class="name">千金归来</div>
+              <div class="meta">
+                <span class="views">📺 218.3w</span>
+                <span class="price">¥28 解锁</span>
+              </div>
+            </div>
+          </a>
+          <a class="grid-card" href="drama-detail.html">
+            <div class="cover cover-7">
+              <span class="badge hot">🔥热</span>
+              <span class="episodes">更新至16集</span>
+              <div class="title-overlay">总裁的秘密</div>
+            </div>
+            <div class="info">
+              <div class="name">总裁的秘密</div>
+              <div class="meta">
+                <span class="views">📺 192.7w</span>
+                <span class="price">¥25 解锁</span>
+              </div>
+            </div>
+          </a>
+          <a class="grid-card" href="drama-detail.html">
+            <div class="cover cover-4">
+              <span class="badge free">免费</span>
+              <span class="episodes">24集全</span>
+              <div class="title-overlay">长安花录</div>
+            </div>
+            <div class="info">
+              <div class="name">长安花录</div>
+              <div class="meta">
+                <span class="views">📺 168.1w</span>
+                <span class="price free">前12集免费</span>
+              </div>
+            </div>
+          </a>
+          <a class="grid-card" href="drama-detail.html">
+            <div class="cover cover-8">
+              <span class="badge hot">🔥热</span>
+              <span class="episodes">更新至22集</span>
+              <div class="title-overlay">玄门诡事</div>
+            </div>
+            <div class="info">
+              <div class="name">玄门诡事</div>
+              <div class="meta">
+                <span class="views">📺 145.9w</span>
+                <span class="price">¥30 解锁</span>
+              </div>
+            </div>
+          </a>
+          <a class="grid-card" href="drama-detail.html">
+            <div class="cover cover-5">
+              <span class="badge new">🆕新</span>
+              <span class="episodes">更新至10集</span>
+              <div class="title-overlay">田园小医女</div>
+            </div>
+            <div class="info">
+              <div class="name">田园小医女</div>
+              <div class="meta">
+                <span class="views">📺 128.4w</span>
+                <span class="price">¥20 解锁</span>
+              </div>
+            </div>
+          </a>
+          <a class="grid-card" href="drama-detail.html">
+            <div class="cover cover-10">
+              <span class="badge hot">🔥热</span>
+              <span class="episodes">30集全</span>
+              <div class="title-overlay">凤求凰</div>
+            </div>
+            <div class="info">
+              <div class="name">凤求凰</div>
+              <div class="meta">
+                <span class="views">📺 112.8w</span>
+                <span class="price">¥25 解锁</span>
+              </div>
+            </div>
+          </a>
+          <a class="grid-card" href="drama-detail.html">
+            <div class="cover cover-3">
+              <span class="badge free">免费</span>
+              <span class="episodes">20集全</span>
+              <div class="title-overlay">花间一壶酒</div>
+            </div>
+            <div class="info">
+              <div class="name">花间一壶酒</div>
+              <div class="meta">
+                <span class="views">📺 98.5w</span>
+                <span class="price free">完全免费</span>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div style="height: 20px;"></div>
+    </div>
+
+    <!-- 底部 TabBar -->
+    <div class="tab-bar">
+      <a class="tab-item active" href="index.html">
+        <span class="tab-icon">🏠</span><span>首页</span>
+      </a>
+      <a class="tab-item" href="teach.html">
+        <span class="tab-icon">📚</span><span>教学</span>
+      </a>
+      <a class="tab-item" href="scenic.html">
+        <span class="tab-icon">🏞️</span><span>景区</span>
+      </a>
+      <a class="tab-item" href="profile.html">
+        <span class="tab-icon">👤</span><span>我的</span>
+      </a>
+    </div>
+  </div>
+
+  <script src="js/common.js"></script>
+  <script>
+    // 分类点击
+    document.querySelectorAll('.filter-bar .filter-item').forEach(item => {
+      item.addEventListener('click', function() {
+        document.querySelectorAll('.filter-bar .filter-item').forEach(i => i.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+    // 轮播指示器
+    document.querySelectorAll('.banner-dots span').forEach((dot, i) => {
+      dot.addEventListener('click', function() {
+        document.querySelectorAll('.banner-dots span').forEach(d => d.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

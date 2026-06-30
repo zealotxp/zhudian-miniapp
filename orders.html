@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>我的订单 - 竖店短剧</title>
+  <link rel="stylesheet" href="css/common.css">
+  <style>
+    .order-tab {
+      display: flex;
+      background: var(--bg-card);
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      border-bottom: 0.5px solid var(--line-soft);
+    }
+    .order-tab .ot-item {
+      flex: 1;
+      padding: 14px 0;
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-3);
+      position: relative;
+    }
+    .order-tab .ot-item.active {
+      color: var(--primary);
+      font-weight: 600;
+    }
+    .order-tab .ot-item.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 24px; height: 3px;
+      border-radius: 2px;
+      background: var(--primary);
+    }
+
+    .order-card {
+      background: var(--bg-card);
+      margin: 10px 12px;
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+    }
+    .order-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      border-bottom: 0.5px solid var(--line-soft);
+    }
+    .order-no {
+      font-size: 12px;
+      color: var(--text-3);
+    }
+    .order-status {
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .order-status.unpaid { color: var(--primary); }
+    .order-status.using { color: var(--warning); }
+    .order-status.done { color: var(--success); }
+    .order-status.refund { color: var(--text-3); }
+
+    .order-body {
+      padding: 12px 16px;
+      display: flex;
+      gap: 12px;
+    }
+    .order-thumb {
+      width: 70px; height: 90px;
+      border-radius: var(--r-sm);
+      flex-shrink: 0;
+    }
+    .order-detail {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .order-name {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-1);
+      line-height: 1.4;
+    }
+    .order-spec {
+      font-size: 11px;
+      color: var(--text-3);
+      margin-top: 4px;
+    }
+    .order-amount {
+      font-size: 13px;
+      color: var(--text-3);
+    }
+    .order-amount .num {
+      color: var(--text-1);
+      font-weight: 600;
+    }
+    .order-foot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 16px;
+      border-top: 0.5px solid var(--line-soft);
+    }
+    .order-total {
+      font-size: 13px;
+      color: var(--text-2);
+    }
+    .order-total .price {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .order-actions {
+      display: flex;
+      gap: 8px;
+    }
+    .order-btn {
+      padding: 6px 14px;
+      border-radius: 14px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+    .order-btn.primary {
+      background: var(--primary);
+      color: #fff;
+    }
+    .order-btn.outline {
+      background: transparent;
+      border: 1px solid var(--line);
+      color: var(--text-2);
+    }
+    .order-btn.gold {
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div class="phone-wrap">
+    <div class="status-bar">
+      <span class="time">9:41</span>
+      <span class="icons"><span style="margin-right:4px">●●●●</span><span style="margin-right:4px">📶</span><span>🔋</span></span>
+    </div>
+    <div class="nav-bar">
+      <div class="nav-back" onclick="goBack()">‹</div>
+      <div class="nav-title">我的订单</div>
+      <div class="nav-right"><span style="font-size:18px;">🔍</span></div>
+    </div>
+
+    <div class="order-tab">
+      <div class="ot-item active">全部</div>
+      <div class="ot-item">待付款</div>
+      <div class="ot-item">观看中</div>
+      <div class="ot-item">已完成</div>
+      <div class="ot-item">退款</div>
+    </div>
+
+    <div class="page-content no-tabbar">
+      <!-- 订单1：待付款 -->
+      <div class="order-card">
+        <div class="order-head">
+          <span class="order-no">订单号：DD202606309988</span>
+          <span class="order-status unpaid">⏰ 待付款 · 14:32后取消</span>
+        </div>
+        <div class="order-body">
+          <div class="order-thumb cover-1"></div>
+          <div class="order-detail">
+            <div>
+              <div class="order-name">古镇重生：铜官风云 · 全集解锁</div>
+              <div class="order-spec">单剧点播 · 6-28集 · 永久观看</div>
+            </div>
+            <div class="order-amount">数量 <span class="num">1</span></div>
+          </div>
+        </div>
+        <div class="order-foot">
+          <div class="order-total">实付 <span class="price">¥30.00</span></div>
+          <div class="order-actions">
+            <button class="order-btn outline">取消订单</button>
+            <button class="order-btn primary">立即付款</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 订单2：观看中 -->
+      <div class="order-card">
+        <div class="order-head">
+          <span class="order-no">订单号：DD202606285566</span>
+          <span class="order-status using">🎬 观看中</span>
+        </div>
+        <div class="order-body">
+          <div class="order-thumb cover-2"></div>
+          <div class="order-detail">
+            <div>
+              <div class="order-name">千金归来 · 全集解锁</div>
+              <div class="order-spec">单剧点播 · 1-30集 · 永久观看</div>
+            </div>
+            <div class="order-amount">数量 <span class="num">1</span> · 已观看 15/30集</div>
+          </div>
+        </div>
+        <div class="order-foot">
+          <div class="order-total">实付 <span class="price">¥28.00</span></div>
+          <div class="order-actions">
+            <button class="order-btn outline">订单详情</button>
+            <button class="order-btn primary">继续观看</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 订单3：会员开通 -->
+      <div class="order-card">
+        <div class="order-head">
+          <span class="order-no">订单号：DD202606201234</span>
+          <span class="order-status done">✅ 已完成</span>
+        </div>
+        <div class="order-body">
+          <div class="order-thumb" style="background:linear-gradient(135deg,#2B2B3A,#1A1A28);display:flex;align-items:center;justify-content:center;font-size:28px;">👑</div>
+          <div class="order-detail">
+            <div>
+              <div class="order-name">黄金会员 · 季卡</div>
+              <div class="order-spec">有效期至 2026-09-20 · 短剧+课程+景区</div>
+            </div>
+            <div class="order-amount">数量 <span class="num">1</span></div>
+          </div>
+        </div>
+        <div class="order-foot">
+          <div class="order-total">实付 <span class="price">¥88.00</span></div>
+          <div class="order-actions">
+            <button class="order-btn outline">订单详情</button>
+            <button class="order-btn gold">续费会员</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 订单4：课程购买 -->
+      <div class="order-card">
+        <div class="order-head">
+          <span class="order-no">订单号：DD202606180011</span>
+          <span class="order-status using">📚 学习中</span>
+        </div>
+        <div class="order-body">
+          <div class="order-thumb cover-3"></div>
+          <div class="order-detail">
+            <div>
+              <div class="order-name">手机短视频拍摄完全攻略</div>
+              <div class="order-spec">技能课程 · 共12节 · 永久观看</div>
+            </div>
+            <div class="order-amount">数量 <span class="num">1</span> · 已学 4/12节</div>
+          </div>
+        </div>
+        <div class="order-foot">
+          <div class="order-total">实付 <span class="price">¥79.00</span></div>
+          <div class="order-actions">
+            <button class="order-btn outline">订单详情</button>
+            <button class="order-btn primary">继续学习</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 订单5：积分兑换 -->
+      <div class="order-card">
+        <div class="order-head">
+          <span class="order-no">订单号：JF202606180022</span>
+          <span class="order-status done">✅ 已核销</span>
+        </div>
+        <div class="order-body">
+          <div class="order-thumb" style="background:linear-gradient(135deg,#FFECD2,#FCB69F);display:flex;align-items:center;justify-content:center;font-size:28px;">🏯</div>
+          <div class="order-detail">
+            <div>
+              <div class="order-name">铜官窑古镇日场门票</div>
+              <div class="order-spec">积分兑换 · 1张 · 已于 06-22 核销</div>
+            </div>
+            <div class="order-amount">数量 <span class="num">1</span></div>
+          </div>
+        </div>
+        <div class="order-foot">
+          <div class="order-total">消耗积分 <span class="price">500分</span></div>
+          <div class="order-actions">
+            <button class="order-btn outline">查看详情</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 订单6：充值 -->
+      <div class="order-card">
+        <div class="order-head">
+          <span class="order-no">订单号：CZ202606150088</span>
+          <span class="order-status done">✅ 已完成</span>
+        </div>
+        <div class="order-body">
+          <div class="order-thumb" style="background:linear-gradient(135deg,#2BA471,#4FD896);display:flex;align-items:center;justify-content:center;font-size:28px;">💰</div>
+          <div class="order-detail">
+            <div>
+              <div class="order-name">账户余额充值</div>
+              <div class="order-spec">充值 ¥100 · 到账 ¥128（含赠送）</div>
+            </div>
+            <div class="order-amount">数量 <span class="num">1</span></div>
+          </div>
+        </div>
+        <div class="order-foot">
+          <div class="order-total">实付 <span class="price">¥100.00</span></div>
+          <div class="order-actions">
+            <button class="order-btn outline">订单详情</button>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding: 20px; text-align: center; color: var(--text-4); font-size: 12px;">
+        — 已显示全部订单 —
+      </div>
+    </div>
+  </div>
+
+  <script src="js/common.js"></script>
+  <script>
+    document.querySelectorAll('.order-tab .ot-item').forEach(tab => {
+      tab.addEventListener('click', function() {
+        document.querySelectorAll('.order-tab .ot-item').forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+    document.querySelectorAll('.order-btn').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        const text = this.textContent;
+        showToast('点击：' + text);
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>开通会员 - 竖店短剧</title>
+  <link rel="stylesheet" href="css/common.css">
+  <style>
+    body { background: #000; }
+    .phone-wrap { background: #0F0F12; color: #fff; }
+    .member-hero {
+      background: linear-gradient(180deg, #1A1A28 0%, #2B2B3A 50%, #0F0F12 100%);
+      padding: 0 16px 30px;
+      position: relative;
+      overflow: hidden;
+    }
+    .member-hero::before {
+      content: '';
+      position: absolute;
+      top: -20%; right: -20%;
+      width: 250px; height: 250px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(212, 162, 76, 0.2) 0%, transparent 70%);
+    }
+    .member-hero .nav-bar {
+      background: transparent; border: none; color: #fff;
+      position: relative; z-index: 2;
+    }
+    .member-hero .nav-bar .nav-back,
+    .member-hero .nav-bar .nav-right {
+      color: #fff;
+    }
+    .member-hero .hero-content {
+      position: relative; z-index: 2;
+      text-align: center;
+      padding: 24px 0 0;
+    }
+    .crown-icon {
+      font-size: 56px;
+      filter: drop-shadow(0 4px 12px rgba(212, 162, 76, 0.5));
+    }
+    .member-name {
+      font-size: 22px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #FCE6A2 0%, #D4A24C 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-top: 8px;
+    }
+    .member-subtitle {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.6);
+      margin-top: 4px;
+    }
+
+    /* 权益展示 */
+    .benefits-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-top: 24px;
+      position: relative; z-index: 2;
+    }
+    .benefit-cell {
+      text-align: center;
+      color: rgba(255, 255, 255, 0.85);
+    }
+    .benefit-cell .bi-icon {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: rgba(212, 162, 76, 0.15);
+      border: 1px solid rgba(212, 162, 76, 0.3);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+      margin: 0 auto 4px;
+    }
+    .benefit-cell .bi-label {
+      font-size: 11px;
+    }
+
+    /* 套餐选择 */
+    .plan-list {
+      padding: 16px 12px;
+    }
+    .plan-item {
+      background: #1A1A20;
+      border: 1px solid #2A2A35;
+      border-radius: var(--r-md);
+      padding: 14px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      position: relative;
+      transition: all 0.2s;
+    }
+    .plan-item.selected {
+      border-color: var(--gold);
+      background: rgba(212, 162, 76, 0.08);
+    }
+    .plan-item .check {
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255, 255, 255, 0.3);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .plan-item.selected .check {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: #fff;
+      font-size: 12px;
+    }
+    .plan-info { flex: 1; }
+    .plan-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: #fff;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .plan-name .discount-tag {
+      background: var(--primary);
+      color: #fff;
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-size: 10px;
+    }
+    .plan-desc {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.5);
+      margin-top: 4px;
+    }
+    .plan-price {
+      text-align: right;
+    }
+    .plan-price .price {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--gold);
+    }
+    .plan-price .origin {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.4);
+      text-decoration: line-through;
+    }
+
+    /* 权益对比 */
+    .compare-section {
+      margin: 0 12px 16px;
+      background: #1A1A20;
+      border-radius: var(--r-md);
+      padding: 14px;
+    }
+    .compare-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 12px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .compare-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-top: 0.5px solid rgba(255, 255, 255, 0.05);
+      font-size: 13px;
+    }
+    .compare-row .feature {
+      color: rgba(255, 255, 255, 0.8);
+    }
+    .compare-row .normal {
+      color: rgba(255, 255, 255, 0.4);
+      font-size: 12px;
+    }
+    .compare-row .vip {
+      color: var(--gold);
+      font-weight: 600;
+      display: flex; align-items: center; gap: 4px;
+    }
+
+    /* 协议 */
+    .agreement {
+      padding: 0 16px 14px;
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.5);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .agreement .check-box {
+      width: 14px; height: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 3px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gold);
+      font-size: 10px;
+    }
+    .agreement .check-box.checked {
+      background: var(--gold);
+      border-color: var(--gold);
+    }
+    .agreement a {
+      color: var(--gold);
+    }
+
+    /* 底部支付栏 */
+    .pay-bar {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 64px;
+      background: rgba(20, 20, 24, 0.95);
+      backdrop-filter: blur(20px);
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      gap: 12px;
+      border-top: 0.5px solid rgba(255, 255, 255, 0.1);
+    }
+    .pay-bar .price-info {
+      flex: 1;
+    }
+    .pay-bar .price-info .label {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.5);
+    }
+    .pay-bar .price-info .price {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--gold);
+    }
+    .pay-bar .pay-btn {
+      padding: 0 28px;
+      height: 44px;
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+      color: #fff;
+      border-radius: 22px;
+      font-size: 15px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="phone-wrap">
+    <div class="member-hero">
+      <div class="status-bar" style="color:#fff;">
+        <span class="time">9:41</span>
+        <span class="icons"><span style="margin-right:4px">●●●●</span><span style="margin-right:4px">📶</span><span>🔋</span></span>
+      </div>
+      <div class="nav-bar">
+        <div class="nav-back" onclick="goBack()">‹</div>
+        <div class="nav-title">开通会员</div>
+        <div class="nav-right"><span style="font-size:12px;">会员条款</span></div>
+      </div>
+
+      <div class="hero-content">
+        <div class="crown-icon">👑</div>
+        <div class="member-name">黄金会员</div>
+        <div class="member-subtitle">畅享全平台短剧 · 课程8折 · 景区入园权益</div>
+
+        <div class="benefits-row">
+          <div class="benefit-cell">
+            <div class="bi-icon">🎬</div>
+            <div class="bi-label">短剧免费看</div>
+          </div>
+          <div class="benefit-cell">
+            <div class="bi-icon">📚</div>
+            <div class="bi-label">课程8折</div>
+          </div>
+          <div class="benefit-cell">
+            <div class="bi-icon">🏯</div>
+            <div class="bi-label">景区门票</div>
+          </div>
+          <div class="benefit-cell">
+            <div class="bi-icon">🚫</div>
+            <div class="bi-label">免广告</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content" style="padding-bottom: 80px;">
+      <!-- 套餐选择 -->
+      <div class="plan-list">
+        <div class="plan-item" data-plan="month">
+          <div class="check"></div>
+          <div class="plan-info">
+            <div class="plan-name">月卡</div>
+            <div class="plan-desc">月度畅享 · 平均每天 ¥1.27</div>
+          </div>
+          <div class="plan-price">
+            <div class="price">¥38</div>
+            <div class="origin">¥58</div>
+          </div>
+        </div>
+
+        <div class="plan-item selected" data-plan="quarter">
+          <div class="check">✓</div>
+          <div class="plan-info">
+            <div class="plan-name">季卡 <span class="discount-tag">省30元</span></div>
+            <div class="plan-desc">3个月畅享 · 平均每天 ¥0.92 · 推荐</div>
+          </div>
+          <div class="plan-price">
+            <div class="price">¥88</div>
+            <div class="origin">¥174</div>
+          </div>
+        </div>
+
+        <div class="plan-item" data-plan="year">
+          <div class="check"></div>
+          <div class="plan-info">
+            <div class="plan-name">年卡 <span class="discount-tag">省218元</span></div>
+            <div class="plan-desc">12个月畅享 · 平均每天 ¥0.40 · 最划算</div>
+          </div>
+          <div class="plan-price">
+            <div class="price">¥158</div>
+            <div class="origin">¥456</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 权益对比 -->
+      <div class="compare-section">
+        <div class="compare-title">📊 会员专属权益</div>
+        <div class="compare-row" style="border-top:none;">
+          <div class="feature">🎬 全平台短剧免费看</div>
+          <div class="normal">前5集免费</div>
+          <div class="vip">✓ 全集免费</div>
+        </div>
+        <div class="compare-row">
+          <div class="feature">📚 教学课程折扣</div>
+          <div class="normal">原价购买</div>
+          <div class="vip">✓ 8折优惠</div>
+        </div>
+        <div class="compare-row">
+          <div class="feature">🏯 铜官窑古镇门票</div>
+          <div class="normal">原价</div>
+          <div class="vip">✓ 月2次日场+1次夜场</div>
+        </div>
+        <div class="compare-row">
+          <div class="feature">🎬 片场探班</div>
+          <div class="normal">付费参与</div>
+          <div class="vip">✓ 免费预约</div>
+        </div>
+        <div class="compare-row">
+          <div class="feature">🚫 观看广告</div>
+          <div class="normal">有广告</div>
+          <div class="vip">✓ 免广告</div>
+        </div>
+        <div class="compare-row">
+          <div class="feature">⚡ 抢先看新剧</div>
+          <div class="normal">普通更新</div>
+          <div class="vip">✓ 提前3集</div>
+        </div>
+        <div class="compare-row">
+          <div class="feature">🎁 专属客服</div>
+          <div class="normal">普通客服</div>
+          <div class="vip">✓ VIP优先</div>
+        </div>
+      </div>
+
+      <!-- 协议 -->
+      <div class="agreement">
+        <div class="check-box checked">✓</div>
+        <span>我已阅读并同意</span>
+        <a href="#">《会员服务协议》</a>
+        <span>和</span>
+        <a href="#">《自动续费规则》</a>
+      </div>
+    </div>
+
+    <!-- 底部支付 -->
+    <div class="pay-bar">
+      <div class="price-info">
+        <div class="label">实付金额</div>
+        <div class="price">¥88.00</div>
+      </div>
+      <div class="pay-btn" onclick="showToast('请先登录')">立即开通</div>
+    </div>
+  </div>
+
+  <script src="js/common.js"></script>
+  <script>
+    document.querySelectorAll('.plan-item').forEach(item => {
+      item.addEventListener('click', function() {
+        document.querySelectorAll('.plan-item').forEach(i => {
+          i.classList.remove('selected');
+          i.querySelector('.check').textContent = '';
+        });
+        this.classList.add('selected');
+        this.querySelector('.check').textContent = '✓';
+        const price = this.querySelector('.plan-price .price').textContent;
+        document.querySelector('.pay-bar .price').textContent = price + '.00';
+      });
+    });
+    document.querySelector('.agreement .check-box').addEventListener('click', function() {
+      this.classList.toggle('checked');
+      if (this.classList.contains('checked')) {
+        this.textContent = '✓';
+      } else {
+        this.textContent = '';
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>课程详情 - 竖店短剧</title>
+  <link rel="stylesheet" href="css/common.css">
+  <style>
+    body { background: #000; }
+    .phone-wrap { background: #0F0F12; color: #fff; }
+
+    /* 视频播放器（同短剧） */
+    .player-box {
+      width: 375px;
+      height: 211px;
+      background: linear-gradient(135deg, #1A2530 0%, #2C3E50 60%, #4CA1AF 100%);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .player-top {
+      position: absolute;
+      top: 50px;
+      left: 0; right: 0;
+      padding: 0 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #fff;
+      font-size: 20px;
+      z-index: 2;
+    }
+    .player-top .title {
+      font-size: 14px;
+    }
+    .play-btn {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(10px);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 24px;
+      padding-left: 4px;
+      border: 2px solid rgba(255, 255, 255, 0.4);
+    }
+    .player-controls {
+      position: absolute;
+      bottom: 12px; left: 12px; right: 12px;
+      display: flex; align-items: center; gap: 8px;
+      color: #fff; font-size: 12px;
+    }
+    .progress-bar {
+      flex: 1; height: 3px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 2px;
+      position: relative;
+    }
+    .progress-bar .progress-fill {
+      width: 35%; height: 100%;
+      background: var(--gold);
+      border-radius: 2px;
+    }
+    .progress-bar .progress-dot {
+      position: absolute; left: 35%; top: 50%;
+      transform: translate(-50%, -50%);
+      width: 10px; height: 10px;
+      border-radius: 50%; background: #fff;
+    }
+
+    /* 课程信息卡 */
+    .course-info-card {
+      background: #1A1A20;
+      padding: 14px 16px;
+    }
+    .course-title {
+      font-size: 17px; font-weight: 700;
+      color: #fff;
+      line-height: 1.4;
+    }
+    .course-tags {
+      display: flex; gap: 6px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+    .course-tags .tag {
+      padding: 2px 8px;
+      background: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.8);
+      border-radius: 4px;
+      font-size: 11px;
+    }
+    .course-stats {
+      display: flex; gap: 16px;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 0.5px solid rgba(255, 255, 255, 0.1);
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.6);
+    }
+    .course-stats .stat {
+      display: flex; align-items: center; gap: 4px;
+    }
+    .course-stats .stat .gold {
+      color: var(--gold); font-weight: 600;
+    }
+    .course-price-row {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 0.5px solid rgba(255, 255, 255, 0.1);
+    }
+    .course-price-row .left .label {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.5);
+    }
+    .course-price-row .left .price {
+      font-size: 22px; font-weight: 700;
+      color: var(--gold);
+      margin-top: 2px;
+    }
+    .course-price-row .left .price .small {
+      font-size: 12px; font-weight: 400;
+      color: rgba(255, 255, 255, 0.5);
+      text-decoration: line-through;
+      margin-left: 6px;
+    }
+
+    /* 教师卡 */
+    .teacher-card {
+      margin: 8px 12px;
+      background: #1A1A20;
+      border-radius: var(--r-md);
+      padding: 14px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .teacher-avatar {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 18px; font-weight: 700;
+      flex-shrink: 0;
+    }
+    .teacher-info { flex: 1; }
+    .teacher-name {
+      font-size: 14px; color: #fff; font-weight: 600;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .teacher-name .verify {
+      color: var(--gold); font-size: 12px;
+    }
+    .teacher-desc {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.6);
+      margin-top: 2px;
+    }
+
+    /* 章节列表 */
+    .chapter-section {
+      background: #1A1A20;
+      margin-top: 8px;
+      padding: 14px 0;
+    }
+    .chapter-title {
+      padding: 0 16px 12px;
+      font-size: 15px; font-weight: 600;
+      color: #fff;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .chapter-title .meta {
+      font-size: 11px; color: rgba(255, 255, 255, 0.5);
+      font-weight: 400;
+    }
+    .chapter-item {
+      display: flex; align-items: center;
+      padding: 12px 16px;
+      gap: 12px;
+      border-top: 0.5px solid rgba(255, 255, 255, 0.05);
+    }
+    .chapter-num {
+      width: 28px; height: 28px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.08);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 600;
+      color: rgba(255, 255, 255, 0.7);
+      flex-shrink: 0;
+    }
+    .chapter-item.current .chapter-num {
+      background: var(--gold);
+      color: #fff;
+    }
+    .chapter-item.done .chapter-num {
+      background: rgba(43, 164, 113, 0.2);
+      color: #4FD896;
+    }
+    .chapter-info { flex: 1; }
+    .chapter-name {
+      font-size: 14px; color: #fff;
+    }
+    .chapter-meta {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.5);
+      margin-top: 2px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .chapter-status {
+      font-size: 11px;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    .chapter-status.free { background: rgba(43, 164, 113, 0.15); color: #4FD896; }
+    .chapter-status.locked { background: rgba(212, 162, 76, 0.15); color: var(--gold); }
+    .chapter-status.done { background: rgba(43, 164, 113, 0.15); color: #4FD896; }
+
+    /* 学习目标 */
+    .objectives-card {
+      background: #1A1A20;
+      margin: 8px 12px;
+      padding: 14px;
+      border-radius: var(--r-md);
+    }
+    .obj-title {
+      font-size: 14px; font-weight: 600;
+      color: #fff; margin-bottom: 10px;
+    }
+    .obj-list { display: flex; flex-direction: column; gap: 6px; }
+    .obj-item {
+      display: flex; gap: 6px;
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.7);
+    }
+    .obj-item .check {
+      color: #4FD896;
+    }
+
+    /* 底部操作栏 */
+    .bottom-bar {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 64px;
+      background: rgba(20, 20, 24, 0.95);
+      backdrop-filter: blur(20px);
+      display: flex; align-items: center;
+      padding: 0 12px; gap: 10px;
+      border-top: 0.5px solid rgba(255, 255, 255, 0.1);
+    }
+    .bottom-bar .action-icon {
+      display: flex; flex-direction: column; align-items: center;
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 10px;
+      padding: 0 8px;
+      gap: 2px;
+    }
+    .bottom-bar .action-icon .icon { font-size: 18px; }
+    .bottom-bar .btn-buy {
+      flex: 1; height: 40px;
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+      color: #fff;
+      border-radius: 20px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 600;
+      gap: 4px;
+    }
+    .bottom-bar .btn-vip {
+      height: 40px; padding: 0 16px;
+      background: rgba(212, 162, 76, 0.15);
+      color: var(--gold);
+      border: 1px solid rgba(212, 162, 76, 0.4);
+      border-radius: 20px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="phone-wrap">
+    <!-- 视频播放器 -->
+    <div class="player-box">
+      <div class="status-bar" style="position:absolute;top:0;left:0;right:0;color:#fff;">
+        <span class="time">9:41</span>
+        <span class="icons"><span style="margin-right:4px">●●●●</span><span style="margin-right:4px">📶</span><span>🔋</span></span>
+      </div>
+      <div class="player-top">
+        <span onclick="goBack()">‹</span>
+        <span class="title">第1节 · 课程导论</span>
+        <span>⋯</span>
+      </div>
+      <div class="play-btn">▶</div>
+      <div class="player-controls">
+        <span>14:30</span>
+        <div class="progress-bar">
+          <div class="progress-fill"></div>
+          <div class="progress-dot"></div>
+        </div>
+        <span>42:18</span>
+        <span>1.0x</span>
+        <span>1080P</span>
+        <span>⛶</span>
+      </div>
+    </div>
+
+    <div class="page-content" style="padding-bottom: 80px;">
+      <!-- 课程信息 -->
+      <div class="course-info-card">
+        <div class="course-title">表演基础：从观察到表达</div>
+        <div class="course-tags">
+          <span class="tag">🎬 表演</span>
+          <span class="tag">🎓 学历必修</span>
+          <span class="tag">⏱ 42分钟/节</span>
+          <span class="tag">📚 共8节</span>
+        </div>
+        <div class="course-stats">
+          <div class="stat">⭐ <span class="gold">4.9</span> 评分</div>
+          <div class="stat">👥 2.3w 学员</div>
+          <div class="stat">🎓 <span class="gold">6学分</span></div>
+        </div>
+        <div class="course-price-row">
+          <div class="left">
+            <div class="label">学历学员免费 · 非学历学员付费观看</div>
+            <div class="price">¥99<span class="small">¥129</span></div>
+          </div>
+          <span class="tag tag-vip">👑 VIP免费</span>
+        </div>
+      </div>
+
+      <!-- 教师介绍 -->
+      <div class="teacher-card">
+        <div class="teacher-avatar">王</div>
+        <div class="teacher-info">
+          <div class="teacher-name">王老师 <span class="verify">✓ 认证教师</span></div>
+          <div class="teacher-desc">国家二级演员 · 20年表演教学经验 · 中央戏剧学院</div>
+        </div>
+        <button class="btn-outline btn-sm" style="color:rgba(255,255,255,0.8);border-color:rgba(255,255,255,0.2);">关注</button>
+      </div>
+
+      <!-- 学习目标 -->
+      <div class="objectives-card">
+        <div class="obj-title">🎯 你将学到</div>
+        <div class="obj-list">
+          <div class="obj-item"><span class="check">✓</span> 掌握表演基础理论与观察方法</div>
+          <div class="obj-item"><span class="check">✓</span> 学会从生活细节中提取角色特征</div>
+          <div class="obj-item"><span class="check">✓</span> 完成课程可获得 6 学分认定</div>
+          <div class="obj-item"><span class="check">✓</span> 优秀学员可推荐至剧组实习</div>
+        </div>
+      </div>
+
+      <!-- 章节列表 -->
+      <div class="chapter-section">
+        <div class="chapter-title">
+          <span>课程章节 · 共8节</span>
+          <span class="meta">已学 2/8 节 · 25%</span>
+        </div>
+        <div class="chapter-item done">
+          <div class="chapter-num">1</div>
+          <div class="chapter-info">
+            <div class="chapter-name">导论：表演是什么</div>
+            <div class="chapter-meta">
+              <span>⏱ 42:18</span>
+              <span class="chapter-status done">✓ 已完成</span>
+            </div>
+          </div>
+        </div>
+        <div class="chapter-item done">
+          <div class="chapter-num">2</div>
+          <div class="chapter-info">
+            <div class="chapter-name">观察：从生活到角色</div>
+            <div class="chapter-meta">
+              <span>⏱ 38:25</span>
+              <span class="chapter-status done">✓ 已完成</span>
+            </div>
+          </div>
+        </div>
+        <div class="chapter-item current">
+          <div class="chapter-num">▶</div>
+          <div class="chapter-info">
+            <div class="chapter-name">表达：肢体语言的力量</div>
+            <div class="chapter-meta">
+              <span>⏱ 45:00</span>
+              <span class="chapter-status free">学习中</span>
+            </div>
+          </div>
+        </div>
+        <div class="chapter-item">
+          <div class="chapter-num">4</div>
+          <div class="chapter-info">
+            <div class="chapter-name">声音：台词艺术的入门</div>
+            <div class="chapter-meta">
+              <span>⏱ 40:12</span>
+              <span class="chapter-status locked">🔒 需解锁</span>
+            </div>
+          </div>
+        </div>
+        <div class="chapter-item">
+          <div class="chapter-num">5</div>
+          <div class="chapter-info">
+            <div class="chapter-name">情感：角色内心世界的构建</div>
+            <div class="chapter-meta">
+              <span>⏱ 48:30</span>
+              <span class="chapter-status locked">🔒 需解锁</span>
+            </div>
+          </div>
+        </div>
+        <div class="chapter-item">
+          <div class="chapter-num">6</div>
+          <div class="chapter-info">
+            <div class="chapter-name">即兴：表演中的临场反应</div>
+            <div class="chapter-meta">
+              <span>⏱ 35:20</span>
+              <span class="chapter-status locked">🔒 需解锁</span>
+            </div>
+          </div>
+        </div>
+        <div class="chapter-item">
+          <div class="chapter-num">7</div>
+          <div class="chapter-info">
+            <div class="chapter-name">实战：短剧片段演绎</div>
+            <div class="chapter-meta">
+              <span>⏱ 50:00</span>
+              <span class="chapter-status locked">🔒 需解锁</span>
+            </div>
+          </div>
+        </div>
+        <div class="chapter-item">
+          <div class="chapter-num">8</div>
+          <div class="chapter-info">
+            <div class="chapter-name">考核：结业作品与学分认定</div>
+            <div class="chapter-meta">
+              <span>⏱ 60:00</span>
+              <span class="chapter-status locked">🔒 需解锁</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 课程简介 -->
+      <div style="background:#1A1A20; margin-top:8px; padding: 14px 16px;">
+        <div style="font-size:15px; font-weight:600; color:#fff; margin-bottom:8px;">课程简介</div>
+        <div style="font-size:13px; color:rgba(255,255,255,0.7); line-height:1.6;">
+          本课程为长沙铜官窑职业培训学校「影视表演系」学历必修课程，由王老师主讲。课程系统讲解表演艺术的基础理论与实用技巧，从观察生活、肢体表达、声音训练到情感构建，循序渐进地带学员走入表演的世界。完成全部章节学习并通过结业考核，可获得 6 学分认定，并有机会推荐至基地剧组实习。
+        </div>
+      </div>
+
+      <!-- 学员评价入口 -->
+      <div style="background:#1A1A20; margin-top:8px; padding: 14px 16px; display:flex; justify-content:space-between; align-items:center;">
+        <div>
+          <div style="font-size:13px; color:#fff;">⭐ 4.9 分 · 1280 条评价</div>
+          <div style="font-size:11px; color:rgba(255,255,255,0.5); margin-top:2px;">学员满意度 98%</div>
+        </div>
+        <span style="color:rgba(255,255,255,0.6); font-size:13px;">查看 ›</span>
+      </div>
+    </div>
+
+    <!-- 底部操作栏 -->
+    <div class="bottom-bar">
+      <div class="action-icon">
+        <span class="icon">⭐</span>
+        <span>收藏</span>
+      </div>
+      <div class="action-icon">
+        <span class="icon">💬</span>
+        <span>咨询</span>
+      </div>
+      <div class="btn-vip" onclick="navigate('member.html')">👑 VIP免费</div>
+      <div class="btn-buy" onclick="showToast('请先登录')">立即购买 ¥99</div>
+    </div>
+  </div>
+
+  <script src="js/common.js"></script>
+  <script>
+    document.querySelectorAll('.chapter-item').forEach(item => {
+      item.addEventListener('click', function() {
+        const status = this.querySelector('.chapter-status');
+        if (status && status.classList.contains('locked')) {
+          showToast('该章节需购买后观看');
+          return;
+        }
+        document.querySelectorAll('.chapter-item').forEach(i => i.classList.remove('current'));
+        this.classList.add('current');
+        const num = this.querySelector('.chapter-num');
+        num.textContent = '▶';
+        showToast('开始播放');
+      });
+    });
+  </script>
+</body>
+</html>

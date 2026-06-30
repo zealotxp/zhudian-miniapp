@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>竖店短剧小程序 - 页面预览</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: linear-gradient(135deg, #F5F5F7 0%, #FFF6E5 100%);
+      min-height: 100vh;
+      padding: 40px 20px;
+      color: #1A1A1A;
+    }
+    .container { max-width: 1400px; margin: 0 auto; }
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding: 30px;
+      background: linear-gradient(135deg, #C8252C 0%, #A81B22 100%);
+      border-radius: 20px;
+      color: #fff;
+      box-shadow: 0 12px 32px rgba(200, 37, 44, 0.2);
+    }
+    .header .logo {
+      width: 64px; height: 64px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #FCE6A2, #D4A24C);
+      color: #A81B22;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 32px; font-weight: 900;
+      margin: 0 auto 16px;
+    }
+    .header h1 {
+      font-size: 28px;
+      margin-bottom: 8px;
+      letter-spacing: 1px;
+    }
+    .header .subtitle {
+      font-size: 14px;
+      opacity: 0.9;
+    }
+    .header .tags {
+      margin-top: 16px;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .header .tags span {
+      padding: 4px 12px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 14px;
+      font-size: 12px;
+    }
+
+    .section {
+      margin-bottom: 32px;
+    }
+    .section-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #1A1A1A;
+    }
+    .section-title::before {
+      content: '';
+      width: 4px; height: 18px;
+      border-radius: 2px;
+      background: #C8252C;
+    }
+    .section-title .count {
+      font-size: 12px;
+      color: #888;
+      font-weight: 400;
+    }
+
+    .page-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+    }
+    .page-card {
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+      transition: all 0.3s;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+    .page-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+    }
+    .page-thumb {
+      width: 100%;
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-thumb::after {
+      content: '点击预览 ›';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 8px;
+      text-align: center;
+      background: rgba(0, 0, 0, 0.7);
+      color: #fff;
+      font-size: 12px;
+      transform: translateY(100%);
+      transition: transform 0.3s;
+    }
+    .page-card:hover .page-thumb::after {
+      transform: translateY(0);
+    }
+    .page-info {
+      padding: 14px 16px;
+    }
+    .page-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: #1A1A1A;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .page-name .num {
+      background: #C8252C;
+      color: #fff;
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      font-size: 11px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .page-desc {
+      font-size: 12px;
+      color: #888;
+      margin-top: 6px;
+      line-height: 1.5;
+    }
+    .page-tags {
+      margin-top: 8px;
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+    .page-tags span {
+      padding: 2px 6px;
+      background: #FCEAEB;
+      color: #C8252C;
+      border-radius: 4px;
+      font-size: 10px;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 30px 20px;
+      color: #888;
+      font-size: 12px;
+      line-height: 1.8;
+    }
+    .footer a {
+      color: #C8252C;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="logo">竖</div>
+      <h1>竖店短剧 · 小程序前端预览</h1>
+      <div class="subtitle">长沙铜官窑古镇 · 短剧 / 教学 / 景区 三大业务板块</div>
+      <div class="tags">
+        <span>📱 微信小程序 UI</span>
+        <span>🎨 HTML + CSS + JS</span>
+        <span>🎯 13 个完整页面</span>
+        <span>🏯 古风红金主题</span>
+      </div>
+    </div>
+
+    <!-- 短剧业务 -->
+    <div class="section">
+      <div class="section-title">
+        🎬 短剧业务模块 <span class="count">3 个页面</span>
+      </div>
+      <div class="page-grid">
+        <a class="page-card" href="index.html" target="_blank">
+          <div class="page-thumb" style="background:linear-gradient(135deg,#C8252C,#A81B22)">🏠</div>
+          <div class="page-info">
+            <div class="page-name"><span class="num">1</span> 首页</div>
+            <div class="page-desc">轮播推荐、题材分类、热榜、限时免费、短剧网格</div>
+            <div class="page-tags">
+              <span>主Tab</span><span>推荐</span><span>分类导航</span>
+            </div>
+          </div>
+        </a>
+        <a class="page-card" href="drama-detail.html" target="_blank">
+          <div class="page-thumb" style="background:linear-gradient(135deg,#2C1810,#C8252C,#D4A24C)">🎬</div>
+          <div class="page-info">
+            <div class="page-name"><span class="num">2</span> 短剧详情页</div>
+            <div class="page-desc">视频播放器、剧集信息、付费解锁、选集列表、相关推荐</div>
+            <div class="page-tags">
+              <span>播放器</span><span>付费</span><span>选集</span>
+            </div>
+          </div>
+        </a>
+        <a class="page-card" href="search.html" target="_blank">
+          <div class="page-thumb" style="background:linear-gradient(135deg,#FFB199,#FF0844)">🔍</div>
+          <div class="page-info">
+            <div class="page-name"><span class="num">3</span> 搜索页</div>
+            <div class="page-desc">热门搜索、历史记录、分类筛选、结果列表</div>
+            <div class="page-tags">
+              <span>搜索</span><span>历史</span><span>筛选</span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- 教学业务 -->
+    <div class="section">
+      <div class="section-title">
+        📚 教学业务模块 <span class="count">2 个页面</span>
+      </div>
+      <div class="page-grid">
+        <a class="page-card" href="teach.html" target="_blank">
+          <div class="page-thumb" style="background:linear-gradient(135deg,#2C3E50,#1A2530)">📖</div>
+          <div class="page-info">
+            <div class="page-name"><span class="num">4</span> 教学首页</div>
+            <div class="page-desc">学分进度、学历必修/技能拓展、课程分类、学习进度</div>
+            <div class="page-tags">
+              <span>主Tab</span><span>学分制</span><span>付费课</span>
+            </div>
+          </div>
+        </a>
+        <a class="page-card" href="course-detail.html" target="_blank">
+          <div class="page-thumb" style="background:linear-gradient(135deg,#1A2530,#4CA1AF)">🎓</div>
+          <div class="page-info">
+            <div class="page-name"><span class="num">5</span> 课程详情页</div>
+            <div class="page-desc">视频播放、教师介绍、章节列表、学分认定、购买</div>
+            <div class="page-tags">
+              <span>播放器</span><span>章节</span><span>付费</span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- 景区运营 -->
+    <div class="section">
+      <div class="section-title">
+        🏯 景区运营模块 <span class="count">3 个页面</span>
+      </div>
+      <div class="page-grid">
+        <a class="page-card" href="scenic.html" target="_blank">
+          <div class="page-thumb" style="background:linear-gradient(135deg,#1A2530,#C8252C,#D4A24C)">🏞️</div>
+          <div class="page-info">
+            <div class="page-name"><span class="num">6</span> 景区首页</div>
+            <div class="page-desc">铜官窑古镇头图、会员权益核销、打卡任务、资讯专区</div>
+            <div class="page-tags">
+              <span>主Tab</span><span>打卡</span><span>权益</span>
+            </div>
+          </div>
+        </a>
+        <a class="page-card" href="news-detail.html" target="_blank">
+          <div class="page-thumb" style="background:linear-gradient(135deg,#2C1810,#C8252C,#D4A24C)">📰</div>
+          <div class="page-info">
+            <div class="page-name"><span class="num">7</span> 资讯详情页</div>
+            <div class="page-desc">文章正文、作者信息、互动栏、评论、底部输入</div>
+            <div class="page-tags">
+              <span>文章</span><span>评论</span><span>分享</span>
+            </div>
+          </div>
+        </a>
+        <a class="page-card" href="points.html" target="_blank">
+          <div class="page-thumb" style="background:linear-gradient(135deg,#D4A24C,#B8862E)">💰</div>
+          <div class="page-info">
+            <div class="page-name"><span class="num">8</span> 积分中心</div>
+            <div class="page-desc">积分余额、签到、积分兑换、积分明细、赚取规则</div>
+            <div class="page-tags">
+              <span>签到</span><span>兑换</span><span>门票</span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- 个人/支付 -->
+    <div class="section">
+      <div class="section-title">
+        👤 个人中心 & 支付 <span class="count">5 个页面</span>
+      </div>
+      <div class="page-grid">
+        <a class="page-card" href="profile.html" target="_blank">
+          <div class="page-thumb" style="background:linear-gradient(135deg,#C8252C,#A81B22)">👤</div>
+          <div class="page-info">
+            <div class="page-name"><span class="num">9</span> 个人中心</div>
+            <div class="page-desc">用户信息、会员卡、资产栏、观看历史、订单入口、工具栏</div>
+            <div class="page-tags">
+              <span>主Tab</span><span>会员</span><span>订单</span>
+            </div>
+          </div>
+        </a>
+        <a class="page-card" href="member.html" target="_blank">
+          <div class="page-thumb" style="background:linear-gradient(135deg,#2B2B3A,#1A1A28)">👑</div>
+          <div class="page-info">
+            <div class="page-name"><span class="num">10</span> 会员开通</div>
+            <div class="page-desc">会员权益展示、月卡/季卡/年卡套餐、权益对比、支付</div>
+            <div class="page-tags">
+              <span>套餐</span><span>权益</span><span>支付</span>
+            </div>
+          </div>
+        </a>
+        <a class="page-card" href="orders.html" target="_blank">
+          <div class="page-thumb" style="background:linear-gradient(135deg,#FA709A,#FEE140)">📦</div>
+          <div class="page-info">
+            <div class="page-name"><span class="num">11</span> 订单管理</div>
+            <div class="page-desc">订单分类Tab、短剧/课程/会员/兑换/充值多种订单卡片</div>
+            <div class="page-tags">
+              <span>订单</span><span>付款</span><span>退款</span>
+            </div>
+          </div>
+        </a>
+        <a class="page-card" href="recharge.html" target="_blank">
+          <div class="page-thumb" style="background:linear-gradient(135deg,#2BA471,#4FD896)">💵</div>
+          <div class="page-info">
+            <div class="page-name"><span class="num">12</span> 账户充值</div>
+            <div class="page-desc">余额展示、固定金额选择、自定义金额、赠送规则、支付</div>
+            <div class="page-tags">
+              <span>充值</span><span>赠送</span><span>微信支付</span>
+            </div>
+          </div>
+        </a>
+        <a class="page-card" href="login.html" target="_blank">
+          <div class="page-thumb" style="background:linear-gradient(135deg,#C8252C,#2C1810)">🔐</div>
+          <div class="page-info">
+            <div class="page-name"><span class="num">13</span> 登录页</div>
+            <div class="page-desc">微信一键登录、手机号验证码登录、协议同意、其他登录</div>
+            <div class="page-tags">
+              <span>微信</span><span>手机号</span><span>注册</span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="footer">
+      <p>🎨 设计主题：铜官窑窑火红 + 古铜金，呼应古镇文化底蕴</p>
+      <p>📐 移动端 375px 宽度，模拟微信小程序原生 UI 体验</p>
+      <p>📦 共 <strong>13 个页面</strong>，覆盖短剧 / 教学 / 景区 / 会员 / 支付全业务流程</p>
+      <p style="margin-top:12px;">📍 长沙铜官窑古镇 · 短剧拍摄基地 © 2026 竖店短剧</p>
+    </div>
+  </div>
+</body>
+</html>

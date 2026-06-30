@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>搜索 - 竖店短剧</title>
+  <link rel="stylesheet" href="css/common.css">
+  <style>
+    .search-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      background: var(--bg-card);
+      border-bottom: 0.5px solid var(--line-soft);
+    }
+    .search-input-wrap {
+      flex: 1;
+      height: 36px;
+      background: var(--bg);
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      padding: 0 14px;
+      gap: 6px;
+    }
+    .search-input-wrap input {
+      flex: 1;
+      font-size: 14px;
+      color: var(--text-1);
+    }
+    .search-input-wrap input::placeholder { color: var(--text-4); }
+    .cancel-btn {
+      font-size: 14px;
+      color: var(--text-2);
+    }
+
+    .hot-search {
+      padding: 16px;
+    }
+    .hot-title {
+      font-size: 14px;
+      color: var(--text-2);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .hot-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .hot-tag {
+      padding: 6px 12px;
+      background: var(--bg-card);
+      border-radius: 16px;
+      font-size: 13px;
+      color: var(--text-2);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .hot-tag .hot-num {
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 11px;
+    }
+    .hot-tag.top1 { color: var(--primary); font-weight: 600; }
+    .hot-tag.top2 { color: var(--gold-dark); font-weight: 600; }
+    .hot-tag.top3 { color: #FF8F1F; font-weight: 600; }
+
+    /* 历史记录 */
+    .history-section {
+      padding: 0 16px 16px;
+    }
+    .history-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .history-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .history-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px;
+      background: var(--bg-card);
+      border-radius: var(--r-sm);
+    }
+    .history-cover {
+      width: 48px;
+      height: 64px;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+    .history-info { flex: 1; }
+    .history-name {
+      font-size: 14px;
+      color: var(--text-1);
+      font-weight: 500;
+    }
+    .history-progress {
+      font-size: 11px;
+      color: var(--text-3);
+      margin-top: 4px;
+    }
+    .history-progress .progress-line {
+      display: inline-block;
+      width: 80px;
+      height: 3px;
+      background: var(--line);
+      border-radius: 2px;
+      margin: 0 6px;
+      vertical-align: middle;
+      position: relative;
+    }
+    .history-progress .progress-line::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 45%;
+      background: var(--primary);
+      border-radius: 2px;
+    }
+
+    /* 筛选条 */
+    .filter-row {
+      background: var(--bg-card);
+      padding: 10px 16px;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      border-bottom: 0.5px solid var(--line-soft);
+    }
+    .filter-row::-webkit-scrollbar { display: none; }
+    .filter-chip {
+      padding: 4px 12px;
+      border-radius: 14px;
+      font-size: 12px;
+      color: var(--text-2);
+      background: var(--bg);
+      white-space: nowrap;
+    }
+    .filter-chip.active {
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-weight: 500;
+    }
+
+    .search-result-tip {
+      padding: 10px 16px;
+      font-size: 12px;
+      color: var(--text-3);
+    }
+    .search-result-tip .num { color: var(--primary); font-weight: 600; }
+  </style>
+</head>
+<body>
+  <div class="phone-wrap">
+    <div class="status-bar">
+      <span class="time">9:41</span>
+      <span class="icons"><span style="margin-right:4px">●●●●</span><span style="margin-right:4px">📶</span><span>🔋</span></span>
+    </div>
+
+    <!-- 搜索头 -->
+    <div class="search-header">
+      <div class="search-input-wrap">
+        <span style="color:var(--text-3)">🔍</span>
+        <input type="text" placeholder="搜索短剧、演员、题材" autofocus value="">
+      </div>
+      <a class="cancel-btn" href="javascript:history.back()">取消</a>
+    </div>
+
+    <div class="page-content no-tabbar">
+      <!-- 热门搜索 -->
+      <div class="hot-search">
+        <div class="hot-title">🔥 热门搜索</div>
+        <div class="hot-tags">
+          <span class="hot-tag top1"><span class="hot-num">1</span>古镇重生</span>
+          <span class="hot-tag top2"><span class="hot-num">2</span>千金归来</span>
+          <span class="hot-tag top3"><span class="hot-num">3</span>总裁的秘密</span>
+          <span class="hot-tag"><span class="hot-num">4</span>铜官窑古镇</span>
+          <span class="hot-tag"><span class="hot-num">5</span>玄门诡事</span>
+          <span class="hot-tag"><span class="hot-num">6</span>古风短剧</span>
+          <span class="hot-tag"><span class="hot-num">7</span>霸总逆袭</span>
+          <span class="hot-tag"><span class="hot-num">8</span>甜宠日常</span>
+          <span class="hot-tag"><span class="hot-num">9</span>顾承琰</span>
+          <span class="hot-tag"><span class="hot-num">10</span>沈玉珠</span>
+        </div>
+      </div>
+
+      <!-- 历史记录 -->
+      <div class="history-section">
+        <div class="history-header">
+          <div style="font-size:14px;color:var(--text-2);">🕐 搜索历史</div>
+          <span style="font-size:12px;color:var(--text-3);">🗑 清空</span>
+        </div>
+        <div class="history-list">
+          <a class="history-item" href="drama-detail.html">
+            <div class="history-cover cover-1"></div>
+            <div class="history-info">
+              <div class="history-name">古镇重生：铜官风云</div>
+              <div class="history-progress">
+                观看至第6集
+                <span class="progress-line"></span>
+                20%
+              </div>
+            </div>
+            <span style="color:var(--text-4)">›</span>
+          </a>
+          <a class="history-item" href="drama-detail.html">
+            <div class="history-cover cover-4"></div>
+            <div class="history-info">
+              <div class="history-name">长安花录</div>
+              <div class="history-progress">
+                观看至第12集
+                <span class="progress-line"></span>
+                50%
+              </div>
+            </div>
+            <span style="color:var(--text-4)">›</span>
+          </a>
+          <a class="history-item" href="drama-detail.html">
+            <div class="history-cover cover-2"></div>
+            <div class="history-info">
+              <div class="history-name">千金归来</div>
+              <div class="history-progress">
+                已看完 · 30集全
+                <span class="progress-line"></span>
+                100%
+              </div>
+            </div>
+            <span style="color:var(--text-4)">›</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 分类筛选结果 -->
+      <div class="filter-row">
+        <span class="filter-chip active">全部</span>
+        <span class="filter-chip">古风</span>
+        <span class="filter-chip">霸总</span>
+        <span class="filter-chip">甜宠</span>
+        <span class="filter-chip">逆袭</span>
+        <span class="filter-chip">玄幻</span>
+        <span class="filter-chip">悬疑</span>
+      </div>
+
+      <div class="search-result-tip">
+        为您找到 <span class="num">128</span> 部相关短剧
+      </div>
+
+      <!-- 结果列表 -->
+      <div style="background:var(--bg-card); border-radius: var(--r-lg); margin: 0 12px 16px; overflow: hidden;">
+        <a class="drama-list-row" href="drama-detail.html" style="padding-top:12px;">
+          <div class="row-cover cover-1"><div class="rank-num top">1</div></div>
+          <div class="row-info">
+            <div class="row-name">古镇重生：铜官风云</div>
+            <div class="row-desc">江南铜官窑古镇，沈家千金沈玉珠被仇家所害，重生回到十五岁那年。她凭借前世记忆，重振家业，与命定之人——铜官窑少主顾承琰并肩对抗商敌。</div>
+            <div class="row-meta">
+              <span class="tag tag-primary">古风</span>
+              <span class="tag tag-gold">逆袭</span>
+              <span>· 286.5w 播放</span>
+              <span class="price">¥30</span>
+            </div>
+          </div>
+        </a>
+        <a class="drama-list-row" href="drama-detail.html">
+          <div class="row-cover cover-2"><div class="rank-num top">2</div></div>
+          <div class="row-info">
+            <div class="row-name">千金归来</div>
+            <div class="row-desc">顾家千金顾倾城被未婚夫背叛，三年后强势归来，要让所有曾经伤害过她的人付出代价。商战与爱情交织，复仇与救赎并存。</div>
+            <div class="row-meta">
+              <span class="tag tag-primary">霸总</span>
+              <span class="tag tag-gold">复仇</span>
+              <span>· 218.3w 播放</span>
+              <span class="price">¥28</span>
+            </div>
+          </div>
+        </a>
+        <a class="drama-list-row" href="drama-detail.html">
+          <div class="row-cover cover-7"><div class="rank-num">3</div></div>
+          <div class="row-info">
+            <div class="row-name">总裁的秘密</div>
+            <div class="row-desc">商界精英陆景深表面冷酷，实则隐藏着一个不为人知的秘密。当秘书林晚晴意外发现真相，两人的命运开始交织。</div>
+            <div class="row-meta">
+              <span class="tag tag-primary">霸总</span>
+              <span class="tag tag-gold">甜宠</span>
+              <span>· 192.7w 播放</span>
+              <span class="price">¥25</span>
+            </div>
+          </div>
+        </a>
+        <a class="drama-list-row" href="drama-detail.html">
+          <div class="row-cover cover-4"><div class="rank-num">4</div></div>
+          <div class="row-info">
+            <div class="row-name">长安花录</div>
+            <div class="row-desc">唐朝长安城，花店老板娘与朝廷密探的不期而遇，揭开一桩惊天大案。古风悬疑甜宠，缠绵悱恻的爱情故事。</div>
+            <div class="row-meta">
+              <span class="tag tag-primary">古风</span>
+              <span class="tag tag-gold">悬疑</span>
+              <span>· 168.1w 播放</span>
+              <span class="price" style="color:var(--success)">免费</span>
+            </div>
+          </div>
+        </a>
+        <a class="drama-list-row" href="drama-detail.html" style="padding-bottom:12px;">
+          <div class="row-cover cover-8"><div class="rank-num">5</div></div>
+          <div class="row-info">
+            <div class="row-name">玄门诡事</div>
+            <div class="row-desc">玄门传人张九阴行走江湖，破解一桩桩诡异案件。每集一个独立故事，悬念重重，令人欲罢不能。</div>
+            <div class="row-meta">
+              <span class="tag tag-primary">玄幻</span>
+              <span class="tag tag-gold">悬疑</span>
+              <span>· 145.9w 播放</span>
+              <span class="price">¥30</span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/common.js"></script>
+  <script>
+    document.querySelectorAll('.filter-chip').forEach(chip => {
+      chip.addEventListener('click', function() {
+        document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+    document.querySelector('input').addEventListener('input', function(e) {
+      if (e.target.value) {
+        showToast('搜索：' + e.target.value, 800);
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>古镇重生 - 竖店短剧</title>
+  <link rel="stylesheet" href="css/common.css">
+  <style>
+    body { background: #000; }
+    .phone-wrap { background: #0F0F12; color: #fff; }
+
+    /* 视频播放器 */
+    .player-box {
+      width: 375px;
+      height: 211px;
+      background: linear-gradient(135deg, #2C1810 0%, #C8252C 60%, #D4A24C 100%);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .player-box .player-title {
+      position: absolute;
+      top: 50px;
+      left: 16px;
+      color: #fff;
+      font-size: 14px;
+      opacity: 0.8;
+    }
+    .player-box .play-btn {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 24px;
+      padding-left: 4px;
+      border: 2px solid rgba(255, 255, 255, 0.4);
+    }
+    .player-controls {
+      position: absolute;
+      bottom: 12px;
+      left: 12px;
+      right: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #fff;
+      font-size: 12px;
+    }
+    .progress-bar {
+      flex: 1;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 2px;
+      position: relative;
+    }
+    .progress-bar .progress-fill {
+      width: 25%;
+      height: 100%;
+      background: var(--primary);
+      border-radius: 2px;
+    }
+    .progress-bar .progress-dot {
+      position: absolute;
+      left: 25%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #fff;
+    }
+    .player-top {
+      position: absolute;
+      top: 50px;
+      left: 0;
+      right: 0;
+      padding: 0 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #fff;
+      font-size: 20px;
+      z-index: 2;
+    }
+
+    /* 剧集信息卡 */
+    .info-card {
+      background: #1A1A20;
+      padding: 14px 16px;
+      margin-bottom: 8px;
+    }
+    .info-title {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .info-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.6);
+      margin-bottom: 10px;
+    }
+    .info-tags {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+    .info-tags .tag {
+      padding: 2px 8px;
+      background: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.8);
+      border-radius: 4px;
+      font-size: 11px;
+    }
+    .info-stats {
+      display: flex;
+      gap: 16px;
+      padding: 10px 0;
+      border-top: 0.5px solid rgba(255, 255, 255, 0.1);
+      border-bottom: 0.5px solid rgba(255, 255, 255, 0.1);
+    }
+    .info-stats .stat-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .info-stats .stat-num {
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .info-stats .stat-label {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.5);
+    }
+    .info-desc {
+      margin-top: 10px;
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.7);
+      line-height: 1.6;
+    }
+    .info-desc .expand-btn {
+      color: var(--gold);
+      font-size: 12px;
+      margin-left: 4px;
+    }
+
+    /* 付费解锁横幅 */
+    .unlock-banner {
+      margin: 0 16px 8px;
+      padding: 12px;
+      background: linear-gradient(135deg, rgba(212, 162, 76, 0.15) 0%, rgba(200, 37, 44, 0.15) 100%);
+      border: 1px solid rgba(212, 162, 76, 0.3);
+      border-radius: var(--r-md);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .unlock-banner .left {
+      flex: 1;
+    }
+    .unlock-banner .unlock-title {
+      font-size: 13px;
+      color: var(--gold);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .unlock-banner .unlock-desc {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.5);
+      margin-top: 2px;
+    }
+
+    /* 集数列表 */
+    .episode-section {
+      background: #1A1A20;
+      padding: 14px 0;
+    }
+    .episode-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px 12px;
+    }
+    .episode-header .title {
+      font-size: 15px;
+      font-weight: 600;
+      color: #fff;
+    }
+    .episode-header .sort {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.6);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .episode-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      padding: 0 16px;
+    }
+    .episode-item {
+      height: 36px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.08);
+      color: rgba(255, 255, 255, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      position: relative;
+    }
+    .episode-item.played {
+      background: rgba(200, 37, 44, 0.15);
+      color: var(--primary);
+      border: 1px solid var(--primary);
+    }
+    .episode-item.free {
+      background: rgba(43, 164, 113, 0.15);
+      color: #4FD896;
+      border: 1px solid rgba(43, 164, 113, 0.5);
+    }
+    .episode-item.locked::after {
+      content: '🔒';
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      font-size: 8px;
+    }
+    .episode-item.current {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: #fff;
+    }
+
+    /* 推荐区 */
+    .recommend-section {
+      margin-top: 8px;
+      padding: 14px 16px 16px;
+      background: #1A1A20;
+    }
+
+    /* 底部操作栏 */
+    .bottom-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 64px;
+      background: rgba(20, 20, 24, 0.95);
+      backdrop-filter: blur(20px);
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      gap: 10px;
+      border-top: 0.5px solid rgba(255, 255, 255, 0.1);
+    }
+    .bottom-action {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 10px;
+      padding: 0 8px;
+    }
+    .bottom-action .icon { font-size: 18px; }
+    .bottom-bar .btn-unlock {
+      flex: 1;
+      height: 40px;
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+      color: #fff;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 600;
+      gap: 6px;
+    }
+    .bottom-bar .btn-vip {
+      flex: 1;
+      height: 40px;
+      background: linear-gradient(135deg, #2B2B3A 0%, #1A1A28 100%);
+      color: #FCE6A2;
+      border: 1px solid rgba(212, 162, 76, 0.4);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 600;
+      gap: 4px;
+    }
+
+    /* 弹层：解锁选项 */
+    .modal-mask {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.6);
+      display: none;
+      z-index: 100;
+    }
+    .modal-mask.show { display: block; }
+    .modal-sheet {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 375px;
+      background: #1A1A20;
+      border-radius: 16px 16px 0 0;
+      padding: 16px;
+      z-index: 101;
+      display: none;
+      animation: slideUp 0.3s;
+    }
+    .modal-sheet.show { display: block; }
+    .modal-sheet .modal-title {
+      text-align: center;
+      font-size: 16px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 16px;
+    }
+    .unlock-option {
+      display: flex;
+      align-items: center;
+      padding: 14px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: var(--r-md);
+      margin-bottom: 10px;
+      gap: 12px;
+      border: 1px solid transparent;
+    }
+    .unlock-option.selected {
+      border-color: var(--primary);
+      background: rgba(200, 37, 44, 0.1);
+    }
+    .unlock-option .opt-info { flex: 1; }
+    .unlock-option .opt-name { font-size: 14px; color: #fff; font-weight: 500; }
+    .unlock-option .opt-desc { font-size: 11px; color: rgba(255, 255, 255, 0.5); margin-top: 2px; }
+    .unlock-option .opt-price { font-size: 16px; color: var(--gold); font-weight: 700; }
+    .modal-btn {
+      width: 100%;
+      height: 44px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: #fff;
+      border-radius: 22px;
+      font-size: 15px;
+      font-weight: 600;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="phone-wrap">
+    <!-- 视频播放器 -->
+    <div class="player-box">
+      <div class="status-bar" style="position:absolute;top:0;left:0;right:0;color:#fff;">
+        <span class="time">9:41</span>
+        <span class="icons"><span style="margin-right:4px">●●●●</span><span style="margin-right:4px">📶</span><span>🔋</span></span>
+      </div>
+      <div class="player-top">
+        <span onclick="goBack()">‹</span>
+        <span style="font-size:14px">第1集 · 重生归来</span>
+        <span>⋯</span>
+      </div>
+      <div class="play-btn">▶</div>
+      <div class="player-controls">
+        <span>00:23</span>
+        <div class="progress-bar">
+          <div class="progress-fill"></div>
+          <div class="progress-dot"></div>
+        </div>
+        <span>05:48</span>
+        <span>倍速</span>
+        <span>720P</span>
+        <span>⛶</span>
+      </div>
+    </div>
+
+    <div class="page-content" style="padding-bottom:80px;">
+      <!-- 剧集信息 -->
+      <div class="info-card">
+        <div class="info-title">古镇重生：铜官风云
+          <span class="tag tag-vip">VIP</span>
+        </div>
+        <div class="info-meta">
+          <span>📺 286.5w 播放</span>
+          <span>💬 1.2w 弹幕</span>
+          <span>🔥 周榜第1</span>
+        </div>
+        <div class="info-tags">
+          <span class="tag">古风</span>
+          <span class="tag">逆袭</span>
+          <span class="tag">权谋</span>
+          <span class="tag">30集</span>
+          <span class="tag">连载中</span>
+        </div>
+        <div class="info-stats">
+          <div class="stat-item">
+            <div class="stat-num">9.6</div>
+            <div class="stat-label">评分</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">28</div>
+            <div class="stat-label">已更新</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">12.5w</div>
+            <div class="stat-label">收藏</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">5.8w</div>
+            <div class="stat-label">分享</div>
+          </div>
+        </div>
+        <div class="info-desc">
+          江南铜官窑古镇，沈家千金沈玉珠被仇家所害，重生回到十五岁那年。她凭借前世记忆，重振家业，与命定之人——铜官窑少主顾承琰并肩对抗商敌，揭开十年前家族血案真相……
+          <span class="expand-btn">展开 ›</span>
+        </div>
+      </div>
+
+      <!-- 付费解锁横幅 -->
+      <div class="unlock-banner">
+        <div class="left">
+          <div class="unlock-title">👑 开通会员 全站免费看</div>
+          <div class="unlock-desc">黄金会员 ¥38/月，畅享全平台短剧+景区入园权益</div>
+        </div>
+        <a href="member.html" class="btn btn-gold btn-sm">立即开通</a>
+      </div>
+
+      <!-- 集数列表 -->
+      <div class="episode-section">
+        <div class="episode-header">
+          <div class="title">选集 · 共30集</div>
+          <div class="sort">排序 ↕</div>
+        </div>
+        <div class="episode-grid">
+          <div class="episode-item current">1</div>
+          <div class="episode-item free">2</div>
+          <div class="episode-item free">3</div>
+          <div class="episode-item free">4</div>
+          <div class="episode-item free">5</div>
+          <div class="episode-item locked">6</div>
+          <div class="episode-item locked">7</div>
+          <div class="episode-item locked">8</div>
+          <div class="episode-item locked">9</div>
+          <div class="episode-item locked">10</div>
+          <div class="episode-item locked">11</div>
+          <div class="episode-item locked">12</div>
+          <div class="episode-item locked">13</div>
+          <div class="episode-item locked">14</div>
+          <div class="episode-item locked">15</div>
+          <div class="episode-item locked">16</div>
+          <div class="episode-item locked">17</div>
+          <div class="episode-item locked">18</div>
+          <div class="episode-item locked">19</div>
+          <div class="episode-item locked">20</div>
+          <div class="episode-item locked">21</div>
+          <div class="episode-item locked">22</div>
+          <div class="episode-item locked">23</div>
+          <div class="episode-item locked">24</div>
+          <div class="episode-item locked">25</div>
+          <div class="episode-item locked">26</div>
+          <div class="episode-item locked">27</div>
+          <div class="episode-item locked">28</div>
+          <div class="episode-item locked" style="opacity:0.3">29</div>
+          <div class="episode-item locked" style="opacity:0.3">30</div>
+        </div>
+        <div style="padding: 12px 16px 0; font-size: 11px; color: rgba(255,255,255,0.4); display:flex; gap:14px;">
+          <span>🟢 前5集免费试看</span>
+          <span>🔴 当前播放</span>
+          <span>🔒 需解锁</span>
+        </div>
+      </div>
+
+      <!-- 相关推荐 -->
+      <div class="recommend-section">
+        <div class="section-title" style="padding:0 0 12px;">
+          <div class="title" style="color:#fff">相关推荐</div>
+        </div>
+        <div class="h-scroll">
+          <a class="drama-card" href="drama-detail.html" style="width:100px;flex-shrink:0;">
+            <div class="drama-cover cover-4" style="width:100px;height:134px;">
+              <span class="cover-tag">VIP</span>
+              <span class="cover-eps">24集</span>
+              <div class="cover-title" style="font-size:12px">长安花录</div>
+            </div>
+          </a>
+          <a class="drama-card" href="drama-detail.html" style="width:100px;flex-shrink:0;">
+            <div class="drama-cover cover-5" style="width:100px;height:134px;">
+              <span class="cover-tag">VIP</span>
+              <span class="cover-eps">28集</span>
+              <div class="cover-title" style="font-size:12px">田园小医女</div>
+            </div>
+          </a>
+          <a class="drama-card" href="drama-detail.html" style="width:100px;flex-shrink:0;">
+            <div class="drama-cover cover-10" style="width:100px;height:134px;">
+              <span class="cover-tag">VIP</span>
+              <span class="cover-eps">30集</span>
+              <div class="cover-title" style="font-size:12px">凤求凰</div>
+            </div>
+          </a>
+          <a class="drama-card" href="drama-detail.html" style="width:100px;flex-shrink:0;">
+            <div class="drama-cover cover-9" style="width:100px;height:134px;">
+              <span class="cover-tag free">免费</span>
+              <span class="cover-eps">20集</span>
+              <div class="cover-title" style="font-size:12px">花间一壶酒</div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- 评论入口 -->
+      <div style="background:#1A1A20; margin-top: 8px; padding: 14px 16px; color: rgba(255,255,255,0.6); font-size: 13px; display:flex; align-items:center; justify-content:space-between;">
+        <span>💬 全部评论 1.2w 条</span>
+        <span>查看 ›</span>
+      </div>
+    </div>
+
+    <!-- 底部操作栏 -->
+    <div class="bottom-bar">
+      <div class="bottom-action">
+        <span class="icon">⭐</span>
+        <span>收藏</span>
+      </div>
+      <div class="bottom-action">
+        <span class="icon">⬇️</span>
+        <span>缓存</span>
+      </div>
+      <div class="btn-vip" onclick="navigate('member.html')">👑 开通会员</div>
+      <div class="btn-unlock" onclick="showUnlockModal()">🔓 解锁全剧 ¥30</div>
+    </div>
+  </div>
+
+  <!-- 解锁选项弹层 -->
+  <div class="modal-mask" id="modalMask" onclick="hideUnlockModal()"></div>
+  <div class="modal-sheet" id="unlockSheet">
+    <div class="modal-title">解锁《古镇重生：铜官风云》</div>
+    <div class="unlock-option selected">
+      <div class="opt-info">
+        <div class="opt-name">单剧点播 · 全集解锁</div>
+        <div class="opt-desc">解锁第6-28集，永久观看</div>
+      </div>
+      <div class="opt-price">¥30</div>
+    </div>
+    <div class="unlock-option">
+      <div class="opt-info">
+        <div class="opt-name">超前点播 · 直到大结局</div>
+        <div class="opt-desc">抢先看全集，比会员快3集</div>
+      </div>
+      <div class="opt-price">¥48</div>
+    </div>
+    <div class="unlock-option">
+      <div class="opt-info">
+        <div class="opt-name">余额支付</div>
+        <div class="opt-desc">当前余额 ¥0.00，<a href="recharge.html" style="color:var(--gold)">去充值 ›</a></div>
+      </div>
+    </div>
+    <button class="modal-btn" onclick="showToast('请先登录')">微信支付 ¥30 立即解锁</button>
+    <div style="text-align:center; font-size:11px; color:rgba(255,255,255,0.4); margin-top:10px;">
+      支付即视为同意《用户付费协议》
+    </div>
+  </div>
+
+  <script src="js/common.js"></script>
+  <script>
+    function showUnlockModal() {
+      document.getElementById('modalMask').classList.add('show');
+      document.getElementById('unlockSheet').classList.add('show');
+    }
+    function hideUnlockModal() {
+      document.getElementById('modalMask').classList.remove('show');
+      document.getElementById('unlockSheet').classList.remove('show');
+    }
+    document.querySelectorAll('.unlock-option').forEach(opt => {
+      opt.addEventListener('click', function() {
+        document.querySelectorAll('.unlock-option').forEach(o => o.classList.remove('selected'));
+        this.classList.add('selected');
+      });
+    });
+    // 选集切换
+    document.querySelectorAll('.episode-item').forEach(item => {
+      item.addEventListener('click', function() {
+        if (this.classList.contains('locked')) {
+          showToast('该集需解锁后观看');
+          return;
+        }
+        document.querySelectorAll('.episode-item').forEach(i => i.classList.remove('current'));
+        this.classList.add('current');
+        showToast('正在播放第 ' + this.textContent + ' 集');
+      });
+    });
+  </script>
+</body>
+</html>
