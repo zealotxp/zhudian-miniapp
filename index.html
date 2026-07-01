@@ -6,62 +6,95 @@
   <title>竖店短剧 - 首页</title>
   <link rel="stylesheet" href="css/common.css">
   <style>
+    /* ===== 首页专属主题：深金 + 暗黑影视质感（仅作用于首页，不影响其它页面）===== */
+    .phone-wrap {
+      --primary: #E6B24E;
+      --primary-dark: #C6902F;
+      --primary-light: #F4C96A;
+      --primary-soft: rgba(230, 178, 78, 0.14);
+      --gold: #E6B24E;
+      --gold-dark: #F4C96A;
+      --gold-soft: rgba(230, 178, 78, 0.12);
+      --accent: #FF7A33;
+      --accent-soft: rgba(255, 122, 51, 0.16);
+      --bg: #100D0A;
+      --bg-card: #1C1712;
+      --bg-elev: #262019;
+      --text-1: #F7F1E6;
+      --text-2: #CFC6B4;
+      --text-3: #97907F;
+      --text-4: #6E6656;
+      --line: rgba(230, 178, 78, 0.16);
+      --line-soft: rgba(255, 255, 255, 0.06);
+      --success: #38C08A;
+      --shadow-card: 0 6px 20px rgba(0, 0, 0, 0.45);
+      --shadow-float: 0 12px 30px rgba(0, 0, 0, 0.55);
+      background:
+        radial-gradient(120% 60% at 50% 0%, #241A10 0%, var(--bg) 55%);
+    }
+    .phone-wrap .page-content { background: transparent; }
+
     .home-header {
-      background: linear-gradient(180deg, #C8252C 0%, #A81B22 100%);
-      padding: 0 12px 14px;
+      background:
+        radial-gradient(140% 90% at 20% 0%, rgba(230, 178, 78, 0.22) 0%, transparent 55%),
+        linear-gradient(180deg, #1E1710 0%, #16110B 100%);
+      padding: 0 12px 16px;
       position: relative;
+      border-bottom: 1px solid rgba(230, 178, 78, 0.12);
     }
     .home-header::after {
       content: '';
       position: absolute;
       left: 0; right: 0; bottom: -1px;
-      height: 16px;
+      height: 18px;
       background: var(--bg);
-      border-radius: 16px 16px 0 0;
+      border-radius: 18px 18px 0 0;
     }
     .home-top {
       display: flex;
       align-items: center;
       gap: 10px;
-      padding: 8px 4px 12px;
+      padding: 8px 4px 14px;
     }
     .home-logo {
-      color: #fff;
+      color: var(--text-1);
       font-size: 18px;
-      font-weight: 700;
+      font-weight: 800;
       letter-spacing: 1px;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 7px;
     }
     .home-logo .logo-icon {
-      width: 26px;
-      height: 26px;
-      border-radius: 6px;
-      background: #FCE6A2;
-      color: #A81B22;
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #F4C96A 0%, #C6902F 100%);
+      color: #2A1E0C;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 900;
+      box-shadow: 0 3px 10px rgba(230, 178, 78, 0.35);
     }
     .search-box {
       flex: 1;
-      height: 32px;
-      background: rgba(255, 255, 255, 0.95);
-      border-radius: 16px;
+      height: 34px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--line);
+      border-radius: 17px;
       display: flex;
       align-items: center;
-      padding: 0 12px;
-      gap: 6px;
+      padding: 0 14px;
+      gap: 7px;
       color: var(--text-3);
       font-size: 13px;
     }
     .header-actions {
       display: flex;
       gap: 10px;
-      color: #fff;
+      color: var(--gold-dark);
       font-size: 18px;
     }
 
@@ -70,11 +103,15 @@
       border-radius: var(--r-lg);
       overflow: hidden;
       position: relative;
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.45);
+      border: 1px solid rgba(230, 178, 78, 0.18);
     }
     .banner-slide {
       width: 100%;
-      height: 150px;
-      background: linear-gradient(135deg, #2C1810 0%, #C8252C 50%, #D4A24C 100%);
+      height: 158px;
+      background:
+        linear-gradient(to top, rgba(12, 9, 6, 0.92) 0%, rgba(20, 14, 8, 0.15) 55%, transparent 100%),
+        linear-gradient(135deg, #2C1810 0%, #7A3A1E 45%, #C6902F 100%);
       position: relative;
       color: #fff;
       padding: 16px;
@@ -84,21 +121,25 @@
     }
     .banner-slide .banner-tag {
       align-self: flex-start;
-      padding: 2px 8px;
-      background: rgba(255, 255, 255, 0.25);
-      border-radius: 10px;
+      padding: 3px 10px;
+      background: linear-gradient(135deg, #FF7A33 0%, #E6531A 100%);
+      color: #fff;
+      border-radius: 11px;
       font-size: 10px;
-      margin-bottom: 6px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      box-shadow: 0 3px 10px rgba(255, 122, 51, 0.4);
     }
     .banner-slide .banner-title {
-      font-size: 18px;
-      font-weight: 700;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      font-size: 19px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
     }
     .banner-slide .banner-desc {
       font-size: 12px;
-      opacity: 0.9;
-      margin-top: 4px;
+      color: rgba(255, 255, 255, 0.82);
+      margin-top: 5px;
     }
     .banner-dots {
       position: absolute;
@@ -133,14 +174,18 @@
       gap: 6px;
     }
     .category-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 22px;
       color: #fff;
+      /* 统一影视质感图标底：深色 + 细金边（覆盖原型内联渐变，保持视觉语言一致）*/
+      background: linear-gradient(135deg, #262019 0%, #17130E 100%) !important;
+      border: 1px solid var(--line);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 3px 10px rgba(0, 0, 0, 0.3);
     }
     .category-name {
       font-size: 11px;
@@ -150,10 +195,11 @@
     /* 榜单 */
     .rank-card {
       margin: 0 12px;
-      background: linear-gradient(135deg, #FFF6E5 0%, #FFFFFF 100%);
+      background: linear-gradient(160deg, #2A2015 0%, #1A1410 100%);
       border-radius: var(--r-lg);
-      padding: 12px;
-      border: 1px solid #FDF3E0;
+      padding: 14px 12px;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-card);
     }
     .rank-header {
       display: flex;
@@ -187,24 +233,27 @@
       position: relative;
       overflow: hidden;
     }
+    .rank-item .poster {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    }
     .rank-item .poster .num {
       position: absolute;
       top: 0;
       left: 0;
       width: 24px;
       height: 28px;
-      background: var(--primary);
+      background: linear-gradient(135deg, #FF7A33, #E6531A);
       color: #fff;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: 700;
+      font-weight: 800;
       font-size: 13px;
       border-radius: 0 0 8px 0;
     }
-    .rank-item .poster .num.top1 { background: #FFD700; color: #5B3A00; }
-    .rank-item .poster .num.top2 { background: #C0C0C0; color: #fff; }
-    .rank-item .poster .num.top3 { background: #CD7F32; color: #fff; }
+    .rank-item .poster .num.top1 { background: linear-gradient(135deg, #FFE08A, #E6B24E); color: #4A3200; }
+    .rank-item .poster .num.top2 { background: linear-gradient(135deg, #E4E4E8, #B7B7C0); color: #3A3A44; }
+    .rank-item .poster .num.top3 { background: linear-gradient(135deg, #E7A86A, #C77A38); color: #fff; }
     .rank-item .name {
       font-size: 12px;
       margin-top: 4px;
@@ -215,7 +264,8 @@
     }
     .rank-item .hot {
       font-size: 10px;
-      color: var(--text-3);
+      color: var(--accent);
+      font-weight: 600;
     }
 
     /* 短剧网格 - 两列大图 */
@@ -264,6 +314,7 @@
       border-radius: var(--r-md);
       overflow: hidden;
       box-shadow: var(--shadow-card);
+      border: 1px solid var(--line-soft);
     }
     .grid-card .cover {
       width: 100%;
@@ -279,9 +330,9 @@
       font-size: 10px;
       color: #fff;
     }
-    .grid-card .cover .badge.hot { background: rgba(200, 37, 44, 0.9); }
-    .grid-card .cover .badge.free { background: rgba(43, 164, 113, 0.9); }
-    .grid-card .cover .badge.new { background: rgba(255, 143, 31, 0.9); }
+    .grid-card .cover .badge.hot { background: linear-gradient(135deg, #FF7A33, #E6531A); font-weight: 700; }
+    .grid-card .cover .badge.free { background: rgba(56, 192, 138, 0.92); font-weight: 700; }
+    .grid-card .cover .badge.new { background: linear-gradient(135deg, #E6B24E, #C6902F); color: #2A1E0C; font-weight: 700; }
     .grid-card .cover .episodes {
       position: absolute;
       bottom: 6px;
