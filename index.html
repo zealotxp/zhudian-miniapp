@@ -382,6 +382,36 @@
     .grid-card .info .meta .price.free {
       color: var(--success);
     }
+
+    /* ===== 真实 PNG 封面映射（覆盖 common.css 的渐变占位）===== */
+    .cover-1 { background: #17130E url('public/posters/guzhen.png') center/cover no-repeat !important; }
+    .cover-2 { background: #17130E url('public/posters/qianjin.png') center/cover no-repeat !important; }
+    .cover-3 { background: #17130E url('public/posters/huajian.png') center/cover no-repeat !important; }
+    .cover-4 { background: #17130E url('public/posters/changan.png') center/cover no-repeat !important; }
+    .cover-5 { background: #17130E url('public/posters/yinv.png') center/cover no-repeat !important; }
+    .cover-6 { background: #17130E url('public/posters/dushi.png') center/cover no-repeat !important; }
+    .cover-7 { background: #17130E url('public/posters/zongcai.png') center/cover no-repeat !important; }
+    .cover-8 { background: #17130E url('public/posters/xuanmen.png') center/cover no-repeat !important; }
+    .cover-9 { background: #17130E url('public/posters/xiaoyuan.png') center/cover no-repeat !important; }
+    .cover-10 { background: #17130E url('public/posters/fengqiuhuang.png') center/cover no-repeat !important; }
+
+    /* Banner 真实图 + 底部压暗渐变保证标题可读 */
+    .banner-slide {
+      background:
+        linear-gradient(to top, rgba(12, 9, 6, 0.92) 0%, rgba(20, 14, 8, 0.15) 55%, transparent 100%),
+        url('public/banner/guzhen-banner.png') center/cover no-repeat,
+        #2C1810;
+    }
+
+    /* 分类图标：真实 PNG */
+    .category-icon img { width: 26px; height: 26px; object-fit: contain; display: block; }
+    /* TabBar 图标：真实 PNG */
+    .tab-item .tab-icon img { width: 22px; height: 22px; object-fit: contain; display: block; }
+    /* 通用内联小图标 */
+    .ico { display: inline-block; object-fit: contain; vertical-align: -2px; }
+    .ico-14 { width: 14px; height: 14px; }
+    .ico-16 { width: 16px; height: 16px; }
+    .ico-18 { width: 18px; height: 18px; }
   </style>
 </head>
 <body>
@@ -390,7 +420,7 @@
     <div class="home-header">
       <div class="status-bar" style="color:#fff">
         <span class="time">9:41</span>
-        <span class="icons"><span style="margin-right:4px">●●●●</span><span style="margin-right:4px">📶</span><span>🔋</span></span>
+        <span class="icons"><img class="ico ico-16" src="public/icons/ui/signal.png" alt="信号"><img class="ico ico-16" src="public/icons/ui/wifi.png" alt="WiFi" style="margin:0 4px"><img class="ico ico-16" src="public/icons/ui/battery.png" alt="电量"></span>
       </div>
       <div class="home-top">
         <div class="home-logo">
@@ -398,18 +428,18 @@
           <span>竖店短剧</span>
         </div>
         <a class="search-box" href="search.html">
-          <span>🔍</span>
+          <img class="ico ico-16" src="public/icons/ui/search.png" alt="搜索">
           <span>搜索短剧、演员、题材</span>
         </a>
         <div class="header-actions">
-          <span>📥</span>
+          <img class="ico ico-18" src="public/icons/ui/download.png" alt="下载">
         </div>
       </div>
 
       <!-- 轮播图 -->
       <div class="banner-wrap">
         <div class="banner-slide">
-          <span class="banner-tag">🔥 限时首发</span>
+          <span class="banner-tag"><img class="ico ico-14" src="public/icons/ui/fire.png" alt=""> 限时首发</span>
           <div class="banner-title">《古镇重生：铜官风云》</div>
           <div class="banner-desc">铜官窑古镇年度巨制 · 古风逆袭 30 集</div>
           <div class="banner-dots">
@@ -426,55 +456,55 @@
       <!-- 题材分类导航 -->
       <div class="category-grid">
         <a class="category-item" href="search.html?cat=gufeng">
-          <div class="category-icon" style="background:linear-gradient(135deg,#C8252C,#E84D54)">🏯</div>
+          <div class="category-icon"><img src="public/icons/cat/gufeng.png" alt="古风"></div>
           <div class="category-name">古风</div>
         </a>
         <a class="category-item" href="search.html?cat=bazong">
-          <div class="category-icon" style="background:linear-gradient(135deg,#2C3E50,#4CA1AF)">💼</div>
+          <div class="category-icon"><img src="public/icons/cat/bazong.png" alt="霸总"></div>
           <div class="category-name">霸总</div>
         </a>
         <a class="category-item" href="search.html?cat=tianchong">
-          <div class="category-icon" style="background:linear-gradient(135deg,#FF9A9E,#FECFEF)">💕</div>
+          <div class="category-icon"><img src="public/icons/cat/tianchong.png" alt="甜宠"></div>
           <div class="category-name">甜宠</div>
         </a>
         <a class="category-item" href="search.html?cat=nixi">
-          <div class="category-icon" style="background:linear-gradient(135deg,#FA709A,#FEE140)">⚡</div>
+          <div class="category-icon"><img src="public/icons/cat/nixi.png" alt="逆袭"></div>
           <div class="category-name">逆袭</div>
         </a>
         <a class="category-item" href="search.html?cat=xuanhuan">
-          <div class="category-icon" style="background:linear-gradient(135deg,#30CFD0,#330867)">🔮</div>
+          <div class="category-icon"><img src="public/icons/cat/xuanhuan.png" alt="玄幻"></div>
           <div class="category-name">玄幻</div>
         </a>
         <a class="category-item" href="search.html?cat=xuanyi">
-          <div class="category-icon" style="background:linear-gradient(135deg,#1A1A28,#5B5B7A)">🌙</div>
+          <div class="category-icon"><img src="public/icons/cat/xuanyi.png" alt="悬疑"></div>
           <div class="category-name">悬疑</div>
         </a>
         <a class="category-item" href="search.html?cat=jiating">
-          <div class="category-icon" style="background:linear-gradient(135deg,#F6D365,#FDA085)">👨‍👩‍👧</div>
+          <div class="category-icon"><img src="public/icons/cat/jiating.png" alt="家庭"></div>
           <div class="category-name">家庭</div>
         </a>
         <a class="category-item" href="search.html?cat=xiaoyuan">
-          <div class="category-icon" style="background:linear-gradient(135deg,#A1C4FD,#C2E9FB)">🎓</div>
+          <div class="category-icon"><img src="public/icons/cat/xiaoyuan.png" alt="校园"></div>
           <div class="category-name">校园</div>
         </a>
         <a class="category-item" href="search.html?cat=zhan shi">
-          <div class="category-icon" style="background:linear-gradient(135deg,#4FACFE,#00F2FE)">⚔️</div>
+          <div class="category-icon"><img src="public/icons/cat/zhanshi.png" alt="战争"></div>
           <div class="category-name">战争</div>
         </a>
         <a class="category-item" href="search.html?cat=all">
-          <div class="category-icon" style="background:linear-gradient(135deg,#888,#555)">⋯</div>
+          <div class="category-icon"><img src="public/icons/cat/all.png" alt="全部分类"></div>
           <div class="category-name">全部分类</div>
         </a>
       </div>
 
       <!-- 热门榜单 -->
       <div class="section-title">
-        <div class="title">🔥 钢官热榜</div>
+        <div class="title"><img class="ico ico-18" src="public/icons/ui/fire.png" alt=""> 钢官热榜</div>
         <a class="more" href="search.html?tab=rank">查看全部 ›</a>
       </div>
       <div class="rank-card">
         <div class="rank-header">
-          <div class="rank-title">🏆 周榜 TOP 6</div>
+          <div class="rank-title"><img class="ico ico-16" src="public/icons/ui/trophy.png" alt=""> 周榜 TOP 6</div>
           <span style="font-size:11px;color:var(--text-3)">每2小时更新</span>
         </div>
         <div class="rank-list">
@@ -483,49 +513,49 @@
               <div class="num top1">1</div>
             </div>
             <div class="name">古镇重生</div>
-            <div class="hot">🔥 286.5w</div>
+            <div class="hot"><img class="ico ico-14" src="public/icons/ui/fire.png" alt=""> 286.5w</div>
           </a>
           <a class="rank-item" href="drama-detail.html">
             <div class="poster cover-2">
               <div class="num top2">2</div>
             </div>
             <div class="name">千金归来</div>
-            <div class="hot">🔥 218.3w</div>
+            <div class="hot"><img class="ico ico-14" src="public/icons/ui/fire.png" alt=""> 218.3w</div>
           </a>
           <a class="rank-item" href="drama-detail.html">
             <div class="poster cover-7">
               <div class="num top3">3</div>
             </div>
             <div class="name">总裁的秘密</div>
-            <div class="hot">🔥 192.7w</div>
+            <div class="hot"><img class="ico ico-14" src="public/icons/ui/fire.png" alt=""> 192.7w</div>
           </a>
           <a class="rank-item" href="drama-detail.html">
             <div class="poster cover-4">
               <div class="num">4</div>
             </div>
             <div class="name">长安花录</div>
-            <div class="hot">🔥 168.1w</div>
+            <div class="hot"><img class="ico ico-14" src="public/icons/ui/fire.png" alt=""> 168.1w</div>
           </a>
           <a class="rank-item" href="drama-detail.html">
             <div class="poster cover-8">
               <div class="num">5</div>
             </div>
             <div class="name">玄门诡事</div>
-            <div class="hot">🔥 145.9w</div>
+            <div class="hot"><img class="ico ico-14" src="public/icons/ui/fire.png" alt=""> 145.9w</div>
           </a>
           <a class="rank-item" href="drama-detail.html">
             <div class="poster cover-5">
               <div class="num">6</div>
             </div>
             <div class="name">田园小医女</div>
-            <div class="hot">🔥 128.4w</div>
+            <div class="hot"><img class="ico ico-14" src="public/icons/ui/fire.png" alt=""> 128.4w</div>
           </a>
         </div>
       </div>
 
       <!-- 限时免费 -->
       <div class="section-title">
-        <div class="title">🎁 限时免费</div>
+        <div class="title"><img class="ico ico-18" src="public/icons/ui/gift.png" alt=""> 限时免费</div>
         <a class="more" href="search.html?tab=free">更多 ›</a>
       </div>
       <div class="h-scroll" style="padding-bottom: 4px;">
@@ -572,42 +602,42 @@
         <div class="drama-grid-2">
           <a class="grid-card" href="drama-detail.html">
             <div class="cover cover-1">
-              <span class="badge hot">🔥热</span>
+              <span class="badge hot">热</span>
               <span class="episodes">更新至28集</span>
               <div class="title-overlay">古镇重生：铜官风云</div>
             </div>
             <div class="info">
               <div class="name">古镇重生：铜官风云</div>
               <div class="meta">
-                <span class="views">📺 286.5w</span>
+                <span class="views"><img class="ico ico-14" src="public/icons/ui/views.png" alt=""> 286.5w</span>
                 <span class="price">¥30 解锁</span>
               </div>
             </div>
           </a>
           <a class="grid-card" href="drama-detail.html">
             <div class="cover cover-2">
-              <span class="badge new">🆕新</span>
+              <span class="badge new">新</span>
               <span class="episodes">30集全</span>
               <div class="title-overlay">千金归来</div>
             </div>
             <div class="info">
               <div class="name">千金归来</div>
               <div class="meta">
-                <span class="views">📺 218.3w</span>
+                <span class="views"><img class="ico ico-14" src="public/icons/ui/views.png" alt=""> 218.3w</span>
                 <span class="price">¥28 解锁</span>
               </div>
             </div>
           </a>
           <a class="grid-card" href="drama-detail.html">
             <div class="cover cover-7">
-              <span class="badge hot">🔥热</span>
+              <span class="badge hot">热</span>
               <span class="episodes">更新至16集</span>
               <div class="title-overlay">总裁的秘密</div>
             </div>
             <div class="info">
               <div class="name">总裁的秘密</div>
               <div class="meta">
-                <span class="views">📺 192.7w</span>
+                <span class="views"><img class="ico ico-14" src="public/icons/ui/views.png" alt=""> 192.7w</span>
                 <span class="price">¥25 解锁</span>
               </div>
             </div>
@@ -621,49 +651,49 @@
             <div class="info">
               <div class="name">长安花录</div>
               <div class="meta">
-                <span class="views">📺 168.1w</span>
+                <span class="views"><img class="ico ico-14" src="public/icons/ui/views.png" alt=""> 168.1w</span>
                 <span class="price free">前12集免费</span>
               </div>
             </div>
           </a>
           <a class="grid-card" href="drama-detail.html">
             <div class="cover cover-8">
-              <span class="badge hot">🔥热</span>
+              <span class="badge hot">热</span>
               <span class="episodes">更新至22集</span>
               <div class="title-overlay">玄门诡事</div>
             </div>
             <div class="info">
               <div class="name">玄门诡事</div>
               <div class="meta">
-                <span class="views">📺 145.9w</span>
+                <span class="views"><img class="ico ico-14" src="public/icons/ui/views.png" alt=""> 145.9w</span>
                 <span class="price">¥30 解锁</span>
               </div>
             </div>
           </a>
           <a class="grid-card" href="drama-detail.html">
             <div class="cover cover-5">
-              <span class="badge new">🆕新</span>
+              <span class="badge new">新</span>
               <span class="episodes">更新至10集</span>
               <div class="title-overlay">田园小医女</div>
             </div>
             <div class="info">
               <div class="name">田园小医女</div>
               <div class="meta">
-                <span class="views">📺 128.4w</span>
+                <span class="views"><img class="ico ico-14" src="public/icons/ui/views.png" alt=""> 128.4w</span>
                 <span class="price">¥20 解锁</span>
               </div>
             </div>
           </a>
           <a class="grid-card" href="drama-detail.html">
             <div class="cover cover-10">
-              <span class="badge hot">🔥热</span>
+              <span class="badge hot">热</span>
               <span class="episodes">30集全</span>
               <div class="title-overlay">凤求凰</div>
             </div>
             <div class="info">
               <div class="name">凤求凰</div>
               <div class="meta">
-                <span class="views">📺 112.8w</span>
+                <span class="views"><img class="ico ico-14" src="public/icons/ui/views.png" alt=""> 112.8w</span>
                 <span class="price">¥25 解锁</span>
               </div>
             </div>
@@ -677,7 +707,7 @@
             <div class="info">
               <div class="name">花间一壶酒</div>
               <div class="meta">
-                <span class="views">📺 98.5w</span>
+                <span class="views"><img class="ico ico-14" src="public/icons/ui/views.png" alt=""> 98.5w</span>
                 <span class="price free">完全免费</span>
               </div>
             </div>
@@ -691,16 +721,16 @@
     <!-- 底部 TabBar -->
     <div class="tab-bar">
       <a class="tab-item active" href="index.html">
-        <span class="tab-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5L12 3l9 7.5"/><path d="M5.5 9.5V20a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1V9.5"/><path d="M9.5 21v-6h5v6"/></svg></span><span>首页</span>
+        <span class="tab-icon"><img src="public/icons/tab/home.png" alt=""></span><span>首页</span>
       </a>
       <a class="tab-item" href="teach.html">
-        <span class="tab-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l10-4.5L22 9l-10 4.5z"/><path d="M6 11v5c0 1.2 2.7 2.5 6 2.5s6-1.3 6-2.5v-5"/><path d="M22 9v5.5"/></svg></span><span>教学</span>
+        <span class="tab-icon"><img src="public/icons/tab/teach.png" alt=""></span><span>教学</span>
       </a>
       <a class="tab-item" href="scenic.html">
-        <span class="tab-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l1.8 3h-3.6z"/><path d="M8.5 5h7l-1 4h-5z"/><path d="M7.5 9h9l-1 4h-7z"/><path d="M6.5 13h11l-1 8h-9z"/><path d="M10 16h4M10 19h4"/></svg></span><span>景区</span>
+        <span class="tab-icon"><img src="public/icons/tab/scenic.png" alt=""></span><span>景区</span>
       </a>
       <a class="tab-item" href="profile.html">
-        <span class="tab-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg></span><span>我的</span>
+        <span class="tab-icon"><img src="public/icons/tab/profile.png" alt=""></span><span>我的</span>
       </a>
     </div>
   </div>
