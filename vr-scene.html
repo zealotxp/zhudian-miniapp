@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VR选景 - 竖店</title>
+  <link rel="stylesheet" href="css/common.css">
+  <style>
+    /* 搜索栏 */
+    .vr-search-bar {
+      background: var(--bg-card);
+      padding: 10px 16px;
+      display: flex;
+      gap: 8px;
+      border-bottom: 0.5px solid var(--line-soft);
+    }
+    .vr-search-input {
+      flex: 1;
+      height: 36px;
+      background: var(--bg);
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      padding: 0 14px;
+      gap: 6px;
+    }
+    .vr-search-input input {
+      flex: 1;
+      font-size: 14px;
+      color: var(--text-1);
+    }
+    .vr-search-input input::placeholder { color: var(--text-4); }
+
+    /* 分类筛选 */
+    .vr-filter {
+      background: var(--bg-card);
+      padding: 8px 16px;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      border-bottom: 0.5px solid var(--line-soft);
+    }
+    .vr-filter::-webkit-scrollbar { display: none; }
+    .vr-chip {
+      padding: 4px 10px;
+      border-radius: 14px;
+      font-size: 12px;
+      background: var(--bg);
+      color: var(--text-2);
+      white-space: nowrap;
+    }
+    .vr-chip.active {
+      background: var(--primary-soft);
+      color: var(--primary);
+    }
+
+    /* 场景统计 */
+    .vr-stats-bar {
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--text-3);
+    }
+    .vr-stats-bar .count {
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    /* 场景卡片 */
+    .scene-card {
+      background: var(--bg-card);
+      margin: 10px 12px 0;
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+    }
+    .scene-pano {
+      width: 100%;
+      height: 180px;
+      position: relative;
+      overflow: hidden;
+    }
+    .scene-pano .pano-overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(135deg, rgba(200, 37, 44, 0.1), rgba(212, 162, 76, 0.2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 6px;
+      color: #fff;
+    }
+    .scene-pano .pano-overlay .pano-icon {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+    }
+    .scene-pano .pano-overlay .pano-label {
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .scene-pano .scene-type-badge {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      background: var(--primary);
+      color: #fff;
+    }
+    .scene-pano .scene-360-badge {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      background: rgba(0, 0, 0, 0.6);
+      color: #fff;
+    }
+    .scene-info {
+      padding: 10px 16px 14px;
+    }
+    .scene-info .scene-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-1);
+    }
+    .scene-info .scene-desc {
+      font-size: 12px;
+      color: var(--text-3);
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+    .scene-info .scene-meta {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+      font-size: 11px;
+      color: var(--text-3);
+    }
+    .scene-info .scene-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .scene-info .scene-actions .sa-btn {
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .sa-btn.primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: #fff;
+    }
+    .sa-btn.ghost {
+      background: var(--bg);
+      color: var(--text-2);
+      border: 0.5px solid var(--line);
+    }
+  </style>
+</head>
+<body>
+  <div class="phone-wrap">
+    <div class="nav-bar">
+      <a class="nav-back" href="scenic.html" onclick="goBack()">←</a>
+      <span class="nav-title">VR选景</span>
+      <span class="nav-right" style="font-size:12px;color:var(--gold-dark)">700+场景</span>
+    </div>
+
+    <!-- 搜索 -->
+    <div class="vr-search-bar">
+      <div class="vr-search-input">
+        <span style="color:var(--text-3)">🔍</span>
+        <input type="text" placeholder="搜索场景名称、类型">
+      </div>
+    </div>
+
+    <!-- 分类筛选 -->
+    <div class="vr-filter">
+      <span class="vr-chip active">全部</span>
+      <span class="vr-chip">古风建筑</span>
+      <span class="vr-chip">民国街景</span>
+      <span class="vr-chip">园林水景</span>
+      <span class="vr-chip">室内场景</span>
+      <span class="vr-chip">现代场景</span>
+      <span class="vr-chip">自然风光</span>
+    </div>
+
+    <!-- 场景数量统计 -->
+    <div class="vr-stats-bar">
+      共 <span class="count">726</span> 个拍摄场景 · 360°全景浏览
+    </div>
+
+    <div class="page-content no-tabbar">
+      <!-- 场景卡片1 -->
+      <div class="scene-card">
+        <div class="scene-pano cover-1">
+          <span class="scene-type-badge">古风建筑</span>
+          <span class="scene-360-badge">360°</span>
+          <div class="pano-overlay">
+            <div class="pano-icon">🔭</div>
+            <div class="pano-label">进入全景浏览</div>
+          </div>
+        </div>
+        <div class="scene-info">
+          <div class="scene-name">铜官窑古镇主街</div>
+          <div class="scene-desc">唐代风貌商业街区，两侧店铺林立，适合古装商战、街头追逐等场景</div>
+          <div class="scene-meta">
+            <span>📐 容纳50-100人</span>
+            <span>🎬 已拍摄12部</span>
+            <span>⭐ 推荐 9.5</span>
+          </div>
+          <div class="scene-actions">
+            <span class="sa-btn primary" onclick="showToast('进入360°全景浏览')">360°浏览</span>
+            <span class="sa-btn ghost" onclick="showToast('已收藏该场景')">☆ 收藏</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 场景卡片2 -->
+      <div class="scene-card">
+        <div class="scene-pano cover-4">
+          <span class="scene-type-badge">民国街景</span>
+          <span class="scene-360-badge">360°</span>
+          <div class="pano-overlay">
+            <div class="pano-icon">🔭</div>
+            <div class="pano-label">进入全景浏览</div>
+          </div>
+        </div>
+        <div class="scene-info">
+          <div class="scene-name">民国风情街</div>
+          <div class="scene-desc">完整民国时期街区，含洋行、茶馆、戏院，适合民国剧、谍战剧拍摄</div>
+          <div class="scene-meta">
+            <span>📐 容纳80-150人</span>
+            <span>🎬 已拍摄8部</span>
+            <span>⭐ 推荐 9.3</span>
+          </div>
+          <div class="scene-actions">
+            <span class="sa-btn primary" onclick="showToast('进入360°全景浏览')">360°浏览</span>
+            <span class="sa-btn ghost" onclick="showToast('已收藏该场景')">☆ 收藏</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 场景卡片3 -->
+      <div class="scene-card">
+        <div class="scene-pano cover-5">
+          <span class="scene-type-badge">园林水景</span>
+          <span class="scene-360-badge">360°</span>
+          <div class="pano-overlay">
+            <div class="pano-icon">🔭</div>
+            <div class="pano-label">进入全景浏览</div>
+          </div>
+        </div>
+        <div class="scene-info">
+          <div class="scene-name">江南园林水系</div>
+          <div class="scene-desc">亭台楼阁、石桥水廊，适合诗意古风场景、水上戏份</div>
+          <div class="scene-meta">
+            <span>📐 容纳30-60人</span>
+            <span>🎬 已拍摄6部</span>
+            <span>⭐ 推荐 9.1</span>
+          </div>
+          <div class="scene-actions">
+            <span class="sa-btn primary" onclick="showToast('进入360°全景浏览')">360°浏览</span>
+            <span class="sa-btn ghost" onclick="showToast('已收藏该场景')">☆ 收藏</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 场景卡片4 -->
+      <div class="scene-card">
+        <div class="scene-pano cover-2">
+          <span class="scene-type-badge">室内场景</span>
+          <span class="scene-360-badge">360°</span>
+          <div class="pano-overlay">
+            <div class="pano-icon">🔭</div>
+            <div class="pano-label">进入全景浏览</div>
+          </div>
+        </div>
+        <div class="scene-info">
+          <div class="scene-name">古宅大院</div>
+          <div class="scene-desc">传统民居大院，含正厅、厢房、后花园，适合家庭伦理、宅斗场景</div>
+          <div class="scene-meta">
+            <span>📐 容纳20-40人</span>
+            <span>🎬 已拍摄15部</span>
+            <span>⭐ 推荐 9.7</span>
+          </div>
+          <div class="scene-actions">
+            <span class="sa-btn primary" onclick="showToast('进入360°全景浏览')">360°浏览</span>
+            <span class="sa-btn ghost" onclick="showToast('已收藏该场景')">☆ 收藏</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 场景卡片5 -->
+      <div class="scene-card">
+        <div class="scene-pano cover-3">
+          <span class="scene-type-badge">自然风光</span>
+          <span class="scene-360-badge">360°</span>
+          <div class="pano-overlay">
+            <div class="pano-icon">🔭</div>
+            <div class="pano-label">进入全景浏览</div>
+          </div>
+        </div>
+        <div class="scene-info">
+          <div class="scene-name">山间古道</div>
+          <div class="scene-desc">依山而建的古道栈桥，俯瞰湘江，适合武侠、仙侠外景拍摄</div>
+          <div class="scene-meta">
+            <span>📐 容纳15-30人</span>
+            <span>🎬 已拍摄5部</span>
+            <span>⭐ 推荐 8.8</span>
+          </div>
+          <div class="scene-actions">
+            <span class="sa-btn primary" onclick="showToast('进入360°全景浏览')">360°浏览</span>
+            <span class="sa-btn ghost" onclick="showToast('已收藏该场景')">☆ 收藏</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding:30px 20px; text-align:center; color:var(--text-4); font-size:12px;">
+        — 滑动加载更多场景 —
+      </div>
+    </div>
+  </div>
+
+  <script src="js/common.js"></script>
+  <script>
+    // 筛选交互
+    document.querySelectorAll('.vr-chip').forEach(chip => {
+      chip.addEventListener('click', function() {
+        document.querySelectorAll('.vr-chip').forEach(c => c.classList.remove('active'));
+        this.classList.add('active');
+        showToast('筛选：' + this.textContent);
+      });
+    });
+  </script>
+</body>
+</html>

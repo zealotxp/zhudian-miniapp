@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>开通会员 - 竖店短剧</title>
+  <title>开通会员 - 竖店</title>
   <link rel="stylesheet" href="css/common.css">
   <style>
     body { background: #000; }
@@ -27,13 +27,11 @@
       position: relative; z-index: 2;
     }
     .member-hero .nav-bar .nav-back,
-    .member-hero .nav-bar .nav-right {
-      color: #fff;
-    }
+    .member-hero .nav-bar .nav-right { color: #fff; }
     .member-hero .hero-content {
       position: relative; z-index: 2;
       text-align: center;
-      padding: 24px 0 0;
+      padding: 20px 0 0;
     }
     .crown-icon {
       font-size: 56px;
@@ -54,12 +52,12 @@
       margin-top: 4px;
     }
 
-    /* 权益展示 */
+    /* 权益展示 6项 */
     .benefits-row {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 8px;
-      margin-top: 24px;
+      margin-top: 20px;
       position: relative; z-index: 2;
     }
     .benefit-cell {
@@ -77,6 +75,30 @@
     }
     .benefit-cell .bi-label {
       font-size: 11px;
+    }
+
+    /* 实名认证提示 */
+    .auth-tip {
+      margin: 16px 12px 0;
+      padding: 10px 14px;
+      background: rgba(200, 37, 44, 0.08);
+      border: 1px solid rgba(200, 37, 44, 0.2);
+      border-radius: var(--r-sm);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+    }
+    .auth-tip .auth-icon { color: var(--primary); }
+    .auth-tip .auth-text { color: rgba(255,255,255,0.7); flex:1; }
+    .auth-tip .auth-text strong { color: #fff; }
+    .auth-tip .auth-btn {
+      padding: 4px 10px;
+      border-radius: 10px;
+      background: var(--primary);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 600;
     }
 
     /* 套餐选择 */
@@ -144,6 +166,17 @@
       color: rgba(255, 255, 255, 0.4);
       text-decoration: line-through;
     }
+    .plan-item.recommend::before {
+      content: '首推';
+      position: absolute;
+      top: 0; right: 16px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      color: #5B3A00;
+      padding: 2px 8px;
+      border-radius: 0 0 6px 6px;
+      font-size: 10px;
+      font-weight: 700;
+    }
 
     /* 权益对比 */
     .compare-section {
@@ -201,9 +234,7 @@
       background: var(--gold);
       border-color: var(--gold);
     }
-    .agreement a {
-      color: var(--gold);
-    }
+    .agreement a { color: var(--gold); }
 
     /* 底部支付栏 */
     .pay-bar {
@@ -260,37 +291,63 @@
       <div class="hero-content">
         <div class="crown-icon">👑</div>
         <div class="member-name">黄金会员</div>
-        <div class="member-subtitle">畅享全平台短剧 · 课程8折 · 景区入园权益</div>
+        <div class="member-subtitle">全年畅享 · 短剧免广告 · 景区不限次入园 · 课程全解锁</div>
 
         <div class="benefits-row">
           <div class="benefit-cell">
+            <div class="bi-icon">🏯</div>
+            <div class="bi-label">景区全年入园</div>
+          </div>
+          <div class="benefit-cell">
             <div class="bi-icon">🎬</div>
-            <div class="bi-label">短剧免费看</div>
+            <div class="bi-label">短剧免广告</div>
           </div>
           <div class="benefit-cell">
             <div class="bi-icon">📚</div>
-            <div class="bi-label">课程8折</div>
+            <div class="bi-label">全部课程</div>
           </div>
           <div class="benefit-cell">
-            <div class="bi-icon">🏯</div>
-            <div class="bi-label">景区门票</div>
+            <div class="bi-icon">💼</div>
+            <div class="bi-label">兼职接单</div>
           </div>
           <div class="benefit-cell">
-            <div class="bi-icon">🚫</div>
-            <div class="bi-label">免广告</div>
+            <div class="bi-icon">✨</div>
+            <div class="bi-label">原创上传</div>
+          </div>
+          <div class="benefit-cell">
+            <div class="bi-icon">🎭</div>
+            <div class="bi-label">群演体验</div>
           </div>
         </div>
       </div>
     </div>
 
     <div class="page-content" style="padding-bottom: 80px;">
+      <!-- 实名认证提示 -->
+      <div class="auth-tip">
+        <span class="auth-icon">🛡️</span>
+        <span class="auth-text"><strong>开通会员需实名认证</strong>（姓名+身份证），用于同步景区入园系统</span>
+        <a class="auth-btn" href="auth.html">去认证</a>
+      </div>
+
       <!-- 套餐选择 -->
       <div class="plan-list">
+        <div class="plan-item" data-plan="once">
+          <div class="check"></div>
+          <div class="plan-info">
+            <div class="plan-name">次卡 · 体验尝鲜</div>
+            <div class="plan-desc">单次入园+1周会员权益</div>
+          </div>
+          <div class="plan-price">
+            <div class="price">¥19</div>
+          </div>
+        </div>
+
         <div class="plan-item" data-plan="month">
           <div class="check"></div>
           <div class="plan-info">
             <div class="plan-name">月卡</div>
-            <div class="plan-desc">月度畅享 · 平均每天 ¥1.27</div>
+            <div class="plan-desc">1个月畅享 · 平均每天 ¥1.27</div>
           </div>
           <div class="plan-price">
             <div class="price">¥38</div>
@@ -298,26 +355,26 @@
           </div>
         </div>
 
-        <div class="plan-item selected" data-plan="quarter">
-          <div class="check">✓</div>
+        <div class="plan-item" data-plan="quarter">
+          <div class="check"></div>
           <div class="plan-info">
             <div class="plan-name">季卡 <span class="discount-tag">省30元</span></div>
-            <div class="plan-desc">3个月畅享 · 平均每天 ¥0.92 · 推荐</div>
+            <div class="plan-desc">3个月畅享 · 平均每天 ¥0.73</div>
           </div>
           <div class="plan-price">
-            <div class="price">¥88</div>
+            <div class="price">¥68</div>
             <div class="origin">¥174</div>
           </div>
         </div>
 
-        <div class="plan-item" data-plan="year">
-          <div class="check"></div>
+        <div class="plan-item selected recommend" data-plan="year">
+          <div class="check">✓</div>
           <div class="plan-info">
-            <div class="plan-name">年卡 <span class="discount-tag">省218元</span></div>
-            <div class="plan-desc">12个月畅享 · 平均每天 ¥0.40 · 最划算</div>
+            <div class="plan-name">年卡 <span class="discount-tag">最划算</span></div>
+            <div class="plan-desc">全年不限次入园+全平台免广告 · 平均每天 ¥0.35</div>
           </div>
           <div class="plan-price">
-            <div class="price">¥158</div>
+            <div class="price">¥128</div>
             <div class="origin">¥456</div>
           </div>
         </div>
@@ -325,41 +382,41 @@
 
       <!-- 权益对比 -->
       <div class="compare-section">
-        <div class="compare-title">📊 会员专属权益</div>
+        <div class="compare-title">📊 会员专属权益对比</div>
         <div class="compare-row" style="border-top:none;">
-          <div class="feature">🎬 全平台短剧免费看</div>
-          <div class="normal">前5集免费</div>
-          <div class="vip">✓ 全集免费</div>
+          <div class="feature">🏯 景区入园</div>
+          <div class="normal">原价购票</div>
+          <div class="vip">✓ 全年不限次</div>
         </div>
         <div class="compare-row">
-          <div class="feature">📚 教学课程折扣</div>
-          <div class="normal">原价购买</div>
-          <div class="vip">✓ 8折优惠</div>
+          <div class="feature">🎬 短剧观看</div>
+          <div class="normal">每集看广告</div>
+          <div class="vip">✓ 全免广告</div>
         </div>
         <div class="compare-row">
-          <div class="feature">🏯 铜官窑古镇门票</div>
-          <div class="normal">原价</div>
-          <div class="vip">✓ 月2次日场+1次夜场</div>
+          <div class="feature">📚 教学课程</div>
+          <div class="normal">仅试看入门课</div>
+          <div class="vip">✓ 全部免费看</div>
         </div>
         <div class="compare-row">
-          <div class="feature">🎬 片场探班</div>
+          <div class="feature">💼 兼职接单</div>
+          <div class="normal">不可报名</div>
+          <div class="vip">✓ 可报名接单</div>
+        </div>
+        <div class="compare-row">
+          <div class="feature">✨ 原创上传</div>
+          <div class="normal">不可上传</div>
+          <div class="vip">✓ 可上传作品</div>
+        </div>
+        <div class="compare-row">
+          <div class="feature">🎭 群演体验</div>
           <div class="normal">付费参与</div>
-          <div class="vip">✓ 免费预约</div>
+          <div class="vip">✓ 赠送1-2次</div>
         </div>
         <div class="compare-row">
-          <div class="feature">🚫 观看广告</div>
-          <div class="normal">有广告</div>
-          <div class="vip">✓ 免广告</div>
-        </div>
-        <div class="compare-row">
-          <div class="feature">⚡ 抢先看新剧</div>
-          <div class="normal">普通更新</div>
-          <div class="vip">✓ 提前3集</div>
-        </div>
-        <div class="compare-row">
-          <div class="feature">🎁 专属客服</div>
-          <div class="normal">普通客服</div>
-          <div class="vip">✓ VIP优先</div>
+          <div class="feature">🛡️ 实名入园</div>
+          <div class="normal">—</div>
+          <div class="vip">✓ 身份证/刷脸</div>
         </div>
       </div>
 
@@ -369,7 +426,7 @@
         <span>我已阅读并同意</span>
         <a href="#">《会员服务协议》</a>
         <span>和</span>
-        <a href="#">《自动续费规则》</a>
+        <a href="#">《实名认证说明》</a>
       </div>
     </div>
 
@@ -377,9 +434,9 @@
     <div class="pay-bar">
       <div class="price-info">
         <div class="label">实付金额</div>
-        <div class="price">¥88.00</div>
+        <div class="price">¥128.00</div>
       </div>
-      <div class="pay-btn" onclick="showToast('请先登录')">立即开通</div>
+      <div class="pay-btn" onclick="showToast('请先完成实名认证')">立即开通</div>
     </div>
   </div>
 

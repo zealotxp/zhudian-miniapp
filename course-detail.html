@@ -3,37 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>课程详情 - 竖店短剧</title>
+  <title>课程详情 - 竖店</title>
   <link rel="stylesheet" href="css/common.css">
   <style>
     body { background: #000; }
     .phone-wrap { background: #0F0F12; color: #fff; }
 
-    /* 视频播放器（同短剧） */
+    /* 视频播放器 */
     .player-box {
-      width: 375px;
-      height: 211px;
+      width: 375px; height: 211px;
       background: linear-gradient(135deg, #1A2530 0%, #2C3E50 60%, #4CA1AF 100%);
       position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
     }
     .player-top {
       position: absolute;
-      top: 50px;
-      left: 0; right: 0;
+      top: 50px; left: 0; right: 0;
       padding: 0 12px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      color: #fff;
-      font-size: 20px;
-      z-index: 2;
+      display: flex; align-items: center; justify-content: space-between;
+      color: #fff; font-size: 20px; z-index: 2;
     }
-    .player-top .title {
-      font-size: 14px;
-    }
+    .player-top .title { font-size: 14px; }
     .play-btn {
       width: 64px; height: 64px;
       border-radius: 50%;
@@ -68,6 +58,27 @@
       border-radius: 50%; background: #fff;
     }
 
+    /* 免费试看提示条 */
+    .free-try-tip {
+      margin: 0 16px;
+      padding: 8px 12px;
+      background: rgba(43, 164, 113, 0.12);
+      border: 1px solid rgba(43, 164, 113, 0.25);
+      border-radius: var(--r-sm);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+    }
+    .free-try-tip .left {
+      color: #4FD896;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .free-try-tip .right {
+      color: var(--gold);
+      font-weight: 500;
+    }
+
     /* 课程信息卡 */
     .course-info-card {
       background: #1A1A20;
@@ -90,6 +101,10 @@
       border-radius: 4px;
       font-size: 11px;
     }
+    .course-tags .tag.free-try {
+      background: rgba(43, 164, 113, 0.15);
+      color: #4FD896;
+    }
     .course-stats {
       display: flex; gap: 16px;
       margin-top: 12px;
@@ -104,26 +119,20 @@
     .course-stats .stat .gold {
       color: var(--gold); font-weight: 600;
     }
-    .course-price-row {
+    .course-access-row {
       display: flex; align-items: center; justify-content: space-between;
       margin-top: 12px;
       padding-top: 12px;
       border-top: 0.5px solid rgba(255, 255, 255, 0.1);
     }
-    .course-price-row .left .label {
+    .course-access-row .left .label {
       font-size: 11px;
       color: rgba(255, 255, 255, 0.5);
     }
-    .course-price-row .left .price {
-      font-size: 22px; font-weight: 700;
+    .course-access-row .left .desc {
+      font-size: 14px; font-weight: 600;
       color: var(--gold);
-      margin-top: 2px;
-    }
-    .course-price-row .left .price .small {
-      font-size: 12px; font-weight: 400;
-      color: rgba(255, 255, 255, 0.5);
-      text-decoration: line-through;
-      margin-left: 6px;
+      margin-top: 4px;
     }
 
     /* 教师卡 */
@@ -148,9 +157,6 @@
     .teacher-name {
       font-size: 14px; color: #fff; font-weight: 600;
       display: flex; align-items: center; gap: 6px;
-    }
-    .teacher-name .verify {
-      color: var(--gold); font-size: 12px;
     }
     .teacher-desc {
       font-size: 12px;
@@ -212,8 +218,8 @@
       padding: 2px 6px;
       border-radius: 4px;
     }
-    .chapter-status.free { background: rgba(43, 164, 113, 0.15); color: #4FD896; }
-    .chapter-status.locked { background: rgba(212, 162, 76, 0.15); color: var(--gold); }
+    .chapter-status.free-try { background: rgba(43, 164, 113, 0.15); color: #4FD896; }
+    .chapter-status.member { background: rgba(212, 162, 76, 0.15); color: var(--gold); }
     .chapter-status.done { background: rgba(43, 164, 113, 0.15); color: #4FD896; }
 
     /* 学习目标 */
@@ -233,9 +239,7 @@
       font-size: 13px;
       color: rgba(255, 255, 255, 0.7);
     }
-    .obj-item .check {
-      color: #4FD896;
-    }
+    .obj-item .check { color: #4FD896; }
 
     /* 底部操作栏 */
     .bottom-bar {
@@ -256,7 +260,16 @@
       gap: 2px;
     }
     .bottom-bar .action-icon .icon { font-size: 18px; }
-    .bottom-bar .btn-buy {
+    .bottom-bar .btn-free-try {
+      flex: 1; height: 40px;
+      background: rgba(43, 164, 113, 0.15);
+      color: #4FD896;
+      border: 1px solid rgba(43, 164, 113, 0.5);
+      border-radius: 20px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 600;
+    }
+    .bottom-bar .btn-member {
       flex: 1; height: 40px;
       background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
       color: #fff;
@@ -264,15 +277,6 @@
       display: flex; align-items: center; justify-content: center;
       font-size: 14px; font-weight: 600;
       gap: 4px;
-    }
-    .bottom-bar .btn-vip {
-      height: 40px; padding: 0 16px;
-      background: rgba(212, 162, 76, 0.15);
-      color: var(--gold);
-      border: 1px solid rgba(212, 162, 76, 0.4);
-      border-radius: 20px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 13px; font-weight: 600;
     }
   </style>
 </head>
@@ -286,7 +290,7 @@
       </div>
       <div class="player-top">
         <span onclick="goBack()">‹</span>
-        <span class="title">第1节 · 课程导论</span>
+        <span class="title">第1节 · 课程导论（免费试看）</span>
         <span>⋯</span>
       </div>
       <div class="play-btn">▶</div>
@@ -303,13 +307,22 @@
       </div>
     </div>
 
+    <!-- 免费试看提示 -->
+    <div class="free-try-tip">
+      <div class="left">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#4FD896" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>
+        <span>非会员可免费试看前2节入门课程</span>
+      </div>
+      <a class="right" href="member.html">开通会员看全部 ›</a>
+    </div>
+
     <div class="page-content" style="padding-bottom: 80px;">
       <!-- 课程信息 -->
       <div class="course-info-card">
         <div class="course-title">表演基础：从观察到表达</div>
         <div class="course-tags">
-          <span class="tag">🎬 表演</span>
-          <span class="tag">🎓 学历必修</span>
+          <span class="tag free-try">✅ 免费试看</span>
+          <span class="tag">🎭 表演专业</span>
           <span class="tag">⏱ 42分钟/节</span>
           <span class="tag">📚 共8节</span>
         </div>
@@ -318,12 +331,12 @@
           <div class="stat">👥 2.3w 学员</div>
           <div class="stat">🎓 <span class="gold">6学分</span></div>
         </div>
-        <div class="course-price-row">
+        <div class="course-access-row">
           <div class="left">
-            <div class="label">学历学员免费 · 非学历学员付费观看</div>
-            <div class="price">¥99<span class="small">¥129</span></div>
+            <div class="label">观看权限</div>
+            <div class="desc">会员免费观看全部章节</div>
           </div>
-          <span class="tag tag-vip">👑 VIP免费</span>
+          <span class="tag tag-vip">👑 会员免费</span>
         </div>
       </div>
 
@@ -331,10 +344,10 @@
       <div class="teacher-card">
         <div class="teacher-avatar">王</div>
         <div class="teacher-info">
-          <div class="teacher-name">王老师 <span class="verify">✓ 认证教师</span></div>
-          <div class="teacher-desc">国家二级演员 · 20年表演教学经验 · 中央戏剧学院</div>
+          <div class="teacher-name">王老师 <span style="color:var(--gold);font-size:12px;">✓ 认证教师</span></div>
+          <div class="teacher-desc">国家二级演员 · 20年表演教学经验</div>
         </div>
-        <button class="btn-outline btn-sm" style="color:rgba(255,255,255,0.8);border-color:rgba(255,255,255,0.2);">关注</button>
+        <button style="font-size:12px;color:rgba(255,255,255,0.8);padding:4px 12px;border:1px solid rgba(255,255,255,0.2);border-radius:12px;background:none;">关注</button>
       </div>
 
       <!-- 学习目标 -->
@@ -352,7 +365,7 @@
       <div class="chapter-section">
         <div class="chapter-title">
           <span>课程章节 · 共8节</span>
-          <span class="meta">已学 2/8 节 · 25%</span>
+          <span class="meta">前2节免费试看</span>
         </div>
         <div class="chapter-item done">
           <div class="chapter-num">1</div>
@@ -360,6 +373,7 @@
             <div class="chapter-name">导论：表演是什么</div>
             <div class="chapter-meta">
               <span>⏱ 42:18</span>
+              <span class="chapter-status free-try">免费试看</span>
               <span class="chapter-status done">✓ 已完成</span>
             </div>
           </div>
@@ -370,6 +384,7 @@
             <div class="chapter-name">观察：从生活到角色</div>
             <div class="chapter-meta">
               <span>⏱ 38:25</span>
+              <span class="chapter-status free-try">免费试看</span>
               <span class="chapter-status done">✓ 已完成</span>
             </div>
           </div>
@@ -380,7 +395,7 @@
             <div class="chapter-name">表达：肢体语言的力量</div>
             <div class="chapter-meta">
               <span>⏱ 45:00</span>
-              <span class="chapter-status free">学习中</span>
+              <span class="chapter-status member">🔒 会员专享</span>
             </div>
           </div>
         </div>
@@ -390,7 +405,7 @@
             <div class="chapter-name">声音：台词艺术的入门</div>
             <div class="chapter-meta">
               <span>⏱ 40:12</span>
-              <span class="chapter-status locked">🔒 需解锁</span>
+              <span class="chapter-status member">🔒 会员专享</span>
             </div>
           </div>
         </div>
@@ -400,7 +415,7 @@
             <div class="chapter-name">情感：角色内心世界的构建</div>
             <div class="chapter-meta">
               <span>⏱ 48:30</span>
-              <span class="chapter-status locked">🔒 需解锁</span>
+              <span class="chapter-status member">🔒 会员专享</span>
             </div>
           </div>
         </div>
@@ -410,7 +425,7 @@
             <div class="chapter-name">即兴：表演中的临场反应</div>
             <div class="chapter-meta">
               <span>⏱ 35:20</span>
-              <span class="chapter-status locked">🔒 需解锁</span>
+              <span class="chapter-status member">🔒 会员专享</span>
             </div>
           </div>
         </div>
@@ -420,7 +435,7 @@
             <div class="chapter-name">实战：短剧片段演绎</div>
             <div class="chapter-meta">
               <span>⏱ 50:00</span>
-              <span class="chapter-status locked">🔒 需解锁</span>
+              <span class="chapter-status member">🔒 会员专享</span>
             </div>
           </div>
         </div>
@@ -430,7 +445,7 @@
             <div class="chapter-name">考核：结业作品与学分认定</div>
             <div class="chapter-meta">
               <span>⏱ 60:00</span>
-              <span class="chapter-status locked">🔒 需解锁</span>
+              <span class="chapter-status member">🔒 会员专享</span>
             </div>
           </div>
         </div>
@@ -440,7 +455,7 @@
       <div style="background:#1A1A20; margin-top:8px; padding: 14px 16px;">
         <div style="font-size:15px; font-weight:600; color:#fff; margin-bottom:8px;">课程简介</div>
         <div style="font-size:13px; color:rgba(255,255,255,0.7); line-height:1.6;">
-          本课程为长沙铜官窑职业培训学校「影视表演系」学历必修课程，由王老师主讲。课程系统讲解表演艺术的基础理论与实用技巧，从观察生活、肢体表达、声音训练到情感构建，循序渐进地带学员走入表演的世界。完成全部章节学习并通过结业考核，可获得 6 学分认定，并有机会推荐至基地剧组实习。
+          本课程为长沙铜官窑职业培训学校「表演专业」核心课程，由王老师主讲。课程系统讲解表演艺术的基础理论与实用技巧，从观察生活、肢体表达、声音训练到情感构建，循序渐进地带学员走入表演的世界。完成全部章节学习并通过结业考核，可获得 6 学分认定，并有机会推荐至剧组实习。
         </div>
       </div>
 
@@ -464,8 +479,8 @@
         <span class="icon">💬</span>
         <span>咨询</span>
       </div>
-      <div class="btn-vip" onclick="navigate('member.html')">👑 VIP免费</div>
-      <div class="btn-buy" onclick="showToast('请先登录')">立即购买 ¥99</div>
+      <div class="btn-free-try" onclick="showToast('开始试看第1节')">免费试看</div>
+      <div class="btn-member" onclick="navigate('member.html')">👑 会员免费看</div>
     </div>
   </div>
 
@@ -473,9 +488,9 @@
   <script>
     document.querySelectorAll('.chapter-item').forEach(item => {
       item.addEventListener('click', function() {
-        const status = this.querySelector('.chapter-status');
-        if (status && status.classList.contains('locked')) {
-          showToast('该章节需购买后观看');
+        const status = this.querySelector('.chapter-status.member');
+        if (status) {
+          showToast('该章节需开通会员后观看');
           return;
         }
         document.querySelectorAll('.chapter-item').forEach(i => i.classList.remove('current'));

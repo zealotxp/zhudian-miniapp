@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>任务详情 - 竖店</title>
+  <link rel="stylesheet" href="css/common.css">
+  <style>
+    /* 详情头部 */
+    .detail-header {
+      background: linear-gradient(135deg, #C8252C 0%, #A81B22 100%);
+      padding: 16px;
+      color: #fff;
+    }
+    .detail-header .task-type-badge {
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 11px;
+      background: rgba(255,255,255,0.2);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .detail-header .task-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-top: 10px;
+      line-height: 1.4;
+    }
+    .detail-header .pay-row {
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+      margin-top: 8px;
+    }
+    .detail-header .pay-row .amount {
+      font-size: 28px;
+      font-weight: 700;
+    }
+    .detail-header .pay-row .unit {
+      font-size: 14px;
+      opacity: 0.8;
+    }
+    .detail-header .pay-row .negotiable {
+      font-size: 12px;
+      background: rgba(255,255,255,0.2);
+      padding: 2px 8px;
+      border-radius: 8px;
+      margin-left: 8px;
+    }
+    .detail-header .task-meta-row {
+      display: flex;
+      gap: 16px;
+      margin-top: 12px;
+      font-size: 12px;
+      opacity: 0.85;
+    }
+    .detail-header .task-meta-row .meta-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* 会员提示 */
+    .member-tip-bar {
+      background: linear-gradient(135deg, #2B2B3A, #1A1A28);
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #fff;
+      font-size: 12px;
+    }
+    .member-tip-bar .tip-icon { color: #D4A24C; font-size: 16px; }
+    .member-tip-bar .tip-text { flex: 1; }
+    .member-tip-bar .tip-text .gold { color: #FCE6A2; font-weight: 600; }
+    .member-tip-bar .tip-btn {
+      padding: 3px 10px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      color: #fff;
+      border-radius: 12px;
+      font-size: 11px;
+    }
+
+    /* 信息区块 */
+    .info-section {
+      background: var(--bg-card);
+      margin: 10px 12px;
+      border-radius: var(--r-lg);
+      padding: 14px 16px;
+      box-shadow: var(--shadow-card);
+    }
+    .info-section .sec-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-1);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+    .info-section .sec-title .icon {
+      font-size: 16px;
+    }
+    .info-section .sec-content {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.6;
+    }
+    .info-section .sec-content .req-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+    .info-section .sec-content .req-item .dot {
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--primary);
+      flex-shrink: 0;
+      margin-top: 7px;
+    }
+
+    /* 剧组信息 */
+    .crew-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .crew-card .crew-avatar {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #C8252C, #E84D54);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .crew-card .crew-info { flex: 1; }
+    .crew-card .crew-info .crew-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-1);
+    }
+    .crew-card .crew-info .crew-desc {
+      font-size: 12px;
+      color: var(--text-3);
+    }
+    .crew-card .crew-verified {
+      padding: 2px 8px;
+      background: #E4F5EC;
+      color: #2BA471;
+      border-radius: 4px;
+      font-size: 11px;
+    }
+
+    /* 联系方式（会员可见） */
+    .contact-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 10px;
+      padding: 8px 12px;
+      background: var(--gold-soft);
+      border-radius: var(--r-md);
+      font-size: 12px;
+    }
+    .contact-row .contact-icon { color: var(--gold-dark); }
+    .contact-row .contact-info { flex: 1; color: var(--gold-dark); }
+    .contact-row .contact-label { font-weight: 600; }
+
+    /* 报名信息 */
+    .apply-info {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 10px;
+      font-size: 12px;
+    }
+    .apply-info .apply-count { color: var(--text-3); }
+    .apply-info .apply-count strong { color: var(--primary); font-size: 14px; }
+    .apply-info .remain { color: var(--success); }
+
+    /* 底部操作栏 */
+    .bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 375px;
+      background: var(--bg-card);
+      padding: 10px 16px;
+      display: flex;
+      gap: 12px;
+      border-top: 0.5px solid var(--line);
+      z-index: 10;
+    }
+    .bottom-bar .bar-btn {
+      height: 44px;
+      border-radius: 22px;
+      font-size: 15px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+    }
+    .bar-btn.primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: #fff;
+    }
+    .bar-btn.ghost {
+      background: var(--bg);
+      color: var(--text-2);
+      border: 0.5px solid var(--line);
+    }
+
+    /* 弹窗 */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 100;
+      display: none;
+    }
+    .modal-overlay.show { display: flex; align-items: flex-end; }
+    .modal-content {
+      width: 375px;
+      background: var(--bg-card);
+      border-radius: var(--r-xl) var(--r-xl) 0 0;
+      padding: 20px 16px;
+      animation: slideUp 0.3s;
+    }
+    .modal-content .modal-title {
+      font-size: 17px;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    .modal-content .form-group {
+      margin-bottom: 12px;
+    }
+    .modal-content .form-group label {
+      font-size: 13px;
+      color: var(--text-2);
+      margin-bottom: 6px;
+      display: block;
+    }
+    .modal-content .form-group input,
+    .modal-content .form-group textarea {
+      width: 100%;
+      height: 40px;
+      padding: 0 12px;
+      border: 0.5px solid var(--line);
+      border-radius: var(--r-md);
+      font-size: 14px;
+      background: var(--bg);
+      color: var(--text-1);
+    }
+    .modal-content .form-group textarea {
+      height: 80px;
+      padding: 10px 12px;
+      resize: none;
+    }
+    .modal-content .modal-btn {
+      height: 44px;
+      width: 100%;
+      border-radius: 22px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: #fff;
+      font-size: 15px;
+      font-weight: 600;
+      margin-top: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-content .modal-note {
+      font-size: 11px;
+      color: var(--text-3);
+      text-align: center;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="phone-wrap">
+    <div class="nav-bar transparent" style="background:transparent; border:none; color:#fff; position:absolute; top:0; left:0; right:0; z-index:5;">
+      <a class="nav-back" href="task-list.html" onclick="goBack()" style="color:#fff">←</a>
+      <span class="nav-title" style="color:#fff">任务详情</span>
+      <span class="nav-right" style="color:#fff">⋯</span>
+    </div>
+
+    <div class="page-content no-tabbar" style="padding-top:0; padding-bottom:70px;">
+      <!-- 头部信息 -->
+      <div class="detail-header">
+        <span class="task-type-badge">🎬 群演类</span>
+        <div class="task-title">古装群演招募 — 《长安花录》大型宴会场景</div>
+        <div class="pay-row">
+          <span class="amount">¥200</span>
+          <span class="unit">/天</span>
+        </div>
+        <div class="task-meta-row">
+          <span class="meta-item">📍 铜官窑古镇</span>
+          <span class="meta-item">📅 7月5日 - 7月7日</span>
+          <span class="meta-item">👥 招30人</span>
+        </div>
+      </div>
+
+      <!-- 会员提示 -->
+      <div class="member-tip-bar">
+        <span class="tip-icon">👑</span>
+        <span class="tip-text">开通<span class="gold">会员</span>后可查看联系方式并报名接单</span>
+        <a class="tip-btn" href="member.html">开通会员</a>
+      </div>
+
+      <!-- 岗位要求 -->
+      <div class="info-section">
+        <div class="sec-title"><span class="icon">📋</span> 岗位要求</div>
+        <div class="sec-content">
+          <div class="req-item"><span class="dot"></span><span>年龄18-45岁，男女不限</span></div>
+          <div class="req-item"><span class="dot"></span><span>无需专业表演经验，服从导演安排即可</span></div>
+          <div class="req-item"><span class="dot"></span><span>能按时到岗，配合剧组工作时间</span></div>
+          <div class="req-item"><span class="dot"></span><span>自带舒适鞋履，现场提供古装服饰</span></div>
+          <div class="req-item"><span class="dot"></span><span>群演类岗位可直接报名，无需筛选</span></div>
+        </div>
+      </div>
+
+      <!-- 工作内容 -->
+      <div class="info-section">
+        <div class="sec-title"><span class="icon">📝</span> 工作内容</div>
+        <div class="sec-content">
+          配合《长安花录》剧组拍摄大型宴会场景，扮演宴会宾客、侍从等角色。主要工作包括：站位配合、走位演练、表情配合拍摄。每日工作时间约8-10小时，含午休和茶歇。
+        </div>
+      </div>
+
+      <!-- 剧组信息 -->
+      <div class="info-section">
+        <div class="sec-title"><span class="icon">🎬</span> 发布方信息</div>
+        <div class="crew-card">
+          <div class="crew-avatar">长</div>
+          <div class="crew-info">
+            <div class="crew-name">长安花录剧组</div>
+            <div class="crew-desc">入驻影视城 · 已发布5个任务</div>
+          </div>
+          <span class="crew-verified">✓ 已认证</span>
+        </div>
+        <!-- 联系方式（会员可见） -->
+        <div class="contact-row">
+          <span class="contact-icon">📞</span>
+          <span class="contact-info"><span class="contact-label">联系人：</span>张导 138****5678（仅会员可见完整号码）</span>
+        </div>
+        <div class="contact-row">
+          <span class="contact-icon">📍</span>
+          <span class="contact-info"><span class="contact-label">集合地点：</span>铜官窑古镇南门 · 古装拍摄区</span>
+        </div>
+      </div>
+
+      <!-- 注意事项 -->
+      <div class="info-section">
+        <div class="sec-title"><span class="icon">⚠️</span> 注意事项</div>
+        <div class="sec-content">
+          <div class="req-item"><span class="dot"></span><span>请提前15分钟到达集合地点</span></div>
+          <div class="req-item"><span class="dot"></span><span>拍摄期间请勿使用手机拍照或录像</span></div>
+          <div class="req-item"><span class="dot"></span><span>酬劳由平台担保结算，任务完成后统一发放</span></div>
+          <div class="req-item"><span class="dot"></span><span>天气炎热请自带防晒用品和水杯</span></div>
+        </div>
+      </div>
+
+      <!-- 报名情况 -->
+      <div class="info-section">
+        <div class="sec-title"><span class="icon">👥</span> 报名情况</div>
+        <div class="apply-info">
+          <span class="apply-count">已报名 <strong>18</strong> 人</span>
+          <span class="remain">还剩 12 个名额</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 底部操作栏 -->
+    <div class="bottom-bar">
+      <div class="bar-btn ghost" onclick="showToast('已收藏该任务')">☆ 收藏</div>
+      <div class="bar-btn primary" onclick="openApplyModal()">立即报名</div>
+    </div>
+
+    <!-- 报名弹窗 -->
+    <div class="modal-overlay" id="applyModal">
+      <div class="modal-content">
+        <div class="modal-title">报名接单</div>
+        <div class="form-group">
+          <label>可到岗时间</label>
+          <input type="text" placeholder="如：7月5日全天可到岗">
+        </div>
+        <div class="form-group">
+          <label>相关经历（选填）</label>
+          <textarea placeholder="如：曾参与XX剧组群演、有表演基础等"></textarea>
+        </div>
+        <div class="form-group">
+          <label>备注（选填）</label>
+          <input type="text" placeholder="其他说明">
+        </div>
+        <div class="modal-btn" onclick="submitApply()">提交报名</div>
+        <div class="modal-note">⚠️ 仅会员可报名接单 · 酬劳由平台担保结算</div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/common.js"></script>
+  <script>
+    function openApplyModal() {
+      document.getElementById('applyModal').classList.add('show');
+    }
+    function submitApply() {
+      document.getElementById('applyModal').classList.remove('show');
+      showToast('报名已提交，等待剧组确认');
+    }
+    // 点击遮罩关闭
+    document.getElementById('applyModal').addEventListener('click', function(e) {
+      if (e.target === this) this.classList.remove('show');
+    });
+  </script>
+</body>
+</html>

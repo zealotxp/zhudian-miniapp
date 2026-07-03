@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>兼职任务 - 竖店</title>
+  <link rel="stylesheet" href="css/common.css">
+  <style>
+    /* 筛选区域 */
+    .filter-bar {
+      background: var(--bg-card);
+      padding: 12px 16px;
+      display: flex;
+      gap: 8px;
+      border-bottom: 0.5px solid var(--line-soft);
+    }
+    .filter-chip {
+      padding: 4px 10px;
+      border-radius: 14px;
+      font-size: 12px;
+      background: var(--bg);
+      color: var(--text-2);
+      border: 0.5px solid var(--line);
+    }
+    .filter-chip.active {
+      background: var(--primary-soft);
+      color: var(--primary);
+      border-color: var(--primary);
+    }
+    .filter-row {
+      display: flex;
+      gap: 8px;
+      padding: 8px 16px;
+      background: var(--bg-card);
+      border-bottom: 0.5px solid var(--line-soft);
+    }
+    .filter-tag {
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      background: #F2F2F2;
+      color: var(--text-3);
+    }
+    .filter-tag.active {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    /* 会员提示 */
+    .member-tip {
+      background: linear-gradient(135deg, #2B2B3A 0%, #1A1A28 100%);
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #fff;
+      font-size: 12px;
+    }
+    .member-tip .tip-icon {
+      color: #D4A24C;
+      font-size: 16px;
+    }
+    .member-tip .tip-text { flex: 1; }
+    .member-tip .tip-text .gold { color: #FCE6A2; font-weight: 600; }
+    .member-tip .tip-btn {
+      padding: 3px 10px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      color: #fff;
+      border-radius: 12px;
+      font-size: 11px;
+    }
+
+    /* 任务卡片 */
+    .task-card {
+      background: var(--bg-card);
+      margin: 10px 12px 0;
+      border-radius: var(--r-lg);
+      padding: 14px 16px;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      gap: 12px;
+    }
+    .task-type-icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+    .task-info { flex: 1; }
+    .task-info .task-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-1);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .task-info .task-title .hot {
+      padding: 1px 4px;
+      background: var(--primary);
+      color: #fff;
+      border-radius: 3px;
+      font-size: 9px;
+    }
+    .task-info .task-desc {
+      font-size: 12px;
+      color: var(--text-3);
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+    .task-info .task-meta {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+      font-size: 11px;
+      color: var(--text-3);
+    }
+    .task-info .task-meta .meta-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+    }
+    .task-info .task-badge-row {
+      display: flex;
+      gap: 6px;
+      margin-top: 8px;
+    }
+    .task-info .task-badge-row .badge {
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 10px;
+    }
+    .badge-vip {
+      background: var(--gold-soft);
+      color: var(--gold-dark);
+    }
+    .badge-type {
+      background: #E4F5EC;
+      color: #2BA471;
+    }
+    .badge-urgent {
+      background: var(--primary-soft);
+      color: var(--primary);
+    }
+    .task-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: space-between;
+      min-width: 70px;
+    }
+    .task-right .pay {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .task-right .pay .unit {
+      font-size: 11px;
+      font-weight: 500;
+    }
+    .task-right .apply-btn {
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 600;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: #fff;
+    }
+    .task-right .apply-btn.disabled {
+      background: var(--bg);
+      color: var(--text-3);
+    }
+    .task-right .apply-count {
+      font-size: 10px;
+      color: var(--text-4);
+      margin-top: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="phone-wrap">
+    <div class="nav-bar">
+      <a class="nav-back" href="index.html" onclick="goBack()">←</a>
+      <span class="nav-title">找兼职</span>
+      <span class="nav-right" style="font-size:12px; color:var(--primary);" onclick="showToast('筛选')">筛选</span>
+    </div>
+
+    <div class="page-content" style="padding-bottom:20px;">
+      <!-- 会员提示 -->
+      <div class="member-tip">
+        <span class="tip-icon">👑</span>
+        <span class="tip-text">开通<span class="gold">会员</span>后可报名接单、查看联系方式</span>
+        <a class="tip-btn" href="member.html">开通</a>
+      </div>
+
+      <!-- 任务类型筛选 -->
+      <div class="filter-bar">
+        <span class="filter-chip active">全部</span>
+        <span class="filter-chip">群演</span>
+        <span class="filter-chip">摄影助理</span>
+        <span class="filter-chip">后期助理</span>
+        <span class="filter-chip">服化道</span>
+        <span class="filter-chip">营销推广</span>
+      </div>
+
+      <!-- 地点/时间筛选 -->
+      <div class="filter-row">
+        <span class="filter-tag active">全部地点</span>
+        <span class="filter-tag">铜官窑</span>
+        <span class="filter-tag">长沙市内</span>
+        <span class="filter-tag active">全部时间</span>
+        <span class="filter-tag">本周</span>
+        <span class="filter-tag">本月</span>
+      </div>
+
+      <!-- 任务卡片列表 -->
+      <a class="task-card" href="task-detail.html">
+        <div class="task-type-icon" style="background:linear-gradient(135deg,#C8252C,#E84D54)">🎬</div>
+        <div class="task-info">
+          <div class="task-title">古装群演招募 <span class="hot">HOT</span></div>
+          <div class="task-desc">《长安花录》剧组招募古装群演30人，需配合拍摄大型宴会场景</div>
+          <div class="task-meta">
+            <span class="meta-item">📍 铜官窑古镇</span>
+            <span class="meta-item">📅 7/5-7/7</span>
+            <span class="meta-item">👥 已报名18人</span>
+          </div>
+          <div class="task-badge-row">
+            <span class="badge badge-vip">会员专享</span>
+            <span class="badge badge-type">群演</span>
+            <span class="badge badge-urgent">急招</span>
+          </div>
+        </div>
+        <div class="task-right">
+          <div class="pay">¥200<span class="unit">/天</span></div>
+          <span class="apply-btn">报名</span>
+          <span class="apply-count">还剩12位</span>
+        </div>
+      </a>
+
+      <a class="task-card" href="task-detail.html">
+        <div class="task-type-icon" style="background:linear-gradient(135deg,#4FACFE,#00F2FE)">📷</div>
+        <div class="task-info">
+          <div class="task-title">摄影助理（跟组拍摄）</div>
+          <div class="task-desc">协助摄影师完成跟组拍摄，负责器材搬运、现场布光调整</div>
+          <div class="task-meta">
+            <span class="meta-item">📍 铜官窑影视基地</span>
+            <span class="meta-item">📅 7/10-7/20</span>
+            <span class="meta-item">👥 已报名6人</span>
+          </div>
+          <div class="task-badge-row">
+            <span class="badge badge-vip">会员专享</span>
+            <span class="badge badge-type">摄影</span>
+          </div>
+        </div>
+        <div class="task-right">
+          <div class="pay">¥300<span class="unit">/天</span></div>
+          <span class="apply-btn">报名</span>
+          <span class="apply-count">还剩4位</span>
+        </div>
+      </a>
+
+      <a class="task-card" href="task-detail.html">
+        <div class="task-type-icon" style="background:linear-gradient(135deg,#D4A24C,#B8862E)">👗</div>
+        <div class="task-info">
+          <div class="task-title">服化道助理（古装剧组）</div>
+          <div class="task-desc">协助化妆师完成古装造型，管理道具摆放和服装整理</div>
+          <div class="task-meta">
+            <span class="meta-item">📍 铜官窑古镇</span>
+            <span class="meta-item">📅 7/8-7/15</span>
+            <span class="meta-item">👥 已报名3人</span>
+          </div>
+          <div class="task-badge-row">
+            <span class="badge badge-vip">会员专享</span>
+            <span class="badge badge-type">服化道</span>
+          </div>
+        </div>
+        <div class="task-right">
+          <div class="pay">¥250<span class="unit">/天</span></div>
+          <span class="apply-btn">报名</span>
+          <span class="apply-count">还剩7位</span>
+        </div>
+      </a>
+
+      <a class="task-card" href="task-detail.html">
+        <div class="task-type-icon" style="background:linear-gradient(135deg,#2BA471,#4FD896)">🖥</div>
+        <div class="task-info">
+          <div class="task-title">后期剪辑助理</div>
+          <div class="task-desc">协助后期团队完成短视频剪辑，需有基础剪辑经验</div>
+          <div class="task-meta">
+            <span class="meta-item">📍 远程/线上</span>
+            <span class="meta-item">📅 7/12开始</span>
+            <span class="meta-item">👥 已报名9人</span>
+          </div>
+          <div class="task-badge-row">
+            <span class="badge badge-vip">会员专享</span>
+            <span class="badge badge-type">后期</span>
+          </div>
+        </div>
+        <div class="task-right">
+          <div class="pay">¥150<span class="unit">/条</span></div>
+          <span class="apply-btn">报名</span>
+          <span class="apply-count">还剩6位</span>
+        </div>
+      </a>
+
+      <a class="task-card" href="task-detail.html">
+        <div class="task-type-icon" style="background:linear-gradient(135deg,#FF8F1F,#FFD700)">📢</div>
+        <div class="task-info">
+          <div class="task-title">景区宣传短视频拍摄</div>
+          <div class="task-desc">为景区拍摄系列宣传短视频，需自带手机或相机，有短视频创作经验</div>
+          <div class="task-meta">
+            <span class="meta-item">📍 铜官窑古镇</span>
+            <span class="meta-item">📅 7/3-7/5</span>
+            <span class="meta-item">👥 已报名5人</span>
+          </div>
+          <div class="task-badge-row">
+            <span class="badge badge-vip">会员专享</span>
+            <span class="badge badge-type">营销</span>
+          </div>
+        </div>
+        <div class="task-right">
+          <div class="pay">¥500<span class="unit">/组</span></div>
+          <span class="apply-btn">报名</span>
+          <span class="apply-count">还剩3位</span>
+        </div>
+      </a>
+
+      <a class="task-card" href="task-detail.html">
+        <div class="task-type-icon" style="background:linear-gradient(135deg,#C8252C,#A81B22)">🎭</div>
+        <div class="task-info">
+          <div class="task-title">民国剧有台词角色</div>
+          <div class="task-desc">《千金归来》剧组招募2名有台词角色，需提交表演视频审核</div>
+          <div class="task-meta">
+            <span class="meta-item">📍 铜官窑民国街</span>
+            <span class="meta-item">📅 7/15-7/25</span>
+            <span class="meta-item">👥 已报名12人</span>
+          </div>
+          <div class="task-badge-row">
+            <span class="badge badge-vip">会员专享</span>
+            <span class="badge badge-type">表演</span>
+            <span class="badge badge-urgent">需筛选</span>
+          </div>
+        </div>
+        <div class="task-right">
+          <div class="pay">¥500<span class="unit">/天</span></div>
+          <span class="apply-btn">报名</span>
+          <span class="apply-count">需筛选</span>
+        </div>
+      </a>
+
+      <!-- 空状态占位 -->
+      <div style="padding: 30px 20px; text-align: center; color: var(--text-4); font-size: 12px;">
+        — 滑动加载更多任务 —
+      </div>
+    </div>
+  </div>
+
+  <script src="js/common.js"></script>
+  <script>
+    // 筛选交互
+    document.querySelectorAll('.filter-chip').forEach(chip => {
+      chip.addEventListener('click', function() {
+        this.parentElement.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+    document.querySelectorAll('.filter-tag').forEach(tag => {
+      tag.addEventListener('click', function() {
+        // 同组切换
+        const siblings = this.parentElement.querySelectorAll('.filter-tag');
+        const sameType = Array.from(siblings).filter(t => {
+          return t.textContent.includes('全部') || t.textContent.includes('地点') || t.textContent.includes('时间') ||
+            t.textContent === this.textContent ||
+            (this.textContent.includes('铜') || this.textContent.includes('长沙') ? t.textContent.includes('铜') || t.textContent.includes('长沙') || t.textContent.includes('全部地点') : false);
+        });
+        siblings.forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+    // 报名按钮
+    document.querySelectorAll('.apply-btn').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        showToast('请先开通会员后报名接单');
+      });
+    });
+  </script>
+</body>
+</html>

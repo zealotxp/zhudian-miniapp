@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>实名认证 - 竖店</title>
+  <link rel="stylesheet" href="css/common.css">
+  <style>
+    .auth-page {
+      padding: 20px 16px;
+    }
+    .auth-hero {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    .auth-hero .auth-icon {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 12px;
+      font-size: 28px;
+      color: #fff;
+    }
+    .auth-hero .auth-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-1);
+    }
+    .auth-hero .auth-desc {
+      font-size: 13px;
+      color: var(--text-3);
+      margin-top: 6px;
+      line-height: 1.5;
+    }
+
+    /* 表单 */
+    .auth-form {
+      background: var(--bg-card);
+      border-radius: var(--r-lg);
+      padding: 16px;
+      box-shadow: var(--shadow-card);
+    }
+    .form-group {
+      margin-bottom: 16px;
+    }
+    .form-group .fg-label {
+      font-size: 14px;
+      color: var(--text-1);
+      font-weight: 500;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .form-group .fg-label .required {
+      color: var(--primary);
+      font-size: 10px;
+    }
+    .form-group .fg-input {
+      width: 100%;
+      height: 44px;
+      padding: 0 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--r-md);
+      font-size: 14px;
+      color: var(--text-1);
+      background: var(--bg);
+    }
+    .form-group .fg-input::placeholder {
+      color: var(--text-4);
+    }
+    .form-group .fg-tip {
+      font-size: 11px;
+      color: var(--text-3);
+      margin-top: 4px;
+    }
+
+    /* 用途说明 */
+    .usage-section {
+      background: var(--bg-card);
+      border-radius: var(--r-lg);
+      padding: 14px 16px;
+      margin-top: 16px;
+      box-shadow: var(--shadow-card);
+    }
+    .usage-section .us-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-1);
+      margin-bottom: 10px;
+    }
+    .usage-section .us-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--text-2);
+      line-height: 1.5;
+      margin-bottom: 8px;
+    }
+    .usage-section .us-item .us-icon {
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      flex-shrink: 0;
+      background: var(--primary-soft);
+      color: var(--primary);
+    }
+
+    /* 安全提示 */
+    .security-note {
+      background: #E4F5EC;
+      border-radius: var(--r-md);
+      padding: 10px 16px;
+      margin-top: 16px;
+      font-size: 12px;
+      color: #2BA471;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* 提交按钮 */
+    .submit-section {
+      margin-top: 24px;
+    }
+    .submit-btn {
+      width: 100%;
+      height: 44px;
+      border-radius: 22px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: #fff;
+      font-size: 15px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .submit-section .submit-note {
+      font-size: 11px;
+      color: var(--text-3);
+      text-align: center;
+      margin-top: 8px;
+    }
+
+    /* 已认证状态 */
+    .authed-state {
+      background: #E4F5EC;
+      border-radius: var(--r-lg);
+      padding: 20px 16px;
+      text-align: center;
+      box-shadow: var(--shadow-card);
+    }
+    .authed-state .as-icon {
+      font-size: 48px;
+      color: #2BA471;
+    }
+    .authed-state .as-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #2BA471;
+      margin-top: 8px;
+    }
+    .authed-state .as-desc {
+      font-size: 13px;
+      color: var(--text-3);
+      margin-top: 6px;
+    }
+    .authed-state .as-info {
+      margin-top: 16px;
+      font-size: 12px;
+      color: var(--text-2);
+    }
+  </style>
+</head>
+<body>
+  <div class="phone-wrap">
+    <div class="nav-bar">
+      <a class="nav-back" href="member.html" onclick="goBack()">←</a>
+      <span class="nav-title">实名认证</span>
+      <span class="nav-right"></span>
+    </div>
+
+    <div class="page-content no-tabbar">
+      <div class="auth-page">
+        <!-- 认证图标和说明 -->
+        <div class="auth-hero">
+          <div class="auth-icon">🛡️</div>
+          <div class="auth-title">实名认证</div>
+          <div class="auth-desc">
+            开通会员需完成实名认证<br>
+            认证信息仅用于景区入园核验，严格保密
+          </div>
+        </div>
+
+        <!-- 认证表单 -->
+        <div class="auth-form" id="authForm">
+          <div class="form-group">
+            <div class="fg-label">真实姓名 <span class="required">*</span></div>
+            <input class="fg-input" type="text" placeholder="请输入身份证上的姓名" id="realName">
+            <div class="fg-tip">请填写与身份证一致的真实姓名</div>
+          </div>
+          <div class="form-group">
+            <div class="fg-label">身份证号码 <span class="required">*</span></div>
+            <input class="fg-input" type="text" placeholder="请输入18位身份证号码" id="idCard" maxlength="18">
+            <div class="fg-tip">用于景区刷脸/刷身份证入园核验，脱敏展示</div>
+          </div>
+        </div>
+
+        <!-- 用途说明 -->
+        <div class="usage-section">
+          <div class="us-title">认证用途</div>
+          <div class="us-item"><span class="us-icon">1</span><span>景区入园身份核验 — 刷身份证/刷脸通行</span></div>
+          <div class="us-item"><span class="us-icon">2</span><span>兼职任务报名身份确认</span></div>
+          <div class="us-item"><span class="us-icon">3</span><span>会员权益绑定 — 到期自动失效入园权限</span></div>
+          <div class="us-item"><span class="us-icon">4</span><span>酬劳结算银行账户核验</span></div>
+        </div>
+
+        <!-- 安全提示 -->
+        <div class="security-note">
+          🔒 您的个人信息受到严格保护，仅用于上述用途，不会泄露给第三方
+        </div>
+
+        <!-- 提交 -->
+        <div class="submit-section">
+          <div class="submit-btn" onclick="submitAuth()">提交认证</div>
+          <div class="submit-note">认证提交后1-3个工作日内完成审核<br>审核通过后可开通会员并入园</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/common.js"></script>
+  <script>
+    function submitAuth() {
+      const name = document.getElementById('realName').value;
+      const id = document.getElementById('idCard').value;
+      if (!name || !id) {
+        showToast('请填写姓名和身份证号');
+        return;
+      }
+      if (id.length !== 18) {
+        showToast('请输入正确的18位身份证号');
+        return;
+      }
+      showToast('认证信息已提交，预计1-3个工作日审核完成');
+    }
+  </script>
+</body>
+</html>

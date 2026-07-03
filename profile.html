@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>我的 - 竖店短剧</title>
+  <title>我的 - 竖店</title>
   <link rel="stylesheet" href="css/common.css">
   <style>
     .profile-hero {
@@ -48,6 +48,21 @@
       font-size: 10px;
       font-weight: 700;
     }
+    .user-name .auth-badge {
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 600;
+      display: inline-flex; align-items: center; gap: 2px;
+    }
+    .auth-badge.authed {
+      background: rgba(46, 184, 92, 0.25);
+      color: #4FD896;
+    }
+    .auth-badge.unauthed {
+      background: rgba(255, 255, 255, 0.15);
+      color: rgba(255, 255, 255, 0.7);
+    }
     .user-meta {
       font-size: 12px;
       opacity: 0.85;
@@ -64,7 +79,7 @@
       font-size: 22px;
     }
 
-    /* 会员卡（半浮层样式，视觉上覆盖在 hero 底部边缘上） */
+    /* 会员卡 */
     .vip-banner {
       margin: -20px 12px 0;
       background: linear-gradient(135deg, #2B2B3A 0%, #1A1A28 100%);
@@ -110,6 +125,51 @@
       position: relative; z-index: 2;
     }
 
+    /* 实名认证提示 */
+    .auth-tip {
+      margin: 10px 12px 0;
+      background: var(--bg-card);
+      border-radius: var(--r-lg);
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: var(--shadow-card);
+    }
+    .auth-tip .auth-icon {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .auth-tip .auth-icon.authed {
+      background: linear-gradient(135deg, #2BA471, #4FD896);
+    }
+    .auth-tip .auth-icon.unauthed {
+      background: linear-gradient(135deg, #FF6B6B, #EE5A5A);
+    }
+    .auth-tip .auth-info { flex: 1; }
+    .auth-tip .auth-info .auth-title {
+      font-size: 13px; font-weight: 600; color: var(--text-1);
+    }
+    .auth-tip .auth-info .auth-desc {
+      font-size: 11px; color: var(--text-3); margin-top: 2px;
+    }
+    .auth-tip .auth-btn {
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .auth-tip .auth-btn.unauthed {
+      background: var(--primary);
+      color: #fff;
+    }
+    .auth-tip .auth-btn.authed {
+      background: var(--bg);
+      color: var(--text-3);
+    }
+
     /* 资产栏 */
     .asset-card {
       background: var(--bg-card);
@@ -117,7 +177,7 @@
       border-radius: var(--r-lg);
       padding: 18px 16px;
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 8px;
       box-shadow: var(--shadow-card);
     }
@@ -233,10 +293,20 @@
     }
     .tool-cell .t-tag {
       padding: 1px 6px;
-      background: var(--primary-soft);
-      color: var(--primary);
       border-radius: 4px;
       font-size: 10px;
+    }
+    .t-tag.gold {
+      background: rgba(212, 162, 76, 0.15);
+      color: #D4A24C;
+    }
+    .t-tag.green {
+      background: rgba(46, 184, 92, 0.15);
+      color: #2BA471;
+    }
+    .t-tag.red {
+      background: var(--primary-soft);
+      color: var(--primary);
     }
 
     /* 观看历史 */
@@ -294,6 +364,23 @@
       font-size: 10px;
       color: var(--text-3);
     }
+
+    .section-header {
+      padding: 16px 12px 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .section-header .title {
+      font-size: 15px; font-weight: 700;
+      color: var(--text-1);
+      display: flex; align-items: center; gap: 6px;
+    }
+    .section-header .title .bar {
+      width: 4px; height: 16px;
+      border-radius: 2px;
+      background: var(--primary);
+    }
   </style>
 </head>
 <body>
@@ -314,7 +401,10 @@
       <div class="user-info">
         <div class="user-avatar">沈</div>
         <div style="flex:1;">
-          <div class="user-name">沈玉珠 <span class="vip-icon">👑 VIP</span></div>
+          <div class="user-name">沈玉珠
+            <span class="vip-icon">👑 年卡会员</span>
+            <span class="auth-badge authed">🛡️ 已认证</span>
+          </div>
           <div class="user-meta">
             <span class="meta-item">📱 138****6688</span>
             <span class="meta-item">📍 长沙</span>
@@ -325,14 +415,24 @@
       </div>
       </div>
 
-      <!-- 会员卡（普通文档流卡片，紧跟红色 hero 之后） -->
+      <!-- 会员卡 -->
       <a class="vip-banner" href="member.html">
         <div class="vb-left">
-          <div class="vb-title">👑 黄金会员 · 有效期至 2026-12-31</div>
-          <div class="vb-desc">畅享全平台短剧 + 景区入园权益 + 课程8折</div>
+          <div class="vb-title">👑 年卡会员 · 有效期至 2026-12-31</div>
+          <div class="vb-desc">免广告畅看 · 全部课程 · 兼职接单 · 景区全年入园</div>
         </div>
         <span class="vb-btn">续费</span>
       </a>
+
+      <!-- 实名认证提示 -->
+      <div class="auth-tip">
+        <div class="auth-icon authed">🛡️</div>
+        <div class="auth-info">
+          <div class="auth-title">实名认证已完成</div>
+          <div class="auth-desc">姓名与身份证已通过核验，景区入园可刷脸</div>
+        </div>
+        <span class="auth-btn authed">已认证</span>
+      </div>
 
       <!-- 资产栏 -->
       <div class="asset-card">
@@ -340,11 +440,7 @@
           <div class="num">¥128</div>
           <div class="label">余额</div>
         </a>
-        <a class="asset-item" href="points.html">
-          <div class="num">580</div>
-          <div class="label">积分</div>
-        </a>
-        <a class="asset-item" href="coupon.html">
+        <a class="asset-item" href="orders.html">
           <div class="num">3</div>
           <div class="label">优惠券</div>
         </a>
@@ -355,11 +451,8 @@
       </div>
 
       <!-- 观看历史 -->
-      <div style="padding: 16px 12px 8px; display:flex; justify-content:space-between; align-items:center;">
-        <div style="font-size:15px; font-weight:700; color:var(--text-1); display:flex; align-items:center; gap:6px;">
-          <span style="width:4px; height:16px; border-radius:2px; background:var(--primary);"></span>
-          📺 观看历史
-        </div>
+      <div class="section-header">
+        <div class="title"><span class="bar"></span>📺 观看历史</div>
         <a href="history.html" style="font-size:12px; color:var(--text-3);">全部 ›</a>
       </div>
       <div class="history-section">
@@ -434,90 +527,85 @@
         </div>
       </div>
 
-      <!-- 学习中心 -->
+      <!-- 学习与任务 -->
       <div class="tool-section">
-        <div class="tool-cell">
+        <div class="tool-cell" onclick="navigate('course-detail.html')">
           <div class="t-icon" style="background:linear-gradient(135deg,#D4A24C,#B8862E)">📚</div>
           <div class="t-label">我的课程</div>
-          <span class="t-tag">进行中 3</span>
+          <span class="t-tag green">进行中 3</span>
           <span class="t-arrow">›</span>
         </div>
-        <div class="tool-cell">
-          <div class="t-icon" style="background:linear-gradient(135deg,#2BA471,#4FD896)">🎓</div>
-          <div class="t-label">学分证书</div>
-          <span class="t-value">42学分</span>
+        <div class="tool-cell" onclick="navigate('my-tasks.html')">
+          <div class="t-icon" style="background:linear-gradient(135deg,#FF6B6B,#EE5A5A)">📋</div>
+          <div class="t-label">我的任务</div>
+          <span class="t-tag red">2项进行中</span>
           <span class="t-arrow">›</span>
         </div>
-        <div class="tool-cell">
-          <div class="t-icon" style="background:linear-gradient(135deg,#4FACFE,#00F2FE)">📋</div>
-          <div class="t-label">学习计划</div>
+        <div class="tool-cell" onclick="navigate('original.html')">
+          <div class="t-icon" style="background:linear-gradient(135deg,#4FACFE,#00F2FE)">🎬</div>
+          <div class="t-label">我的作品</div>
+          <span class="t-tag gold">已上传5部</span>
           <span class="t-arrow">›</span>
         </div>
       </div>
 
       <!-- 景区权益 -->
       <div class="tool-section">
-        <div class="tool-cell">
+        <div class="tool-cell" onclick="navigate('scenic.html')">
           <div class="t-icon" style="background:linear-gradient(135deg,#C8252C,#E84D54)">🎫</div>
-          <div class="t-label">我的门票</div>
-          <span class="t-value">2张可用</span>
+          <div class="t-label">景区入园权益</div>
+          <span class="t-value">年卡 · 全年不限次</span>
           <span class="t-arrow">›</span>
         </div>
-        <div class="tool-cell">
-          <div class="t-icon" style="background:linear-gradient(135deg,#D4A24C,#B8862E)">📍</div>
-          <div class="t-label">打卡记录</div>
-          <span class="t-value">已完成 12</span>
-          <span class="t-arrow">›</span>
-        </div>
-        <div class="tool-cell">
-          <div class="t-icon" style="background:linear-gradient(135deg,#2BA471,#4FD896)">🛡️</div>
-          <div class="t-label">会员权益核销</div>
-          <span class="t-tag">3项可用</span>
+        <div class="tool-cell" onclick="navigate('vr-scene.html')">
+          <div class="t-icon" style="background:linear-gradient(135deg,#D4A24C,#B8862E)">🔭</div>
+          <div class="t-label">VR选景收藏</div>
+          <span class="t-value">已收藏8个</span>
           <span class="t-arrow">›</span>
         </div>
       </div>
 
       <!-- 其他工具 -->
       <div class="tool-section">
-        <div class="tool-cell">
+        <div class="tool-cell" onclick="showToast('我的收藏')">
           <div class="t-icon" style="background:linear-gradient(135deg,#888,#555)">⭐</div>
           <div class="t-label">我的收藏</div>
           <span class="t-value">28 个</span>
           <span class="t-arrow">›</span>
         </div>
-        <div class="tool-cell">
+        <div class="tool-cell" onclick="showToast('邀请好友')">
           <div class="t-icon" style="background:linear-gradient(135deg,#888,#555)">👥</div>
           <div class="t-label">邀请好友</div>
-          <span class="t-tag">得100积分</span>
+          <span class="t-tag red">得红包</span>
           <span class="t-arrow">›</span>
         </div>
-        <div class="tool-cell">
+        <div class="tool-cell" onclick="showToast('联系客服')">
           <div class="t-icon" style="background:linear-gradient(135deg,#888,#555)">💬</div>
           <div class="t-label">联系客服</div>
           <span class="t-arrow">›</span>
         </div>
-        <div class="tool-cell">
+        <div class="tool-cell" onclick="showToast('意见反馈')">
           <div class="t-icon" style="background:linear-gradient(135deg,#888,#555)">📢</div>
           <div class="t-label">意见反馈</div>
           <span class="t-arrow">›</span>
         </div>
-        <div class="tool-cell">
+        <div class="tool-cell" onclick="showToast('关于我们')">
           <div class="t-icon" style="background:linear-gradient(135deg,#888,#555)">ℹ️</div>
           <div class="t-label">关于我们</div>
-          <span class="t-value">v1.0.0</span>
+          <span class="t-value">v1.0</span>
           <span class="t-arrow">›</span>
         </div>
       </div>
 
       <div style="padding: 20px; text-align: center; color: var(--text-4); font-size: 11px;">
-        竖店短剧 v1.0.0 © 长沙铜官窑古镇
+        竖店 v1.0 © 长沙铜官窑古镇
       </div>
     </div>
 
     <!-- 底部 TabBar -->
     <div class="tab-bar">
       <a class="tab-item" href="index.html">
-        <span class="tab-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5L12 3l9 7.5"/><path d="M5.5 9.5V20a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1V9.5"/><path d="M9.5 21v-6h5v6"/></svg></span><span>首页</span>
+        <span class="tab-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg></span><span>发现</span>
       </a>
       <a class="tab-item" href="teach.html">
         <span class="tab-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l10-4.5L22 9l-10 4.5z"/><path d="M6 11v5c0 1.2 2.7 2.5 6 2.5s6-1.3 6-2.5v-5"/><path d="M22 9v5.5"/></svg></span><span>教学</span>

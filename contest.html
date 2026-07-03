@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>赛事专区 - 竖店</title>
+  <link rel="stylesheet" href="css/common.css">
+  <style>
+    /* 赛事封面 */
+    .contest-hero {
+      background: linear-gradient(135deg, #C8252C 0%, #A81B22 100%);
+      padding: 16px;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .contest-hero::before {
+      content: '';
+      position: absolute;
+      top: -30%;
+      right: -10%;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(212, 162, 76, 0.3), transparent);
+    }
+    .contest-hero .ch-title {
+      font-size: 20px;
+      font-weight: 700;
+      position: relative;
+      z-index: 2;
+    }
+    .contest-hero .ch-subtitle {
+      font-size: 13px;
+      opacity: 0.85;
+      margin-top: 6px;
+      position: relative;
+      z-index: 2;
+    }
+    .contest-hero .ch-badge {
+      display: inline-flex;
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 11px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      color: #fff;
+      margin-top: 10px;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* 赛事信息卡片 */
+    .contest-info-card {
+      background: var(--bg-card);
+      margin: 12px;
+      border-radius: var(--r-lg);
+      padding: 14px 16px;
+      box-shadow: var(--shadow-card);
+    }
+    .contest-info-card .ci-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      font-size: 13px;
+    }
+    .contest-info-card .ci-row + .ci-row {
+      border-top: 0.5px solid var(--line-soft);
+    }
+    .contest-info-card .ci-row .ci-label {
+      color: var(--text-3);
+    }
+    .contest-info-card .ci-row .ci-value {
+      color: var(--text-1);
+      font-weight: 500;
+    }
+    .contest-info-card .ci-row .ci-value.red {
+      color: var(--primary);
+    }
+    .contest-info-card .ci-row .ci-value.gold {
+      color: var(--gold-dark);
+    }
+
+    /* 赛事规则 */
+    .rules-section {
+      background: var(--bg-card);
+      margin: 12px;
+      border-radius: var(--r-lg);
+      padding: 14px 16px;
+      box-shadow: var(--shadow-card);
+    }
+    .rules-section .sec-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-1);
+      margin-bottom: 10px;
+    }
+    .rules-section .rule-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.5;
+      margin-bottom: 8px;
+    }
+    .rules-section .rule-item .num {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-size: 11px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    /* 奖项展示 */
+    .prizes-section {
+      background: var(--bg-card);
+      margin: 12px;
+      border-radius: var(--r-lg);
+      padding: 14px 16px;
+      box-shadow: var(--shadow-card);
+    }
+    .prizes-section .sec-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-1);
+      margin-bottom: 12px;
+    }
+    .prize-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 0;
+    }
+    .prize-item + .prize-item {
+      border-top: 0.5px solid var(--line-soft);
+    }
+    .prize-item .prize-rank {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .prize-rank.gold { background: linear-gradient(135deg, #FCE6A2, #D4A24C); color: #5B3A00; }
+    .prize-rank.silver { background: linear-gradient(135deg, #E0E0E0, #C0C0C0); color: #666; }
+    .prize-rank.bronze { background: linear-gradient(135deg, #FFD7B5, #CD7F32); color: #8B4513; }
+    .prize-item .prize-info { flex: 1; }
+    .prize-item .prize-info .prize-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-1);
+    }
+    .prize-item .prize-info .prize-desc {
+      font-size: 12px;
+      color: var(--text-3);
+      margin-top: 2px;
+    }
+    .prize-item .prize-amount {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    /* 参赛作品 */
+    .contest-works {
+      padding: 12px;
+    }
+    .contest-works .sec-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-1);
+      margin-bottom: 10px;
+    }
+    .work-list-item {
+      display: flex;
+      gap: 10px;
+      background: var(--bg-card);
+      border-radius: var(--r-md);
+      padding: 10px;
+      margin-bottom: 8px;
+      box-shadow: var(--shadow-card);
+    }
+    .work-list-item .wl-cover {
+      width: 80px;
+      height: 106px;
+      border-radius: var(--r-sm);
+      flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .work-list-item .wl-cover .wl-badge {
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      padding: 1px 4px;
+      border-radius: 3px;
+      font-size: 9px;
+      background: var(--gold);
+      color: #5B3A00;
+    }
+    .work-list-item .wl-info { flex: 1; }
+    .work-list-item .wl-info .wl-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-1);
+    }
+    .work-list-item .wl-info .wl-author {
+      font-size: 12px;
+      color: var(--text-3);
+      margin-top: 4px;
+    }
+    .work-list-item .wl-info .wl-stats {
+      display: flex;
+      gap: 10px;
+      margin-top: 6px;
+      font-size: 11px;
+      color: var(--text-3);
+    }
+
+    /* 底部操作 */
+    .bottom-action {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 375px;
+      padding: 10px 16px;
+      background: var(--bg-card);
+      border-top: 0.5px solid var(--line);
+      z-index: 10;
+      display: flex;
+      gap: 12px;
+    }
+    .bottom-action .ba-btn {
+      height: 44px;
+      border-radius: 22px;
+      font-size: 15px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+    }
+    .ba-btn.primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: #fff;
+    }
+    .ba-btn.ghost {
+      background: var(--bg);
+      color: var(--text-2);
+    }
+  </style>
+</head>
+<body>
+  <div class="phone-wrap">
+    <div class="nav-bar transparent" style="background:transparent; border:none; color:#fff; position:absolute; top:24px; left:0; right:0; z-index:5;">
+      <a class="nav-back" href="original.html" onclick="goBack()" style="color:#fff">←</a>
+      <span class="nav-title" style="color:#fff">赛事专区</span>
+      <span class="nav-right" style="color:#fff"></span>
+    </div>
+
+    <div class="page-content no-tabbar" style="padding-top:0; padding-bottom:70px;">
+      <!-- 赛事封面 -->
+      <div class="contest-hero">
+        <div class="ch-title">🏆 童话主题剧本拍摄大赛</div>
+        <div class="ch-subtitle">以赛促教 · 真人/AI创作均可参赛 · 奖金丰厚</div>
+        <span class="ch-badge">🔥 报名进行中</span>
+      </div>
+
+      <!-- 赛事信息 -->
+      <div class="contest-info-card">
+        <div class="ci-row">
+          <span class="ci-label">赛事主题</span>
+          <span class="ci-value gold">童话故事剧本拍摄</span>
+        </div>
+        <div class="ci-row">
+          <span class="ci-label">报名时间</span>
+          <span class="ci-value red">6月15日 - 7月31日</span>
+        </div>
+        <div class="ci-row">
+          <span class="ci-label">作品提交截止</span>
+          <span class="ci-value">8月15日</span>
+        </div>
+        <div class="ci-row">
+          <span class="ci-label">评选公布</span>
+          <span class="ci-value">8月30日</span>
+        </div>
+        <div class="ci-row">
+          <span class="ci-label">已参赛作品</span>
+          <span class="ci-value red">36 部</span>
+        </div>
+        <div class="ci-row">
+          <span class="ci-label">参赛人数</span>
+          <span class="ci-value">28 人</span>
+        </div>
+      </div>
+
+      <!-- 赛事规则 -->
+      <div class="rules-section">
+        <div class="sec-title">📋 赛事规则</div>
+        <div class="rule-item"><span class="num">1</span><span>作品需以童话故事为主题，在铜官窑古镇场景拍摄或使用AI虚拟场景创作</span></div>
+        <div class="rule-item"><span class="num">2</span><span>作品时长 3-10分钟，真人剧或AI创作均可</span></div>
+        <div class="rule-item"><span class="num">3</span><span>需为原创作品，未在其他平台发布</span></div>
+        <div class="rule-item"><span class="num">4</span><span>参赛者需开通会员，完成实名认证</span></div>
+        <div class="rule-item"><span class="num">5</span><span>每个参赛者最多提交3部作品</span></div>
+      </div>
+
+      <!-- 奖项设置 -->
+      <div class="prizes-section">
+        <div class="sec-title">🎁 奖项设置</div>
+        <div class="prize-item">
+          <div class="prize-rank gold">1</div>
+          <div class="prize-info">
+            <div class="prize-name">最佳作品奖</div>
+            <div class="prize-desc">综合评分最高作品</div>
+          </div>
+          <div class="prize-amount">¥5000</div>
+        </div>
+        <div class="prize-item">
+          <div class="prize-rank silver">2</div>
+          <div class="prize-info">
+            <div class="prize-name">优秀创作奖</div>
+            <div class="prize-desc">创意和制作质量突出</div>
+          </div>
+          <div class="prize-amount">¥2000</div>
+        </div>
+        <div class="prize-item">
+          <div class="prize-rank bronze">3</div>
+          <div class="prize-info">
+            <div class="prize-name">人气作品奖</div>
+            <div class="prize-desc">点赞数最高的作品</div>
+          </div>
+          <div class="prize-amount">¥1000</div>
+        </div>
+      </div>
+
+      <!-- 参赛作品展示 -->
+      <div class="contest-works">
+        <div class="sec-title">🎬 参赛作品</div>
+        <a class="work-list-item" href="drama-detail.html">
+          <div class="wl-cover cover-4"><span class="wl-badge">赛事</span></div>
+          <div class="wl-info">
+            <div class="wl-title">白雪公主在古镇</div>
+            <div class="wl-author">李梦 · 表演专业</div>
+            <div class="wl-stats"><span>❤️ 856</span><span>▶ 1.8w</span><span>⭐ 9.2</span></div>
+          </div>
+        </a>
+        <a class="work-list-item" href="drama-detail.html">
+          <div class="wl-cover cover-7"><span class="wl-badge">赛事</span></div>
+          <div class="wl-info">
+            <div class="wl-title">小红帽历险记</div>
+            <div class="wl-author">孙琳 · 表演专业</div>
+            <div class="wl-stats"><span>❤️ 678</span><span>▶ 1.2w</span><span>⭐ 8.8</span></div>
+          </div>
+        </a>
+        <a class="work-list-item" href="drama-detail.html">
+          <div class="wl-cover cover-1"><span class="wl-badge">赛事</span></div>
+          <div class="wl-info">
+            <div class="wl-title">灰姑娘的铜官梦</div>
+            <div class="wl-author">张小艺 · 摄影专业</div>
+            <div class="wl-stats"><span>❤️ 523</span><span>▶ 9800</span><span>⭐ 8.5</span></div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- 底部操作 -->
+    <div class="bottom-action">
+      <div class="ba-btn ghost" onclick="navigate('original.html')">浏览更多作品</div>
+      <div class="ba-btn primary" onclick="navigate('original-upload.html')">参赛报名</div>
+    </div>
+  </div>
+
+  <script src="js/common.js"></script>
+</body>
+</html>

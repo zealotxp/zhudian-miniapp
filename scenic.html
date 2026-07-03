@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>景区 - 竖店短剧</title>
+  <title>景区体验 - 竖店</title>
   <link rel="stylesheet" href="css/common.css">
   <style>
     .scenic-hero {
@@ -47,30 +47,6 @@
       font-size: 11px;
       opacity: 0.8;
     }
-    .scenic-stats {
-      position: relative; z-index: 2;
-      display: flex;
-      gap: 10px;
-      margin-top: 18px;
-    }
-    .scenic-stats .stat {
-      flex: 1;
-      background: rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(10px);
-      border-radius: var(--r-md);
-      padding: 8px 10px;
-      color: #fff;
-    }
-    .scenic-stats .stat .label {
-      font-size: 10px;
-      opacity: 0.8;
-    }
-    .scenic-stats .stat .num {
-      font-size: 16px;
-      font-weight: 700;
-      color: #FCE6A2;
-      margin-top: 2px;
-    }
 
     /* 快捷功能 */
     .quick-grid {
@@ -102,19 +78,217 @@
       font-size: 11px;
       color: var(--text-2);
     }
-    .quick-grid .q-badge {
+
+    /* 会员权益展示卡 */
+    .benefit-card {
+      background: linear-gradient(135deg, #2B2B3A 0%, #1A1A28 100%);
+      margin: 0 12px 12px;
+      border-radius: var(--r-lg);
+      padding: 16px;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .benefit-card::before {
+      content: '';
+      position: absolute;
+      top: -50%; right: -10%;
+      width: 180px; height: 180px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(212, 162, 76, 0.25) 0%, transparent 70%);
+    }
+    .benefit-head {
+      display: flex; align-items: center; gap: 8px;
+      margin-bottom: 12px;
+      position: relative; z-index: 2;
+    }
+    .benefit-head .title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #FCE6A2;
+    }
+    .benefit-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      position: relative; z-index: 2;
+    }
+    .benefit-item {
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 8px;
+      padding: 10px 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .benefit-item .bi-icon {
+      font-size: 22px;
+    }
+    .benefit-item .bi-label {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.85);
+    }
+    .benefit-item .bi-status {
+      font-size: 10px;
+      color: #FCE6A2;
+    }
+
+    /* VR选景入口 */
+    .vr-card {
+      margin: 0 12px 12px;
+      background: var(--bg-card);
+      border-radius: var(--r-lg);
+      padding: 0;
+      box-shadow: var(--shadow-card);
+      overflow: hidden;
+    }
+    .vr-cover {
+      height: 140px;
+      background: linear-gradient(135deg, #30CFD0 0%, #330867 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
       position: relative;
     }
-    .quick-grid .q-badge::after {
-      content: 'HOT';
+    .vr-cover .vr-badge {
       position: absolute;
-      top: -4px; right: -8px;
-      background: var(--primary);
-      color: #fff;
-      font-size: 8px;
-      padding: 1px 4px;
-      border-radius: 6px;
+      top: 8px; left: 8px;
+      padding: 2px 8px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 10px;
+      font-size: 10px;
+    }
+    .vr-cover .vr-icon {
+      font-size: 48px;
+    }
+    .vr-cover .vr-text {
+      position: absolute;
+      bottom: 12px;
+      left: 16px;
+      font-size: 16px;
       font-weight: 700;
+    }
+    .vr-info {
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .vr-info .vr-desc {
+      font-size: 12px;
+      color: var(--text-3);
+    }
+    .vr-info .vr-btn {
+      padding: 6px 14px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #30CFD0, #00F2FE);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    /* 游玩体验项目 */
+    .experience-card {
+      background: var(--bg-card);
+      margin: 0 12px 10px;
+      border-radius: var(--r-md);
+      padding: 12px;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      gap: 12px;
+    }
+    .experience-thumb {
+      width: 100px;
+      height: 80px;
+      border-radius: var(--r-sm);
+      flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .experience-thumb .exp-badge {
+      position: absolute;
+      top: 4px; left: 4px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 9px;
+      color: #fff;
+    }
+    .experience-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .experience-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-1);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .experience-desc {
+      font-size: 12px;
+      color: var(--text-3);
+      margin-top: 4px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .experience-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 6px;
+      font-size: 11px;
+      color: var(--text-3);
+    }
+    .experience-price {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    /* 联营商家 */
+    .merchant-card {
+      background: var(--bg-card);
+      margin: 0 12px 10px;
+      border-radius: var(--r-md);
+      padding: 12px;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .merchant-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      color: #fff;
+    }
+    .merchant-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .merchant-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-1);
+    }
+    .merchant-desc {
+      font-size: 12px;
+      color: var(--text-3);
+      margin-top: 2px;
+    }
+    .merchant-addr {
+      font-size: 11px;
+      color: var(--text-3);
+      margin-top: 2px;
     }
 
     /* 资讯 */
@@ -173,135 +347,6 @@
       border-radius: 3px;
       font-size: 10px;
     }
-
-    /* 打卡任务 */
-    .task-card {
-      background: var(--bg-card);
-      margin: 0 12px 10px;
-      border-radius: var(--r-md);
-      padding: 12px;
-      box-shadow: var(--shadow-card);
-      display: flex;
-      gap: 12px;
-      align-items: center;
-    }
-    .task-icon {
-      width: 56px; height: 56px;
-      border-radius: var(--r-md);
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 28px;
-      color: #fff;
-    }
-    .task-info { flex: 1; }
-    .task-name {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text-1);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .task-desc {
-      font-size: 11px;
-      color: var(--text-3);
-      margin-top: 4px;
-      line-height: 1.4;
-    }
-    .task-reward {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-top: 6px;
-      font-size: 11px;
-    }
-    .task-reward .points {
-      color: var(--gold-dark);
-      font-weight: 600;
-    }
-    .task-reward .progress {
-      flex: 1;
-      height: 4px;
-      background: var(--line);
-      border-radius: 2px;
-      overflow: hidden;
-    }
-    .task-reward .progress .p-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--gold), #FCE6A2);
-      width: 30%;
-    }
-    .task-btn {
-      padding: 6px 12px;
-      background: var(--primary-soft);
-      color: var(--primary);
-      border-radius: 14px;
-      font-size: 12px;
-      font-weight: 500;
-    }
-    .task-btn.done {
-      background: #F2F2F2;
-      color: var(--text-3);
-    }
-
-    /* 会员权益核销卡 */
-    .benefit-card {
-      background: linear-gradient(135deg, #2B2B3A 0%, #1A1A28 100%);
-      margin: 0 12px 12px;
-      border-radius: var(--r-lg);
-      padding: 16px;
-      color: #fff;
-      position: relative;
-      overflow: hidden;
-    }
-    .benefit-card::before {
-      content: '';
-      position: absolute;
-      top: -50%; right: -10%;
-      width: 180px; height: 180px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(212, 162, 76, 0.25) 0%, transparent 70%);
-    }
-    .benefit-head {
-      display: flex; align-items: center; gap: 8px;
-      margin-bottom: 12px;
-      position: relative; z-index: 2;
-    }
-    .benefit-head .title {
-      font-size: 15px;
-      font-weight: 700;
-      color: #FCE6A2;
-    }
-    .benefit-list {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      position: relative; z-index: 2;
-    }
-    .benefit-item {
-      background: rgba(255, 255, 255, 0.06);
-      border-radius: 8px;
-      padding: 10px 6px;
-      text-align: center;
-    }
-    .benefit-item .bi-icon {
-      font-size: 22px;
-    }
-    .benefit-item .bi-label {
-      font-size: 11px;
-      color: rgba(255, 255, 255, 0.85);
-      margin-top: 4px;
-    }
-    .benefit-item .bi-status {
-      font-size: 10px;
-      color: #FCE6A2;
-      margin-top: 2px;
-    }
-    .benefit-item .bi-status.used {
-      color: rgba(255, 255, 255, 0.4);
-    }
   </style>
 </head>
 <body>
@@ -320,130 +365,163 @@
           <span>⭐ 4.8分</span>
           <span>👀 12.8w 关注</span>
         </div>
-        <div class="scenic-stats">
-          <div class="stat">
-            <div class="label">今日打卡</div>
-            <div class="num">328</div>
-          </div>
-          <div class="stat">
-            <div class="label">本月活动</div>
-            <div class="num">8</div>
-          </div>
-          <div class="stat">
-            <div class="label">我的积分</div>
-            <div class="num">580</div>
-          </div>
-        </div>
       </div>
     </div>
 
     <div class="page-content" style="padding-top: 16px;">
       <!-- 快捷功能 -->
       <div class="quick-grid">
-        <a class="q-item" href="scenic.html">
-          <div class="q-icon q-badge" style="background:linear-gradient(135deg,#C8252C,#E84D54)">🎫</div>
-          <div class="q-label">门票兑换</div>
+        <a class="q-item" href="member.html">
+          <div class="q-icon" style="background:linear-gradient(135deg,#D4A24C,#B8862E)">👑</div>
+          <div class="q-label">会员权益</div>
         </a>
-        <a class="q-item" href="points.html">
-          <div class="q-icon" style="background:linear-gradient(135deg,#D4A24C,#B8862E)">💰</div>
-          <div class="q-label">积分中心</div>
+        <a class="q-item" href="vr-scene.html">
+          <div class="q-icon" style="background:linear-gradient(135deg,#30CFD0,#330867)">🔭</div>
+          <div class="q-label">VR选景</div>
         </a>
-        <a class="q-item" href="scenic.html">
-          <div class="q-icon" style="background:linear-gradient(135deg,#2BA471,#4FD896)">📍</div>
-          <div class="q-label">打卡任务</div>
+        <a class="q-item" href="scenic.html#experience">
+          <div class="q-icon" style="background:linear-gradient(135deg,#C8252C,#E84D54)">🎭</div>
+          <div class="q-label">游玩体验</div>
         </a>
-        <a class="q-item" href="scenic.html">
-          <div class="q-icon" style="background:linear-gradient(135deg,#4FACFE,#00F2FE)">🛡️</div>
-          <div class="q-label">权益核销</div>
+        <a class="q-item" href="scenic.html#merchant">
+          <div class="q-icon" style="background:linear-gradient(135deg,#2BA471,#4FD896)">🏪</div>
+          <div class="q-label">联营商家</div>
         </a>
       </div>
 
-      <!-- 会员权益核销 -->
+      <!-- 会员权益展示 -->
       <div class="benefit-card">
         <div class="benefit-head">
           <span style="font-size:18px;">👑</span>
-          <div class="title">黄金会员尊享权益</div>
+          <div class="title">会员入园权益</div>
           <span style="margin-left:auto; font-size:11px; color:rgba(255,255,255,0.6);">有效期至 2026-12-31</span>
         </div>
         <div class="benefit-list">
           <div class="benefit-item">
             <div class="bi-icon">🏯</div>
-            <div class="bi-label">日场门票</div>
-            <div class="bi-status">可核销 2次</div>
+            <div class="bi-label">全年不限次入园</div>
+            <div class="bi-status">身份证/刷脸通行</div>
           </div>
           <div class="benefit-item">
-            <div class="bi-icon">🌙</div>
-            <div class="bi-label">夜场门票</div>
-            <div class="bi-status">可核销 1次</div>
+            <div class="bi-icon">🎭</div>
+            <div class="bi-label">赠送群演体验</div>
+            <div class="bi-status">剩余 1 次</div>
           </div>
           <div class="benefit-item">
             <div class="bi-icon">🎬</div>
             <div class="bi-label">片场探班</div>
-            <div class="bi-status used">已使用</div>
+            <div class="bi-status">每月1次</div>
+          </div>
+          <div class="benefit-item">
+            <div class="bi-icon">🛡️</div>
+            <div class="bi-label">实名认证已通过</div>
+            <div class="bi-status">✓ 已认证</div>
           </div>
         </div>
-        <button class="btn btn-gold btn-block" style="margin-top:12px; height:36px; font-size:13px;">
-          出示核销码
-        </button>
+        <div style="font-size:11px; color:rgba(255,255,255,0.5); margin-top:12px; text-align:center; position:relative;z-index:2;">
+          会员到期后入园权限自动失效 · <a href="member.html" style="color:var(--gold)">续费</a>
+        </div>
       </div>
 
-      <!-- 打卡任务 -->
-      <div class="section-title">
-        <div class="title">📍 景区打卡任务</div>
-        <a class="more" href="scenic.html">全部 ›</a>
+      <!-- VR选景入口 -->
+      <a class="vr-card" href="vr-scene.html">
+        <div class="vr-cover">
+          <span class="vr-badge">🔍 700+场景</span>
+          <span class="vr-icon">🔭</span>
+          <div class="vr-text">VR 360°全景选景</div>
+        </div>
+        <div class="vr-info">
+          <span class="vr-desc">在线浏览影视城全部拍摄场景，支持搜索与分类筛选</span>
+          <span class="vr-btn">进入选景 ›</span>
+        </div>
+      </a>
+
+      <!-- 游玩体验项目 -->
+      <div class="section-title" id="experience">
+        <div class="title">🎭 游玩体验项目</div>
+        <a class="more" href="scenic.html">更多 ›</a>
       </div>
 
-      <a class="task-card" href="scenic.html">
-        <div class="task-icon" style="background:linear-gradient(135deg,#C8252C,#E84D54)">📸</div>
-        <div class="task-info">
-          <div class="task-name">古风片场打卡 <span class="tag tag-gold">每日</span></div>
-          <div class="task-desc">在铜官窑古镇古建筑片场拍摄1张合影</div>
-          <div class="task-reward">
-            <span class="points">+20积分</span>
-            <div class="progress"><div class="p-fill" style="width:0%"></div></div>
-            <span style="color:var(--text-3)">0/1</span>
-          </div>
+      <a class="experience-card" href="scenic.html">
+        <div class="experience-thumb" style="background:linear-gradient(135deg,#C8252C,#E84D54)">
+          <span class="exp-badge" style="background:rgba(255,255,255,0.2)">🔥热门</span>
         </div>
-        <span class="task-btn">去打卡</span>
+        <div class="experience-info">
+          <div class="experience-name">县太爷体验 · 古装情景演绎</div>
+          <div class="experience-desc">穿上古装扮演县太爷审案，沉浸式古风演绎体验</div>
+          <div class="experience-meta">
+            <span>⏱ 60分钟</span>
+            <span>📍 古镇衙门</span>
+          </div>
+          <div class="experience-price">¥128/人</div>
+        </div>
       </a>
 
-      <a class="task-card" href="scenic.html">
-        <div class="task-icon" style="background:linear-gradient(135deg,#D4A24C,#B8862E)">🎭</div>
-        <div class="task-info">
-          <div class="task-name">剧组探班打卡 <span class="tag tag-primary">限时</span></div>
-          <div class="task-desc">参观《古镇重生》剧组拍摄现场并签到</div>
-          <div class="task-reward">
-            <span class="points">+50积分</span>
-            <div class="progress"><div class="p-fill" style="width:100%"></div></div>
-            <span style="color:var(--success)">已完成</span>
-          </div>
+      <a class="experience-card" href="scenic.html">
+        <div class="experience-thumb" style="background:linear-gradient(135deg,#D4A24C,#B8862E)">
+          <span class="exp-badge" style="background:rgba(255,255,255,0.2)">⭐推荐</span>
         </div>
-        <span class="task-btn done">已打卡</span>
+        <div class="experience-info">
+          <div class="experience-name">锦衣卫猫鼠游戏 · 民国互动</div>
+          <div class="experience-desc">化身锦衣卫或密探，在民国街区完成追捕任务</div>
+          <div class="experience-meta">
+            <span>⏱ 90分钟</span>
+            <span>📍 民国街区</span>
+          </div>
+          <div class="experience-price">¥198/人</div>
+        </div>
       </a>
 
-      <a class="task-card" href="scenic.html">
-        <div class="task-icon" style="background:linear-gradient(135deg,#2BA471,#4FD896)">🗺️</div>
-        <div class="task-info">
-          <div class="task-name">古镇寻宝任务 <span class="tag tag-gold">主线</span></div>
-          <div class="task-desc">完成古镇8处景点打卡集章</div>
-          <div class="task-reward">
-            <span class="points">+200积分</span>
-            <div class="progress"><div class="p-fill" style="width:50%"></div></div>
-            <span style="color:var(--text-3)">4/8</span>
-          </div>
+      <a class="experience-card" href="scenic.html">
+        <div class="experience-thumb" style="background:linear-gradient(135deg,#2BA471,#4FD896)">
         </div>
-        <span class="task-btn">继续</span>
+        <div class="experience-info">
+          <div class="experience-name">个人微电影套餐</div>
+          <div class="experience-desc">专业团队拍摄，从剧本到成片一站式体验</div>
+          <div class="experience-meta">
+            <span>⏱ 半天</span>
+            <span>📍 全景区</span>
+          </div>
+          <div class="experience-price">¥580起</div>
+        </div>
       </a>
 
-      <!-- 资讯专区 -->
+      <!-- 联营商家 -->
+      <div class="section-title" id="merchant">
+        <div class="title">🏪 联营商家</div>
+      </div>
+
+      <a class="merchant-card" href="scenic.html">
+        <div class="merchant-icon" style="background:linear-gradient(135deg,#D4A24C,#B8862E)">🍜</div>
+        <div class="merchant-info">
+          <div class="merchant-name">铜官窑农家菜馆</div>
+          <div class="merchant-desc">正宗湘菜 · 窑火柴火鸡 · 会员享9折</div>
+          <div class="merchant-addr">📍 古镇美食街A区</div>
+        </div>
+      </a>
+
+      <a class="merchant-card" href="scenic.html">
+        <div class="merchant-icon" style="background:linear-gradient(135deg,#4FACFE,#00F2FE)">🏨</div>
+        <div class="merchant-info">
+          <div class="merchant-name">古镇主题客栈</div>
+          <div class="merchant-desc">民国风格客房 · 剧组常驻住宿 · 会员特价</div>
+          <div class="merchant-addr">📍 古镇西门内</div>
+        </div>
+      </a>
+
+      <a class="merchant-card" href="scenic.html">
+        <div class="merchant-icon" style="background:linear-gradient(135deg,#FA709A,#FEE140)">💄</div>
+        <div class="merchant-info">
+          <div class="merchant-name">铜官服化道工作室</div>
+          <div class="merchant-desc">古装租借 · 影视化妆 · 道具定制</div>
+          <div class="merchant-addr">📍 影视城B区</div>
+        </div>
+      </a>
+
+      <!-- 活动资讯 -->
       <div class="section-title">
-        <div class="title">📰 基地资讯</div>
-        <div style="display:flex; gap:8px; font-size:12px;">
-          <span style="color:var(--primary); font-weight:500;">全部</span>
-          <span style="color:var(--text-3)">花絮</span>
-          <span style="color:var(--text-3)">活动</span>
-          <span style="color:var(--text-3)">行业</span>
-        </div>
+        <div class="title">📰 影视城动态</div>
+        <a class="more" href="news-detail.html">更多 ›</a>
       </div>
 
       <a class="news-card" href="news-detail.html">
@@ -451,9 +529,9 @@
           <span class="pin">置顶</span>
         </div>
         <div class="news-info">
-          <div class="news-title">《古镇重生》剧组开放日来啦！本周六可在铜官窑古镇探班拍摄现场</div>
+          <div class="news-title">铜官窑影视城暑期档开机仪式隆重举行</div>
           <div class="news-meta">
-            <span class="news-cat">🎬 拍摄花絮</span>
+            <span class="news-cat">🔥 动态</span>
             <span>2小时前</span>
             <span>👀 3.2w</span>
           </div>
@@ -463,48 +541,24 @@
       <a class="news-card" href="news-detail.html">
         <div class="news-thumb cover-2"></div>
         <div class="news-info">
-          <div class="news-title">铜官窑古镇国庆汉服游园会即将开启，会员专享9折门票</div>
+          <div class="news-title">《民国风云录》正式开机，招募群演50名</div>
           <div class="news-meta">
-            <span class="news-cat">🎉 景区活动</span>
+            <span class="news-cat">🎬 开机</span>
             <span>5小时前</span>
             <span>👀 1.8w</span>
           </div>
         </div>
       </a>
 
-      <a class="news-card" href="news-detail.html">
-        <div class="news-thumb cover-7"></div>
-        <div class="news-info">
-          <div class="news-title">2026年短剧行业白皮书发布，竖屏短剧市场规模突破300亿</div>
-          <div class="news-meta">
-            <span class="news-cat">📈 行业热点</span>
-            <span>1天前</span>
-            <span>👀 2.5w</span>
-          </div>
-        </div>
-      </a>
-
-      <a class="news-card" href="news-detail.html">
-        <div class="news-thumb cover-4"></div>
-        <div class="news-info">
-          <div class="news-title">基地培训学校2026年秋季招生启动，学历班限额50名</div>
-          <div class="news-meta">
-            <span class="news-cat">🎓 学校公告</span>
-            <span>2天前</span>
-            <span>👀 1.2w</span>
-          </div>
-        </div>
-      </a>
-
       <div style="padding: 20px; text-align:center; color:var(--text-3); font-size:13px;">
-        — 查看更多资讯 —
+        — 查看更多 —
       </div>
     </div>
 
     <!-- 底部 TabBar -->
     <div class="tab-bar">
       <a class="tab-item" href="index.html">
-        <span class="tab-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5L12 3l9 7.5"/><path d="M5.5 9.5V20a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1V9.5"/><path d="M9.5 21v-6h5v6"/></svg></span><span>首页</span>
+        <span class="tab-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5L12 3l9 7.5"/><path d="M5.5 9.5V20a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1V9.5"/><path d="M9.5 21v-6h5v6"/></svg></span><span>发现</span>
       </a>
       <a class="tab-item" href="teach.html">
         <span class="tab-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l10-4.5L22 9l-10 4.5z"/><path d="M6 11v5c0 1.2 2.7 2.5 6 2.5s6-1.3 6-2.5v-5"/><path d="M22 9v5.5"/></svg></span><span>教学</span>
@@ -519,17 +573,5 @@
   </div>
 
   <script src="js/common.js"></script>
-  <script>
-    document.querySelectorAll('.task-btn').forEach(btn => {
-      btn.addEventListener('click', function(e) {
-        e.preventDefault();
-        if (this.classList.contains('done')) {
-          showToast('该任务已完成');
-        } else {
-          showToast('打卡成功！积分 +20');
-        }
-      });
-    });
-  </script>
 </body>
 </html>

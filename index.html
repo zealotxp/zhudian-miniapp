@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-  <title>竖店短剧 - 首页</title>
+  <title>竖店 - 发现</title>
   <link rel="stylesheet" href="css/common.css">
   <style>
     .home-header {
@@ -74,7 +74,6 @@
     .banner-slide {
       width: 100%;
       height: 150px;
-      background: linear-gradient(135deg, #2C1810 0%, #C8252C 50%, #D4A24C 100%);
       position: relative;
       color: #fff;
       padding: 16px;
@@ -119,109 +118,123 @@
       border-radius: 3px;
     }
 
-    /* 分类导航 */
-    .category-grid {
+    /* 核心功能入口 - 3×2 grid */
+    .func-grid {
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 8px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
       padding: 16px 12px 8px;
     }
-    .category-item {
+    .func-item {
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 6px;
+      padding: 10px 0 6px;
+      background: var(--bg-card);
+      border-radius: var(--r-md);
+      box-shadow: var(--shadow-card);
+      transition: transform .2s;
     }
-    .category-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
+    .func-item:active { transform: scale(0.95); }
+    .func-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 22px;
-      color: #fff;
     }
-    .category-name {
-      font-size: 11px;
+    .func-icon svg {
+      width: 22px;
+      height: 22px;
+    }
+    .func-name {
+      font-size: 12px;
       color: var(--text-2);
+      font-weight: 500;
     }
 
-    /* 榜单 */
-    .rank-card {
-      margin: 0 12px;
-      background: linear-gradient(135deg, #FFF6E5 0%, #FFFFFF 100%);
-      border-radius: var(--r-lg);
-      padding: 12px;
-      border: 1px solid #FDF3E0;
-    }
-    .rank-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 10px;
-    }
-    .rank-title {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--gold-dark);
-    }
-    .rank-list {
+    /* 短剧推荐 */
+    .drama-scroll {
       display: flex;
       gap: 10px;
       overflow-x: auto;
+      padding: 0 16px 8px;
       scrollbar-width: none;
     }
-    .rank-list::-webkit-scrollbar { display: none; }
-    .rank-item {
+    .drama-scroll::-webkit-scrollbar { display: none; }
+    .drama-scroll-item {
+      width: 130px;
       flex-shrink: 0;
-      width: 100px;
+      background: var(--bg-card);
+      border-radius: var(--r-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
     }
-    .rank-item .poster {
-      width: 100px;
-      height: 134px;
-      border-radius: var(--r-sm);
+    .drama-scroll-item .d-cover {
+      width: 130px;
+      height: 173px;
       position: relative;
       overflow: hidden;
     }
-    .rank-item .poster .num {
+    .drama-scroll-item .d-cover .d-badge {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 24px;
-      height: 28px;
-      background: var(--primary);
+      top: 6px;
+      left: 6px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 10px;
       color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 13px;
-      border-radius: 0 0 8px 0;
     }
-    .rank-item .poster .num.top1 { background: #FFD700; color: #5B3A00; }
-    .rank-item .poster .num.top2 { background: #C0C0C0; color: #fff; }
-    .rank-item .poster .num.top3 { background: #CD7F32; color: #fff; }
-    .rank-item .name {
-      font-size: 12px;
-      margin-top: 4px;
+    .drama-scroll-item .d-cover .d-badge.vip-free {
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    }
+    .drama-scroll-item .d-cover .d-badge.ad {
+      background: rgba(200, 37, 44, 0.9);
+    }
+    .drama-scroll-item .d-cover .d-eps {
+      position: absolute;
+      bottom: 6px;
+      right: 6px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 10px;
+      color: #fff;
+      background: rgba(0, 0, 0, 0.6);
+    }
+    .drama-scroll-item .d-cover .d-title-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 14px 8px 8px;
+      background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .drama-scroll-item .d-info {
+      padding: 6px 8px 8px;
+    }
+    .drama-scroll-item .d-info .d-name {
+      font-size: 13px;
+      font-weight: 500;
       color: var(--text-1);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
-    .rank-item .hot {
-      font-size: 10px;
+    .drama-scroll-item .d-info .d-meta {
+      font-size: 11px;
       color: var(--text-3);
+      margin-top: 2px;
     }
 
-    /* 短剧网格 - 两列大图 */
-    .drama-section {
-      margin-top: 8px;
-    }
+    /* 短剧分类筛选+网格 */
     .filter-bar {
       display: flex;
       gap: 16px;
@@ -279,9 +292,11 @@
       font-size: 10px;
       color: #fff;
     }
-    .grid-card .cover .badge.hot { background: rgba(200, 37, 44, 0.9); }
-    .grid-card .cover .badge.free { background: rgba(43, 164, 113, 0.9); }
+    .grid-card .cover .badge.vip-free { background: linear-gradient(135deg, var(--gold), var(--gold-dark)); }
+    .grid-card .cover .badge.ad { background: rgba(200, 37, 44, 0.9); }
     .grid-card .cover .badge.new { background: rgba(255, 143, 31, 0.9); }
+    .grid-card .cover .badge.ai { background: rgba(48, 207, 208, 0.9); }
+    .grid-card .cover .badge.original { background: rgba(43, 164, 113, 0.9); }
     .grid-card .cover .episodes {
       position: absolute;
       bottom: 6px;
@@ -324,12 +339,176 @@
     .grid-card .info .meta .views {
       color: var(--text-3);
     }
-    .grid-card .info .meta .price {
+    .grid-card .info .meta .access-label {
       color: var(--primary);
       font-weight: 600;
     }
-    .grid-card .info .meta .price.free {
-      color: var(--success);
+    .grid-card .info .meta .access-label.vip {
+      color: var(--gold-dark);
+    }
+
+    /* 热门任务推荐 */
+    .task-card-list {
+      padding: 0 12px;
+    }
+    .task-card {
+      background: var(--bg-card);
+      border-radius: var(--r-md);
+      padding: 12px;
+      margin-bottom: 8px;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      gap: 12px;
+    }
+    .task-card .task-type-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .task-card .task-type-icon svg {
+      width: 24px;
+      height: 24px;
+    }
+    .task-card .task-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .task-card .task-info .task-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-1);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .task-card .task-info .task-meta {
+      font-size: 12px;
+      color: var(--text-3);
+      margin-top: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .task-card .task-info .task-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+    }
+    .task-card .task-pay {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      flex-shrink: 0;
+    }
+    .task-card .task-pay .pay-amount {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .task-card .task-pay .pay-unit {
+      font-size: 11px;
+      color: var(--text-3);
+    }
+    .task-card .task-pay .task-badge {
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-top: 4px;
+    }
+    .task-card .task-pay .task-badge.hot {
+      background: var(--primary-soft);
+      color: var(--primary);
+    }
+    .task-card .task-pay .task-badge.urgent {
+      background: #FFF3E0;
+      color: #E67E22;
+    }
+
+    /* 活动资讯 */
+    .news-card-list {
+      padding: 0 12px;
+    }
+    .news-card {
+      background: var(--bg-card);
+      border-radius: var(--r-md);
+      padding: 12px;
+      margin-bottom: 8px;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      gap: 12px;
+    }
+    .news-card .news-cover {
+      width: 80px;
+      height: 60px;
+      border-radius: var(--r-sm);
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+    .news-card .news-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .news-card .news-info .news-tag {
+      display: inline-block;
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-size: 10px;
+      margin-bottom: 4px;
+    }
+    .news-card .news-info .news-tag.event { background: var(--primary-soft); color: var(--primary); }
+    .news-card .news-info .news-tag.start { background: var(--gold-soft); color: var(--gold-dark); }
+    .news-card .news-info .news-tag.competition { background: #E4F5EC; color: var(--success); }
+    .news-card .news-info .news-title {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-1);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .news-card .news-info .news-meta {
+      font-size: 11px;
+      color: var(--text-3);
+      margin-top: 4px;
+    }
+
+    /* 会员提示条 */
+    .member-tip {
+      margin: 12px;
+      background: linear-gradient(135deg, #2B2B3A 0%, #1A1A28 100%);
+      border-radius: var(--r-md);
+      padding: 12px 16px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .member-tip .tip-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .member-tip .tip-icon {
+      font-size: 18px;
+      color: #FCE6A2;
+    }
+    .member-tip .tip-text {
+      font-size: 13px;
+    }
+    .member-tip .tip-text strong {
+      color: #FCE6A2;
+    }
+    .member-tip .tip-btn {
+      padding: 6px 14px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      color: #5B3A00;
+      font-size: 12px;
+      font-weight: 600;
     }
   </style>
 </head>
@@ -344,23 +523,23 @@
       <div class="home-top">
         <div class="home-logo">
           <span class="logo-icon">竖</span>
-          <span>竖店短剧</span>
+          <span>竖店</span>
         </div>
         <a class="search-box" href="search.html">
-          <span>🔍</span>
-          <span>搜索短剧、演员、题材</span>
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
+          <span>搜索短剧、课程、任务</span>
         </a>
         <div class="header-actions">
-          <span>📥</span>
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
         </div>
       </div>
 
       <!-- 轮播图 -->
       <div class="banner-wrap">
-        <div class="banner-slide">
-          <span class="banner-tag">🔥 限时首发</span>
+        <div class="banner-slide" style="background:linear-gradient(135deg,#2C1810,#C8252C,#D4A24C)">
+          <span class="banner-tag">🔥 新剧上线</span>
           <div class="banner-title">《古镇重生：铜官风云》</div>
-          <div class="banner-desc">铜官窑古镇年度巨制 · 古风逆袭 30 集</div>
+          <div class="banner-desc">铜官窑古镇年度巨制 · 古风逆袭 30集 · 会员免广告畅看</div>
           <div class="banner-dots">
             <span class="active"></span>
             <span></span>
@@ -372,266 +551,339 @@
     </div>
 
     <div class="page-content">
-      <!-- 题材分类导航 -->
-      <div class="category-grid">
-        <a class="category-item" href="search.html?cat=gufeng">
-          <div class="category-icon" style="background:linear-gradient(135deg,#C8252C,#E84D54)">🏯</div>
-          <div class="category-name">古风</div>
-        </a>
-        <a class="category-item" href="search.html?cat=bazong">
-          <div class="category-icon" style="background:linear-gradient(135deg,#2C3E50,#4CA1AF)">💼</div>
-          <div class="category-name">霸总</div>
-        </a>
-        <a class="category-item" href="search.html?cat=tianchong">
-          <div class="category-icon" style="background:linear-gradient(135deg,#FF9A9E,#FECFEF)">💕</div>
-          <div class="category-name">甜宠</div>
-        </a>
-        <a class="category-item" href="search.html?cat=nixi">
-          <div class="category-icon" style="background:linear-gradient(135deg,#FA709A,#FEE140)">⚡</div>
-          <div class="category-name">逆袭</div>
-        </a>
-        <a class="category-item" href="search.html?cat=xuanhuan">
-          <div class="category-icon" style="background:linear-gradient(135deg,#30CFD0,#330867)">🔮</div>
-          <div class="category-name">玄幻</div>
-        </a>
-        <a class="category-item" href="search.html?cat=xuanyi">
-          <div class="category-icon" style="background:linear-gradient(135deg,#1A1A28,#5B5B7A)">🌙</div>
-          <div class="category-name">悬疑</div>
-        </a>
-        <a class="category-item" href="search.html?cat=jiating">
-          <div class="category-icon" style="background:linear-gradient(135deg,#F6D365,#FDA085)">👨‍👩‍👧</div>
-          <div class="category-name">家庭</div>
-        </a>
-        <a class="category-item" href="search.html?cat=xiaoyuan">
-          <div class="category-icon" style="background:linear-gradient(135deg,#A1C4FD,#C2E9FB)">🎓</div>
-          <div class="category-name">校园</div>
-        </a>
-        <a class="category-item" href="search.html?cat=zhan shi">
-          <div class="category-icon" style="background:linear-gradient(135deg,#4FACFE,#00F2FE)">⚔️</div>
-          <div class="category-name">战争</div>
-        </a>
-        <a class="category-item" href="search.html?cat=all">
-          <div class="category-icon" style="background:linear-gradient(135deg,#888,#555)">⋯</div>
-          <div class="category-name">全部分类</div>
-        </a>
-      </div>
-
-      <!-- 热门榜单 -->
-      <div class="section-title">
-        <div class="title">🔥 钢官热榜</div>
-        <a class="more" href="search.html?tab=rank">查看全部 ›</a>
-      </div>
-      <div class="rank-card">
-        <div class="rank-header">
-          <div class="rank-title">🏆 周榜 TOP 6</div>
-          <span style="font-size:11px;color:var(--text-3)">每2小时更新</span>
+      <!-- 会员提示 -->
+      <div class="member-tip">
+        <div class="tip-left">
+          <span class="tip-icon">👑</span>
+          <span class="tip-text"><strong>开通会员</strong> 短剧免广告 · 课程全解锁 · 兼职可接单</span>
         </div>
-        <div class="rank-list">
-          <a class="rank-item" href="drama-detail.html">
-            <div class="poster cover-1">
-              <div class="num top1">1</div>
-            </div>
-            <div class="name">古镇重生</div>
-            <div class="hot">🔥 286.5w</div>
-          </a>
-          <a class="rank-item" href="drama-detail.html">
-            <div class="poster cover-2">
-              <div class="num top2">2</div>
-            </div>
-            <div class="name">千金归来</div>
-            <div class="hot">🔥 218.3w</div>
-          </a>
-          <a class="rank-item" href="drama-detail.html">
-            <div class="poster cover-7">
-              <div class="num top3">3</div>
-            </div>
-            <div class="name">总裁的秘密</div>
-            <div class="hot">🔥 192.7w</div>
-          </a>
-          <a class="rank-item" href="drama-detail.html">
-            <div class="poster cover-4">
-              <div class="num">4</div>
-            </div>
-            <div class="name">长安花录</div>
-            <div class="hot">🔥 168.1w</div>
-          </a>
-          <a class="rank-item" href="drama-detail.html">
-            <div class="poster cover-8">
-              <div class="num">5</div>
-            </div>
-            <div class="name">玄门诡事</div>
-            <div class="hot">🔥 145.9w</div>
-          </a>
-          <a class="rank-item" href="drama-detail.html">
-            <div class="poster cover-5">
-              <div class="num">6</div>
-            </div>
-            <div class="name">田园小医女</div>
-            <div class="hot">🔥 128.4w</div>
-          </a>
-        </div>
+        <a class="tip-btn" href="member.html">立即开通</a>
       </div>
 
-      <!-- 限时免费 -->
+      <!-- 核心功能入口 -->
+      <div class="func-grid">
+        <a class="func-item" href="search.html">
+          <div class="func-icon" style="background:linear-gradient(135deg,#C8252C,#E84D54)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M10 8l6 4-6 4V8z"/></svg>
+          </div>
+          <div class="func-name">看短剧</div>
+        </a>
+        <a class="func-item" href="teach.html">
+          <div class="func-icon" style="background:linear-gradient(135deg,#4CA1AF,#2C3E50)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l10-4.5L22 9l-10 4.5z"/><path d="M6 11v5c0 1.2 2.7 2.5 6 2.5s6-1.3 6-2.5v-5"/></svg>
+          </div>
+          <div class="func-name">学课程</div>
+        </a>
+        <a class="func-item" href="task-list.html">
+          <div class="func-icon" style="background:linear-gradient(135deg,#2BA471,#1B7A4E)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a4 4 0 0 0-8 0v2"/><circle cx="12" cy="14" r="2"/></svg>
+          </div>
+          <div class="func-name">找兼职</div>
+        </a>
+        <a class="func-item" href="original.html">
+          <div class="func-icon" style="background:linear-gradient(135deg,#D4A24C,#B8862E)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          </div>
+          <div class="func-name">原创区</div>
+        </a>
+        <a class="func-item" href="scenic.html">
+          <div class="func-icon" style="background:linear-gradient(135deg,#FF8F1F,#E67E22)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 21v-4h6v4"/><path d="M9 10h.01"/><path d="M15 10h.01"/></svg>
+          </div>
+          <div class="func-name">景区权益</div>
+        </a>
+        <a class="func-item" href="scenic.html#experience">
+          <div class="func-icon" style="background:linear-gradient(135deg,#FA709A,#FEE140)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+          </div>
+          <div class="func-name">游玩体验</div>
+        </a>
+      </div>
+
+      <!-- 推荐短剧 -->
       <div class="section-title">
-        <div class="title">🎁 限时免费</div>
-        <a class="more" href="search.html?tab=free">更多 ›</a>
+        <div class="title">推荐短剧</div>
+        <a class="more" href="search.html">更多 ›</a>
       </div>
-      <div class="h-scroll" style="padding-bottom: 4px;">
-        <a class="drama-card" href="drama-detail.html" style="width:110px;flex-shrink:0;">
-          <div class="drama-cover cover-3" style="width:110px;height:146px;">
-            <span class="cover-tag free">免费</span>
-            <span class="cover-eps">30集</span>
-            <div class="cover-title">花间一壶酒</div>
+      <div class="drama-scroll">
+        <a class="drama-scroll-item" href="drama-detail.html">
+          <div class="d-cover cover-1">
+            <span class="d-badge vip-free">会员免广告</span>
+            <span class="d-eps">更新至28集</span>
+            <div class="d-title-overlay">古镇重生：铜官风云</div>
+          </div>
+          <div class="d-info">
+            <div class="d-name">古镇重生：铜官风云</div>
+            <div class="d-meta">古风 · 286.5w播放</div>
           </div>
         </a>
-        <a class="drama-card" href="drama-detail.html" style="width:110px;flex-shrink:0;">
-          <div class="drama-cover cover-6" style="width:110px;height:146px;">
-            <span class="cover-tag free">免费</span>
-            <span class="cover-eps">24集</span>
-            <div class="cover-title">都市奇缘</div>
+        <a class="drama-scroll-item" href="drama-detail.html">
+          <div class="d-cover cover-2">
+            <span class="d-badge ad">看广告免费看</span>
+            <span class="d-eps">30集全</span>
+            <div class="d-title-overlay">千金归来</div>
+          </div>
+          <div class="d-info">
+            <div class="d-name">千金归来</div>
+            <div class="d-meta">民国 · 218.3w播放</div>
           </div>
         </a>
-        <a class="drama-card" href="drama-detail.html" style="width:110px;flex-shrink:0;">
-          <div class="drama-cover cover-9" style="width:110px;height:146px;">
-            <span class="cover-tag free">免费</span>
-            <span class="cover-eps">18集</span>
-            <div class="cover-title">校园初恋</div>
+        <a class="drama-scroll-item" href="drama-detail.html">
+          <div class="d-cover cover-7">
+            <span class="d-badge vip-free">会员免广告</span>
+            <span class="d-eps">更新至16集</span>
+            <div class="d-title-overlay">总裁的秘密</div>
+          </div>
+          <div class="d-info">
+            <div class="d-name">总裁的秘密</div>
+            <div class="d-meta">现代 · 192.7w播放</div>
           </div>
         </a>
-        <a class="drama-card" href="drama-detail.html" style="width:110px;flex-shrink:0;">
-          <div class="drama-cover cover-10" style="width:110px;height:146px;">
-            <span class="cover-tag free">免费</span>
-            <span class="cover-eps">26集</span>
-            <div class="cover-title">凤求凰</div>
+        <a class="drama-scroll-item" href="drama-detail.html">
+          <div class="d-cover cover-8">
+            <span class="d-badge ad">看广告免费看</span>
+            <span class="d-eps">更新至22集</span>
+            <div class="d-title-overlay">玄门诡事</div>
+          </div>
+          <div class="d-info">
+            <div class="d-name">玄门诡事</div>
+            <div class="d-meta">古装 · 145.9w播放</div>
+          </div>
+        </a>
+        <a class="drama-scroll-item" href="drama-detail.html">
+          <div class="d-cover cover-5">
+            <span class="d-badge new">AI剧上新</span>
+            <span class="d-eps">更新至10集</span>
+            <div class="d-title-overlay">田园小医女</div>
+          </div>
+          <div class="d-info">
+            <div class="d-name">田园小医女</div>
+            <div class="d-meta">AI剧 · 128.4w播放</div>
           </div>
         </a>
       </div>
 
-      <!-- 编辑精选/全部短剧 -->
+      <!-- 热门任务推荐 -->
+      <div class="section-title">
+        <div class="title">热门任务</div>
+        <a class="more" href="task-list.html">更多 ›</a>
+      </div>
+      <div class="task-card-list">
+        <a class="task-card" href="task-detail.html">
+          <div class="task-type-icon" style="background:linear-gradient(135deg,#C8252C,#E84D54)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <div class="task-info">
+            <div class="task-title">《古镇重生》群演招募</div>
+            <div class="task-meta">
+              <span>📍 铜官窑古镇</span>
+              <span>📅 7月5-7日</span>
+              <span>👥 12/30人</span>
+            </div>
+          </div>
+          <div class="task-pay">
+            <span class="pay-amount">¥200</span>
+            <span class="pay-unit">/天</span>
+            <span class="task-badge hot">热门</span>
+          </div>
+        </a>
+        <a class="task-card" href="task-detail.html">
+          <div class="task-type-icon" style="background:linear-gradient(135deg,#4CA1AF,#2C3E50)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          </div>
+          <div class="task-info">
+            <div class="task-title">摄影助理 · 古装剧跟组</div>
+            <div class="task-meta">
+              <span>📍 影视城B区</span>
+              <span>📅 7月10-20日</span>
+              <span>👥 5/8人</span>
+            </div>
+          </div>
+          <div class="task-pay">
+            <span class="pay-amount">¥350</span>
+            <span class="pay-unit">/天</span>
+            <span class="task-badge urgent">急招</span>
+          </div>
+        </a>
+        <a class="task-card" href="task-detail.html">
+          <div class="task-type-icon" style="background:linear-gradient(135deg,#2BA471,#1B7A4E)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </div>
+          <div class="task-info">
+            <div class="task-title">后期剪辑助理</div>
+            <div class="task-meta">
+              <span>📍 线上远程</span>
+              <span>📅 7月起</span>
+              <span>👥 3/5人</span>
+            </div>
+          </div>
+          <div class="task-pay">
+            <span class="pay-amount">¥150</span>
+            <span class="pay-unit">/天</span>
+          </div>
+        </a>
+      </div>
+
+      <!-- 短剧分类 -->
       <div class="drama-section">
+        <div class="section-title">
+          <div class="title">全部短剧</div>
+        </div>
         <div class="filter-bar">
           <div class="filter-item active">推荐</div>
-          <div class="filter-item">最新</div>
-          <div class="filter-item">最热</div>
-          <div class="filter-item">完结</div>
-          <div class="filter-item">付费</div>
-          <div class="filter-item">免费</div>
+          <div class="filter-item">真人剧</div>
+          <div class="filter-item">AI剧</div>
+          <div class="filter-item">原创作品</div>
+          <div class="filter-item">古装</div>
+          <div class="filter-item">民国</div>
+          <div class="filter-item">现代</div>
         </div>
         <div class="drama-grid-2">
           <a class="grid-card" href="drama-detail.html">
             <div class="cover cover-1">
-              <span class="badge hot">🔥热</span>
+              <span class="badge vip-free">会员免广告</span>
               <span class="episodes">更新至28集</span>
               <div class="title-overlay">古镇重生：铜官风云</div>
             </div>
             <div class="info">
               <div class="name">古镇重生：铜官风云</div>
               <div class="meta">
-                <span class="views">📺 286.5w</span>
-                <span class="price">¥30 解锁</span>
+                <span class="views">古风 · 286.5w</span>
+                <span class="access-label vip">会员免费</span>
               </div>
             </div>
           </a>
           <a class="grid-card" href="drama-detail.html">
             <div class="cover cover-2">
-              <span class="badge new">🆕新</span>
+              <span class="badge ad">看广告</span>
               <span class="episodes">30集全</span>
               <div class="title-overlay">千金归来</div>
             </div>
             <div class="info">
               <div class="name">千金归来</div>
               <div class="meta">
-                <span class="views">📺 218.3w</span>
-                <span class="price">¥28 解锁</span>
+                <span class="views">民国 · 218.3w</span>
+                <span class="access-label">非会员看广告</span>
               </div>
             </div>
           </a>
           <a class="grid-card" href="drama-detail.html">
             <div class="cover cover-7">
-              <span class="badge hot">🔥热</span>
+              <span class="badge vip-free">会员免广告</span>
               <span class="episodes">更新至16集</span>
               <div class="title-overlay">总裁的秘密</div>
             </div>
             <div class="info">
               <div class="name">总裁的秘密</div>
               <div class="meta">
-                <span class="views">📺 192.7w</span>
-                <span class="price">¥25 解锁</span>
+                <span class="views">现代 · 192.7w</span>
+                <span class="access-label vip">会员免费</span>
               </div>
             </div>
           </a>
           <a class="grid-card" href="drama-detail.html">
             <div class="cover cover-4">
-              <span class="badge free">免费</span>
+              <span class="badge vip-free">会员免广告</span>
               <span class="episodes">24集全</span>
               <div class="title-overlay">长安花录</div>
             </div>
             <div class="info">
               <div class="name">长安花录</div>
               <div class="meta">
-                <span class="views">📺 168.1w</span>
-                <span class="price free">前12集免费</span>
+                <span class="views">古装 · 168.1w</span>
+                <span class="access-label vip">会员免费</span>
               </div>
             </div>
           </a>
           <a class="grid-card" href="drama-detail.html">
             <div class="cover cover-8">
-              <span class="badge hot">🔥热</span>
+              <span class="badge ad">看广告</span>
               <span class="episodes">更新至22集</span>
               <div class="title-overlay">玄门诡事</div>
             </div>
             <div class="info">
               <div class="name">玄门诡事</div>
               <div class="meta">
-                <span class="views">📺 145.9w</span>
-                <span class="price">¥30 解锁</span>
+                <span class="views">古装 · 145.9w</span>
+                <span class="access-label">非会员看广告</span>
               </div>
             </div>
           </a>
           <a class="grid-card" href="drama-detail.html">
             <div class="cover cover-5">
-              <span class="badge new">🆕新</span>
+              <span class="badge ai">AI剧</span>
               <span class="episodes">更新至10集</span>
               <div class="title-overlay">田园小医女</div>
             </div>
             <div class="info">
               <div class="name">田园小医女</div>
               <div class="meta">
-                <span class="views">📺 128.4w</span>
-                <span class="price">¥20 解锁</span>
+                <span class="views">AI剧 · 128.4w</span>
+                <span class="access-label vip">会员免费</span>
               </div>
             </div>
           </a>
           <a class="grid-card" href="drama-detail.html">
             <div class="cover cover-10">
-              <span class="badge hot">🔥热</span>
+              <span class="badge original">原创</span>
               <span class="episodes">30集全</span>
               <div class="title-overlay">凤求凰</div>
             </div>
             <div class="info">
               <div class="name">凤求凰</div>
               <div class="meta">
-                <span class="views">📺 112.8w</span>
-                <span class="price">¥25 解锁</span>
+                <span class="views">古装 · 112.8w</span>
+                <span class="access-label vip">会员免费</span>
               </div>
             </div>
           </a>
           <a class="grid-card" href="drama-detail.html">
             <div class="cover cover-3">
-              <span class="badge free">免费</span>
+              <span class="badge ad">看广告</span>
               <span class="episodes">20集全</span>
               <div class="title-overlay">花间一壶酒</div>
             </div>
             <div class="info">
               <div class="name">花间一壶酒</div>
               <div class="meta">
-                <span class="views">📺 98.5w</span>
-                <span class="price free">完全免费</span>
+                <span class="views">民国 · 98.5w</span>
+                <span class="access-label">非会员看广告</span>
               </div>
             </div>
           </a>
         </div>
+      </div>
+
+      <!-- 活动资讯 -->
+      <div class="section-title">
+        <div class="title">活动资讯</div>
+        <a class="more" href="news-detail.html">更多 ›</a>
+      </div>
+      <div class="news-card-list">
+        <a class="news-card" href="news-detail.html">
+          <div class="news-cover" style="background:linear-gradient(135deg,#C8252C,#E84D54)"></div>
+          <div class="news-info">
+            <span class="news-tag event">影视城动态</span>
+            <div class="news-title">铜官窑影视城暑期档开机仪式隆重举行</div>
+            <div class="news-meta">2026-06-28 · 1.2w阅读</div>
+          </div>
+        </a>
+        <a class="news-card" href="news-detail.html">
+          <div class="news-cover" style="background:linear-gradient(135deg,#D4A24C,#B8862E)"></div>
+          <div class="news-info">
+            <span class="news-tag start">开机信息</span>
+            <div class="news-title">《民国风云录》正式开机，招募群演50名</div>
+            <div class="news-meta">2026-06-25 · 3.6k阅读</div>
+          </div>
+        </a>
+        <a class="news-card" href="news-detail.html">
+          <div class="news-cover" style="background:linear-gradient(135deg,#2BA471,#1B7A4E)"></div>
+          <div class="news-info">
+            <span class="news-tag competition">赛事通知</span>
+            <div class="news-title">童话主题剧本拍摄大赛报名正式启动</div>
+            <div class="news-meta">2026-06-20 · 5.8k阅读</div>
+          </div>
+        </a>
       </div>
 
       <div style="height: 20px;"></div>
@@ -640,7 +892,7 @@
     <!-- 底部 TabBar -->
     <div class="tab-bar">
       <a class="tab-item active" href="index.html">
-        <span class="tab-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5L12 3l9 7.5"/><path d="M5.5 9.5V20a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1V9.5"/><path d="M9.5 21v-6h5v6"/></svg></span><span>首页</span>
+        <span class="tab-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5L12 3l9 7.5"/><path d="M5.5 9.5V20a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1V9.5"/><path d="M9.5 21v-6h5v6"/></svg></span><span>发现</span>
       </a>
       <a class="tab-item" href="teach.html">
         <span class="tab-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l10-4.5L22 9l-10 4.5z"/><path d="M6 11v5c0 1.2 2.7 2.5 6 2.5s6-1.3 6-2.5v-5"/><path d="M22 9v5.5"/></svg></span><span>教学</span>
@@ -656,7 +908,7 @@
 
   <script src="js/common.js"></script>
   <script>
-    // 分类点击
+    // 分类筛选
     document.querySelectorAll('.filter-bar .filter-item').forEach(item => {
       item.addEventListener('click', function() {
         document.querySelectorAll('.filter-bar .filter-item').forEach(i => i.classList.remove('active'));

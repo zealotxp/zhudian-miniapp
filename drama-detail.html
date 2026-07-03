@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>古镇重生 - 竖店短剧</title>
+  <title>古镇重生 - 竖店</title>
   <link rel="stylesheet" href="css/common.css">
   <style>
     body { background: #000; }
@@ -89,6 +89,33 @@
       z-index: 2;
     }
 
+    /* 广告提示条 */
+    .ad-tip-bar {
+      margin: 0 16px 0;
+      padding: 8px 12px;
+      background: rgba(200, 37, 44, 0.12);
+      border: 1px solid rgba(200, 37, 44, 0.25);
+      border-radius: var(--r-sm);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+    }
+    .ad-tip-bar .ad-left {
+      color: rgba(255,255,255,0.7);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .ad-tip-bar .ad-left svg {
+      width: 14px;
+      height: 14px;
+    }
+    .ad-tip-bar .ad-right {
+      color: var(--gold);
+      font-weight: 500;
+    }
+
     /* 剧集信息卡 */
     .info-card {
       background: #1A1A20;
@@ -157,7 +184,7 @@
       margin-left: 4px;
     }
 
-    /* 付费解锁横幅 */
+    /* 会员解锁横幅 */
     .unlock-banner {
       margin: 0 16px 8px;
       padding: 12px;
@@ -169,9 +196,7 @@
       justify-content: space-between;
       gap: 12px;
     }
-    .unlock-banner .left {
-      flex: 1;
-    }
+    .unlock-banner .left { flex: 1; }
     .unlock-banner .unlock-title {
       font-size: 13px;
       color: var(--gold);
@@ -236,16 +261,24 @@
       color: #4FD896;
       border: 1px solid rgba(43, 164, 113, 0.5);
     }
-    .episode-item.locked::after {
-      content: '🔒';
+    /* 非会员看广告标识 */
+    .episode-item.ad::after {
+      content: 'AD';
       position: absolute;
-      top: 2px;
+      top: 1px;
       right: 2px;
-      font-size: 8px;
+      font-size: 7px;
+      color: rgba(255,255,255,0.35);
+      letter-spacing: 0;
     }
     .episode-item.current {
       background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
       color: #fff;
+    }
+    .episode-item.vip-free {
+      background: rgba(212, 162, 76, 0.15);
+      color: #FCE6A2;
+      border: 1px solid rgba(212, 162, 76, 0.4);
     }
 
     /* 推荐区 */
@@ -280,25 +313,11 @@
       padding: 0 8px;
     }
     .bottom-action .icon { font-size: 18px; }
-    .bottom-bar .btn-unlock {
-      flex: 1;
-      height: 40px;
-      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
-      color: #fff;
-      border-radius: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-      font-weight: 600;
-      gap: 6px;
-    }
     .bottom-bar .btn-vip {
       flex: 1;
       height: 40px;
-      background: linear-gradient(135deg, #2B2B3A 0%, #1A1A28 100%);
-      color: #FCE6A2;
-      border: 1px solid rgba(212, 162, 76, 0.4);
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+      color: #5B3A00;
       border-radius: 20px;
       display: flex;
       align-items: center;
@@ -307,8 +326,20 @@
       font-weight: 600;
       gap: 4px;
     }
+    .bottom-bar .btn-ad {
+      flex: 1;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.08);
+      color: rgba(255,255,255,0.7);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      gap: 4px;
+    }
 
-    /* 弹层：解锁选项 */
+    /* 弹层：会员开通 */
     .modal-mask {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -338,7 +369,7 @@
       color: #fff;
       margin-bottom: 16px;
     }
-    .unlock-option {
+    .modal-option {
       display: flex;
       align-items: center;
       padding: 14px;
@@ -348,23 +379,37 @@
       gap: 12px;
       border: 1px solid transparent;
     }
-    .unlock-option.selected {
+    .modal-option.selected {
       border-color: var(--primary);
       background: rgba(200, 37, 44, 0.1);
     }
-    .unlock-option .opt-info { flex: 1; }
-    .unlock-option .opt-name { font-size: 14px; color: #fff; font-weight: 500; }
-    .unlock-option .opt-desc { font-size: 11px; color: rgba(255, 255, 255, 0.5); margin-top: 2px; }
-    .unlock-option .opt-price { font-size: 16px; color: var(--gold); font-weight: 700; }
+    .modal-option .opt-info { flex: 1; }
+    .modal-option .opt-name { font-size: 14px; color: #fff; font-weight: 500; }
+    .modal-option .opt-desc { font-size: 11px; color: rgba(255, 255, 255, 0.5); margin-top: 2px; }
+    .modal-option .opt-price { font-size: 16px; color: var(--gold); font-weight: 700; }
     .modal-btn {
       width: 100%;
       height: 44px;
-      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-      color: #fff;
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+      color: #5B3A00;
       border-radius: 22px;
       font-size: 15px;
       font-weight: 600;
       margin-top: 8px;
+    }
+    .modal-benefit-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 12px 0;
+      font-size: 11px;
+      color: rgba(255,255,255,0.6);
+    }
+    .modal-benefit-list span {
+      padding: 3px 8px;
+      background: rgba(212,162,76,0.15);
+      border-radius: 4px;
+      color: var(--gold);
     }
   </style>
 </head>
@@ -395,11 +440,20 @@
       </div>
     </div>
 
+    <!-- 广告提示条 (非会员状态) -->
+    <div class="ad-tip-bar">
+      <div class="ad-left">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <span>非会员每集播放前插播10-30秒广告</span>
+      </div>
+      <a class="ad-right" href="member.html">开通会员免广告 ›</a>
+    </div>
+
     <div class="page-content" style="padding-bottom:80px;">
       <!-- 剧集信息 -->
       <div class="info-card">
         <div class="info-title">古镇重生：铜官风云
-          <span class="tag tag-vip">VIP</span>
+          <span class="tag tag-vip">会员免广告</span>
         </div>
         <div class="info-meta">
           <span>📺 286.5w 播放</span>
@@ -408,6 +462,7 @@
         </div>
         <div class="info-tags">
           <span class="tag">古风</span>
+          <span class="tag">真人剧</span>
           <span class="tag">逆袭</span>
           <span class="tag">权谋</span>
           <span class="tag">30集</span>
@@ -437,13 +492,13 @@
         </div>
       </div>
 
-      <!-- 付费解锁横幅 -->
+      <!-- 会员权益横幅 -->
       <div class="unlock-banner">
         <div class="left">
-          <div class="unlock-title">👑 开通会员 全站免费看</div>
-          <div class="unlock-desc">黄金会员 ¥38/月，畅享全平台短剧+景区入园权益</div>
+          <div class="unlock-title">👑 开通会员 免广告畅看</div>
+          <div class="unlock-desc">年卡仅需100+元，短剧免广告·课程全解锁·兼职可接单·景区全年入园</div>
         </div>
-        <a href="member.html" class="btn btn-gold btn-sm">立即开通</a>
+        <a href="member.html" class="btn btn-gold btn-sm">开通会员</a>
       </div>
 
       <!-- 集数列表 -->
@@ -454,40 +509,40 @@
         </div>
         <div class="episode-grid">
           <div class="episode-item current">1</div>
-          <div class="episode-item free">2</div>
-          <div class="episode-item free">3</div>
-          <div class="episode-item free">4</div>
-          <div class="episode-item free">5</div>
-          <div class="episode-item locked">6</div>
-          <div class="episode-item locked">7</div>
-          <div class="episode-item locked">8</div>
-          <div class="episode-item locked">9</div>
-          <div class="episode-item locked">10</div>
-          <div class="episode-item locked">11</div>
-          <div class="episode-item locked">12</div>
-          <div class="episode-item locked">13</div>
-          <div class="episode-item locked">14</div>
-          <div class="episode-item locked">15</div>
-          <div class="episode-item locked">16</div>
-          <div class="episode-item locked">17</div>
-          <div class="episode-item locked">18</div>
-          <div class="episode-item locked">19</div>
-          <div class="episode-item locked">20</div>
-          <div class="episode-item locked">21</div>
-          <div class="episode-item locked">22</div>
-          <div class="episode-item locked">23</div>
-          <div class="episode-item locked">24</div>
-          <div class="episode-item locked">25</div>
-          <div class="episode-item locked">26</div>
-          <div class="episode-item locked">27</div>
-          <div class="episode-item locked">28</div>
-          <div class="episode-item locked" style="opacity:0.3">29</div>
-          <div class="episode-item locked" style="opacity:0.3">30</div>
+          <div class="episode-item played">2</div>
+          <div class="episode-item played">3</div>
+          <div class="episode-item ad">4</div>
+          <div class="episode-item ad">5</div>
+          <div class="episode-item ad">6</div>
+          <div class="episode-item ad">7</div>
+          <div class="episode-item ad">8</div>
+          <div class="episode-item ad">9</div>
+          <div class="episode-item ad">10</div>
+          <div class="episode-item ad">11</div>
+          <div class="episode-item ad">12</div>
+          <div class="episode-item ad">13</div>
+          <div class="episode-item ad">14</div>
+          <div class="episode-item ad">15</div>
+          <div class="episode-item ad">16</div>
+          <div class="episode-item ad">17</div>
+          <div class="episode-item ad">18</div>
+          <div class="episode-item ad">19</div>
+          <div class="episode-item ad">20</div>
+          <div class="episode-item ad">21</div>
+          <div class="episode-item ad">22</div>
+          <div class="episode-item ad">23</div>
+          <div class="episode-item ad">24</div>
+          <div class="episode-item ad">25</div>
+          <div class="episode-item ad">26</div>
+          <div class="episode-item ad">27</div>
+          <div class="episode-item ad">28</div>
+          <div class="episode-item" style="opacity:0.3">29</div>
+          <div class="episode-item" style="opacity:0.3">30</div>
         </div>
         <div style="padding: 12px 16px 0; font-size: 11px; color: rgba(255,255,255,0.4); display:flex; gap:14px;">
-          <span>🟢 前5集免费试看</span>
           <span>🔴 当前播放</span>
-          <span>🔒 需解锁</span>
+          <span style="color:var(--primary)">已看</span>
+          <span style="color:rgba(255,255,255,0.35)">AD 需看广告</span>
         </div>
       </div>
 
@@ -499,30 +554,30 @@
         <div class="h-scroll">
           <a class="drama-card" href="drama-detail.html" style="width:100px;flex-shrink:0;">
             <div class="drama-cover cover-4" style="width:100px;height:134px;">
-              <span class="cover-tag">VIP</span>
+              <span class="cover-tag" style="background:linear-gradient(135deg,#D4A24C,#B8862E)">会员免广告</span>
               <span class="cover-eps">24集</span>
               <div class="cover-title" style="font-size:12px">长安花录</div>
             </div>
           </a>
           <a class="drama-card" href="drama-detail.html" style="width:100px;flex-shrink:0;">
             <div class="drama-cover cover-5" style="width:100px;height:134px;">
-              <span class="cover-tag">VIP</span>
+              <span class="cover-tag" style="background:rgba(48,207,208,0.9)">AI剧</span>
               <span class="cover-eps">28集</span>
               <div class="cover-title" style="font-size:12px">田园小医女</div>
             </div>
           </a>
           <a class="drama-card" href="drama-detail.html" style="width:100px;flex-shrink:0;">
             <div class="drama-cover cover-10" style="width:100px;height:134px;">
-              <span class="cover-tag">VIP</span>
+              <span class="cover-tag" style="background:linear-gradient(135deg,#D4A24C,#B8862E)">会员免广告</span>
               <span class="cover-eps">30集</span>
               <div class="cover-title" style="font-size:12px">凤求凰</div>
             </div>
           </a>
           <a class="drama-card" href="drama-detail.html" style="width:100px;flex-shrink:0;">
-            <div class="drama-cover cover-9" style="width:100px;height:134px;">
-              <span class="cover-tag free">免费</span>
+            <div class="drama-cover cover-2" style="width:100px;height:134px;">
+              <span class="cover-tag" style="background:rgba(200,37,44,0.9)">看广告免费看</span>
               <span class="cover-eps">20集</span>
-              <div class="cover-title" style="font-size:12px">花间一壶酒</div>
+              <div class="cover-title" style="font-size:12px">千金归来</div>
             </div>
           </a>
         </div>
@@ -545,67 +600,80 @@
         <span class="icon">⬇️</span>
         <span>缓存</span>
       </div>
-      <div class="btn-vip" onclick="navigate('member.html')">👑 开通会员</div>
-      <div class="btn-unlock" onclick="showUnlockModal()">🔓 解锁全剧 ¥30</div>
+      <div class="btn-ad" onclick="showToast('即将播放广告…')">看广告免费看</div>
+      <div class="btn-vip" onclick="showMemberModal()">👑 会员免广告</div>
     </div>
   </div>
 
-  <!-- 解锁选项弹层 -->
-  <div class="modal-mask" id="modalMask" onclick="hideUnlockModal()"></div>
-  <div class="modal-sheet" id="unlockSheet">
-    <div class="modal-title">解锁《古镇重生：铜官风云》</div>
-    <div class="unlock-option selected">
-      <div class="opt-info">
-        <div class="opt-name">单剧点播 · 全集解锁</div>
-        <div class="opt-desc">解锁第6-28集，永久观看</div>
-      </div>
-      <div class="opt-price">¥30</div>
+  <!-- 会员开通弹层 -->
+  <div class="modal-mask" id="modalMask" onclick="hideMemberModal()"></div>
+  <div class="modal-sheet" id="memberSheet">
+    <div class="modal-title">开通会员 · 免广告畅看全部短剧</div>
+    <div class="modal-benefit-list">
+      <span>✅ 短剧免广告</span>
+      <span>✅ 全部课程</span>
+      <span>✅ 兼职接单</span>
+      <span>✅ 景区全年入园</span>
+      <span>✅ 原创上传</span>
+      <span>✅ 群演体验</span>
     </div>
-    <div class="unlock-option">
+    <div class="modal-option selected">
       <div class="opt-info">
-        <div class="opt-name">超前点播 · 直到大结局</div>
-        <div class="opt-desc">抢先看全集，比会员快3集</div>
+        <div class="opt-name">年卡 · 最划算</div>
+        <div class="opt-desc">全年不限次入园 + 全平台免广告畅看</div>
       </div>
-      <div class="opt-price">¥48</div>
+      <div class="opt-price">¥128/年</div>
     </div>
-    <div class="unlock-option">
+    <div class="modal-option">
       <div class="opt-info">
-        <div class="opt-name">余额支付</div>
-        <div class="opt-desc">当前余额 ¥0.00，<a href="recharge.html" style="color:var(--gold)">去充值 ›</a></div>
+        <div class="opt-name">季卡</div>
+        <div class="opt-desc">3个月畅享会员权益</div>
       </div>
+      <div class="opt-price">¥68/季</div>
     </div>
-    <button class="modal-btn" onclick="showToast('请先登录')">微信支付 ¥30 立即解锁</button>
+    <div class="modal-option">
+      <div class="opt-info">
+        <div class="opt-name">月卡</div>
+        <div class="opt-desc">1个月体验会员权益</div>
+      </div>
+      <div class="opt-price">¥38/月</div>
+    </div>
+    <button class="modal-btn" onclick="navigate('member.html')">立即开通会员</button>
     <div style="text-align:center; font-size:11px; color:rgba(255,255,255,0.4); margin-top:10px;">
-      支付即视为同意《用户付费协议》
+      开通需实名认证 · 支付即视为同意《用户付费协议》
     </div>
   </div>
 
   <script src="js/common.js"></script>
   <script>
-    function showUnlockModal() {
+    function showMemberModal() {
       document.getElementById('modalMask').classList.add('show');
-      document.getElementById('unlockSheet').classList.add('show');
+      document.getElementById('memberSheet').classList.add('show');
     }
-    function hideUnlockModal() {
+    function hideMemberModal() {
       document.getElementById('modalMask').classList.remove('show');
-      document.getElementById('unlockSheet').classList.remove('show');
+      document.getElementById('memberSheet').classList.remove('show');
     }
-    document.querySelectorAll('.unlock-option').forEach(opt => {
+    document.querySelectorAll('.modal-option').forEach(opt => {
       opt.addEventListener('click', function() {
-        document.querySelectorAll('.unlock-option').forEach(o => o.classList.remove('selected'));
+        document.querySelectorAll('.modal-option').forEach(o => o.classList.remove('selected'));
         this.classList.add('selected');
       });
     });
     // 选集切换
     document.querySelectorAll('.episode-item').forEach(item => {
       item.addEventListener('click', function() {
-        if (this.classList.contains('locked')) {
-          showToast('该集需解锁后观看');
+        if (this.style.opacity === '0.3') {
+          showToast('该集尚未更新');
           return;
         }
         document.querySelectorAll('.episode-item').forEach(i => i.classList.remove('current'));
         this.classList.add('current');
-        showToast('正在播放第 ' + this.textContent + ' 集');
+        if (this.classList.contains('ad')) {
+          showToast('非会员将播放10-30秒广告后继续');
+        } else {
+          showToast('正在播放第 ' + this.textContent.trim() + ' 集');
+        }
       });
     });
   </script>

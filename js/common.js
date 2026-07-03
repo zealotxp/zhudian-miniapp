@@ -65,13 +65,13 @@ function renderNavBar(title, opts = {}) {
 // 渲染底部 TabBar
 function renderTabBar(active = '') {
   const SVG = {
-    home: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5L12 3l9 7.5"/><path d="M5.5 9.5V20a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1V9.5"/><path d="M9.5 21v-6h5v6"/></svg>',
+    home: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>',
     teach: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l10-4.5L22 9l-10 4.5z"/><path d="M6 11v5c0 1.2 2.7 2.5 6 2.5s6-1.3 6-2.5v-5"/><path d="M22 9v5.5"/></svg>',
     scenic: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l1.8 3h-3.6z"/><path d="M8.5 5h7l-1 4h-5z"/><path d="M7.5 9h9l-1 4h-7z"/><path d="M6.5 13h11l-1 8h-9z"/><path d="M10 16h4M10 19h4"/></svg>',
     profile: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>'
   };
   const tabs = [
-    { key: 'home', name: '首页', url: 'index.html' },
+    { key: 'home', name: '发现', url: 'index.html' },
     { key: 'teach', name: '教学', url: 'teach.html' },
     { key: 'scenic', name: '景区', url: 'scenic.html' },
     { key: 'profile', name: '我的', url: 'profile.html' }

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>竖店短剧小程序 - 页面预览</title>
+  <title>竖店 - V1.0 页面预览</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -142,6 +142,13 @@
       font-size: 11px;
       display: flex; align-items: center; justify-content: center;
     }
+    .page-name .new {
+      background: #2BA471;
+      color: #fff;
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-size: 9px;
+    }
     .page-desc {
       font-size: 12px;
       color: #888;
@@ -161,6 +168,10 @@
       border-radius: 4px;
       font-size: 10px;
     }
+    .page-tags span.new-tag {
+      background: #E4F5EC;
+      color: #2BA471;
+    }
 
     .footer {
       text-align: center;
@@ -169,39 +180,36 @@
       font-size: 12px;
       line-height: 1.8;
     }
-    .footer a {
-      color: #C8252C;
-      text-decoration: none;
-    }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="header">
       <div class="logo">竖</div>
-      <h1>竖店短剧 · 小程序前端预览</h1>
-      <div class="subtitle">长沙铜官窑古镇 · 短剧 / 教学 / 景区 三大业务板块</div>
+      <h1>竖店 · V1.0 首期上线版本预览</h1>
+      <div class="subtitle">长沙铜官窑古镇 · 短剧/教学/兼职/原创/景区 五大业务板块</div>
       <div class="tags">
         <span>📱 微信小程序 UI</span>
         <span>🎨 HTML + CSS + JS</span>
-        <span>🎯 13 个完整页面</span>
+        <span>🎯 21 个完整页面</span>
         <span>🏯 古风红金主题</span>
+        <span>✨ V1.0 首期版本</span>
       </div>
     </div>
 
-    <!-- 短剧业务 -->
+    <!-- 发现/首页模块 -->
     <div class="section">
       <div class="section-title">
-        🎬 短剧业务模块 <span class="count">3 个页面</span>
+        🔍 发现/首页模块 <span class="count">3 个页面</span>
       </div>
       <div class="page-grid">
         <a class="page-card" href="index.html" target="_blank">
-          <div class="page-thumb" style="background:linear-gradient(135deg,#C8252C,#A81B22)">🏠</div>
+          <div class="page-thumb" style="background:linear-gradient(135deg,#C8252C,#A81B22)">🔍</div>
           <div class="page-info">
-            <div class="page-name"><span class="num">1</span> 首页</div>
-            <div class="page-desc">轮播推荐、题材分类、热榜、限时免费、短剧网格</div>
+            <div class="page-name"><span class="num">1</span> 发现首页</div>
+            <div class="page-desc">6大功能入口、推荐短剧、热门任务推荐、活动资讯</div>
             <div class="page-tags">
-              <span>主Tab</span><span>推荐</span><span>分类导航</span>
+              <span>主Tab</span><span>功能入口</span><span>推荐</span>
             </div>
           </div>
         </a>
@@ -209,9 +217,9 @@
           <div class="page-thumb" style="background:linear-gradient(135deg,#2C1810,#C8252C,#D4A24C)">🎬</div>
           <div class="page-info">
             <div class="page-name"><span class="num">2</span> 短剧详情页</div>
-            <div class="page-desc">视频播放器、剧集信息、付费解锁、选集列表、相关推荐</div>
+            <div class="page-desc">播放器+广告提示、选集列表、会员免广告、开通会员弹窗</div>
             <div class="page-tags">
-              <span>播放器</span><span>付费</span><span>选集</span>
+              <span>播放器</span><span>免广告</span><span>会员</span>
             </div>
           </div>
         </a>
@@ -219,28 +227,28 @@
           <div class="page-thumb" style="background:linear-gradient(135deg,#FFB199,#FF0844)">🔍</div>
           <div class="page-info">
             <div class="page-name"><span class="num">3</span> 搜索页</div>
-            <div class="page-desc">热门搜索、历史记录、分类筛选、结果列表</div>
+            <div class="page-desc">热门搜索、历史记录、分类筛选(真人剧/AI剧/原创/古装/民国/现代)</div>
             <div class="page-tags">
-              <span>搜索</span><span>历史</span><span>筛选</span>
+              <span>搜索</span><span>筛选</span><span>新分类</span>
             </div>
           </div>
         </a>
       </div>
     </div>
 
-    <!-- 教学业务 -->
+    <!-- 教学学习模块 -->
     <div class="section">
       <div class="section-title">
-        📚 教学业务模块 <span class="count">2 个页面</span>
+        📚 教学学习模块 <span class="count">2 个页面</span>
       </div>
       <div class="page-grid">
         <a class="page-card" href="teach.html" target="_blank">
           <div class="page-thumb" style="background:linear-gradient(135deg,#2C3E50,#1A2530)">📖</div>
           <div class="page-info">
             <div class="page-name"><span class="num">4</span> 教学首页</div>
-            <div class="page-desc">学分进度、学历必修/技能拓展、课程分类、学习进度</div>
+            <div class="page-desc">4专业Tab(表演/摄影/后期/AI虚拟)、免费试看+会员专享、会员提示</div>
             <div class="page-tags">
-              <span>主Tab</span><span>学分制</span><span>付费课</span>
+              <span>主Tab</span><span>4专业</span><span>免费试看</span>
             </div>
           </div>
         </a>
@@ -248,35 +256,123 @@
           <div class="page-thumb" style="background:linear-gradient(135deg,#1A2530,#4CA1AF)">🎓</div>
           <div class="page-info">
             <div class="page-name"><span class="num">5</span> 课程详情页</div>
-            <div class="page-desc">视频播放、教师介绍、章节列表、学分认定、购买</div>
+            <div class="page-desc">免费试看提示、前2节免费+会员专享、章节列表、会员免费看</div>
             <div class="page-tags">
-              <span>播放器</span><span>章节</span><span>付费</span>
+              <span>播放器</span><span>免费试看</span><span>会员</span>
             </div>
           </div>
         </a>
       </div>
     </div>
 
-    <!-- 景区运营 -->
+    <!-- 兼职任务模块 -->
     <div class="section">
       <div class="section-title">
-        🏯 景区运营模块 <span class="count">3 个页面</span>
+        📋 兼职任务模块 <span class="count">3 个页面</span>
+      </div>
+      <div class="page-grid">
+        <a class="page-card" href="task-list.html" target="_blank">
+          <div class="page-thumb" style="background:linear-gradient(135deg,#FF6B6B,#EE5A5A)">📋</div>
+          <div class="page-info">
+            <div class="page-name"><span class="num">6</span> 兼职任务列表 <span class="new">NEW</span></div>
+            <div class="page-desc">类型/地点筛选、任务卡片(酬劳+报名)、会员专享提示</div>
+            <div class="page-tags">
+              <span class="new-tag">新模块</span><span>筛选</span><span>酬劳</span>
+            </div>
+          </div>
+        </a>
+        <a class="page-card" href="task-detail.html" target="_blank">
+          <div class="page-thumb" style="background:linear-gradient(135deg,#C8252C,#E84D54)">📝</div>
+          <div class="page-info">
+            <div class="page-name"><span class="num">7</span> 任务详情 <span class="new">NEW</span></div>
+            <div class="page-desc">岗位要求、剧组信息、联系方式(会员可见)、报名弹窗</div>
+            <div class="page-tags">
+              <span class="new-tag">新模块</span><span>报名</span><span>担保结算</span>
+            </div>
+          </div>
+        </a>
+        <a class="page-card" href="my-tasks.html" target="_blank">
+          <div class="page-thumb" style="background:linear-gradient(135deg,#D4A24C,#B8862E)">📊</div>
+          <div class="page-info">
+            <div class="page-name"><span class="num">8</span> 我的任务 <span class="new">NEW</span></div>
+            <div class="page-desc">4状态Tab(报名中/已录用/进行中/已完成)、结算状态</div>
+            <div class="page-tags">
+              <span class="new-tag">新模块</span><span>状态跟踪</span><span>结算</span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- 原创作品模块 -->
+    <div class="section">
+      <div class="section-title">
+        🎬 原创作品模块 <span class="count">3 个页面</span>
+      </div>
+      <div class="page-grid">
+        <a class="page-card" href="original.html" target="_blank">
+          <div class="page-thumb" style="background:linear-gradient(135deg,#4FACFE,#00F2FE)">🎨</div>
+          <div class="page-info">
+            <div class="page-name"><span class="num">9</span> 原创作品 <span class="new">NEW</span></div>
+            <div class="page-desc">分类Tab、赛事入口、作品网格(原创/AI剧/赛事)、上传按钮</div>
+            <div class="page-tags">
+              <span class="new-tag">新模块</span><span>作品展示</span><span>赛事入口</span>
+            </div>
+          </div>
+        </a>
+        <a class="page-card" href="original-upload.html" target="_blank">
+          <div class="page-thumb" style="background:linear-gradient(135deg,#2BA471,#4FD896)">⬆️</div>
+          <div class="page-info">
+            <div class="page-name"><span class="num">10</span> 上传作品 <span class="new">NEW</span></div>
+            <div class="page-desc">视频上传、封面图、作品信息、分类标签、关联赛事、提交审核</div>
+            <div class="page-tags">
+              <span class="new-tag">新模块</span><span>上传</span><span>审核</span>
+            </div>
+          </div>
+        </a>
+        <a class="page-card" href="contest.html" target="_blank">
+          <div class="page-thumb" style="background:linear-gradient(135deg,#C8252C,#D4A24C)">🏆</div>
+          <div class="page-info">
+            <div class="page-name"><span class="num">11</span> 赛事专区 <span class="new">NEW</span></div>
+            <div class="page-desc">赛事封面、规则说明、奖项设置、参赛作品展示、报名入口</div>
+            <div class="page-tags">
+              <span class="new-tag">新模块</span><span>赛事</span><span>奖金</span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- 景区与体验模块 -->
+    <div class="section">
+      <div class="section-title">
+        🏯 景区与体验模块 <span class="count">4 个页面</span>
       </div>
       <div class="page-grid">
         <a class="page-card" href="scenic.html" target="_blank">
           <div class="page-thumb" style="background:linear-gradient(135deg,#1A2530,#C8252C,#D4A24C)">🏞️</div>
           <div class="page-info">
-            <div class="page-name"><span class="num">6</span> 景区首页</div>
-            <div class="page-desc">铜官窑古镇头图、会员权益核销、打卡任务、资讯专区</div>
+            <div class="page-name"><span class="num">12</span> 景区首页</div>
+            <div class="page-desc">会员权益+入园、VR选景入口、游玩体验项目、联营商家</div>
             <div class="page-tags">
-              <span>主Tab</span><span>打卡</span><span>权益</span>
+              <span>主Tab</span><span>权益</span><span>VR选景</span>
+            </div>
+          </div>
+        </a>
+        <a class="page-card" href="vr-scene.html" target="_blank">
+          <div class="page-thumb" style="background:linear-gradient(135deg,#30CFD0,#330867)">🔭</div>
+          <div class="page-info">
+            <div class="page-name"><span class="num">13</span> VR选景 <span class="new">NEW</span></div>
+            <div class="page-desc">700+场景、分类筛选、360°全景卡片、收藏、预约</div>
+            <div class="page-tags">
+              <span class="new-tag">新模块</span><span>360°全景</span><span>选景</span>
             </div>
           </div>
         </a>
         <a class="page-card" href="news-detail.html" target="_blank">
           <div class="page-thumb" style="background:linear-gradient(135deg,#2C1810,#C8252C,#D4A24C)">📰</div>
           <div class="page-info">
-            <div class="page-name"><span class="num">7</span> 资讯详情页</div>
+            <div class="page-name"><span class="num">14</span> 资讯详情页</div>
             <div class="page-desc">文章正文、作者信息、互动栏、评论、底部输入</div>
             <div class="page-tags">
               <span>文章</span><span>评论</span><span>分享</span>
@@ -286,7 +382,7 @@
         <a class="page-card" href="points.html" target="_blank">
           <div class="page-thumb" style="background:linear-gradient(135deg,#D4A24C,#B8862E)">💰</div>
           <div class="page-info">
-            <div class="page-name"><span class="num">8</span> 积分中心</div>
+            <div class="page-name"><span class="num">15</span> 积分中心</div>
             <div class="page-desc">积分余额、签到、积分兑换、积分明细、赚取规则</div>
             <div class="page-tags">
               <span>签到</span><span>兑换</span><span>门票</span>
@@ -296,37 +392,47 @@
       </div>
     </div>
 
-    <!-- 个人/支付 -->
+    <!-- 个人/会员/支付 -->
     <div class="section">
       <div class="section-title">
-        👤 个人中心 & 支付 <span class="count">5 个页面</span>
+        👤 个人中心 & 会员支付 <span class="count">6 个页面</span>
       </div>
       <div class="page-grid">
         <a class="page-card" href="profile.html" target="_blank">
           <div class="page-thumb" style="background:linear-gradient(135deg,#C8252C,#A81B22)">👤</div>
           <div class="page-info">
-            <div class="page-name"><span class="num">9</span> 个人中心</div>
-            <div class="page-desc">用户信息、会员卡、资产栏、观看历史、订单入口、工具栏</div>
+            <div class="page-name"><span class="num">16</span> 个人中心</div>
+            <div class="page-desc">实名认证状态、年卡会员、我的任务+我的作品入口、景区权益</div>
             <div class="page-tags">
-              <span>主Tab</span><span>会员</span><span>订单</span>
+              <span>主Tab</span><span>实名认证</span><span>作品入口</span>
             </div>
           </div>
         </a>
         <a class="page-card" href="member.html" target="_blank">
           <div class="page-thumb" style="background:linear-gradient(135deg,#2B2B3A,#1A1A28)">👑</div>
           <div class="page-info">
-            <div class="page-name"><span class="num">10</span> 会员开通</div>
-            <div class="page-desc">会员权益展示、月卡/季卡/年卡套餐、权益对比、支付</div>
+            <div class="page-name"><span class="num">17</span> 会员开通</div>
+            <div class="page-desc">6大权益、实名认证提示、次卡/月卡/季卡/年卡、权益对比</div>
             <div class="page-tags">
-              <span>套餐</span><span>权益</span><span>支付</span>
+              <span>4档位</span><span>实名认证</span><span>年卡¥128</span>
+            </div>
+          </div>
+        </a>
+        <a class="page-card" href="auth.html" target="_blank">
+          <div class="page-thumb" style="background:linear-gradient(135deg,#2BA471,#4FD896)">🛡️</div>
+          <div class="page-info">
+            <div class="page-name"><span class="num">18</span> 实名认证 <span class="new">NEW</span></div>
+            <div class="page-desc">姓名+身份证、认证用途说明、安全提示、提交审核</div>
+            <div class="page-tags">
+              <span class="new-tag">新页面</span><span>认证</span><span>入园核验</span>
             </div>
           </div>
         </a>
         <a class="page-card" href="orders.html" target="_blank">
           <div class="page-thumb" style="background:linear-gradient(135deg,#FA709A,#FEE140)">📦</div>
           <div class="page-info">
-            <div class="page-name"><span class="num">11</span> 订单管理</div>
-            <div class="page-desc">订单分类Tab、短剧/课程/会员/兑换/充值多种订单卡片</div>
+            <div class="page-name"><span class="num">19</span> 订单管理</div>
+            <div class="page-desc">订单分类Tab、多种订单卡片</div>
             <div class="page-tags">
               <span>订单</span><span>付款</span><span>退款</span>
             </div>
@@ -335,8 +441,8 @@
         <a class="page-card" href="recharge.html" target="_blank">
           <div class="page-thumb" style="background:linear-gradient(135deg,#2BA471,#4FD896)">💵</div>
           <div class="page-info">
-            <div class="page-name"><span class="num">12</span> 账户充值</div>
-            <div class="page-desc">余额展示、固定金额选择、自定义金额、赠送规则、支付</div>
+            <div class="page-name"><span class="num">20</span> 账户充值</div>
+            <div class="page-desc">余额展示、固定金额选择、赠送规则、支付</div>
             <div class="page-tags">
               <span>充值</span><span>赠送</span><span>微信支付</span>
             </div>
@@ -345,8 +451,8 @@
         <a class="page-card" href="login.html" target="_blank">
           <div class="page-thumb" style="background:linear-gradient(135deg,#C8252C,#2C1810)">🔐</div>
           <div class="page-info">
-            <div class="page-name"><span class="num">13</span> 登录页</div>
-            <div class="page-desc">微信一键登录、手机号验证码登录、协议同意、其他登录</div>
+            <div class="page-name"><span class="num">21</span> 登录页</div>
+            <div class="page-desc">微信一键登录、手机号验证码登录、协议同意</div>
             <div class="page-tags">
               <span>微信</span><span>手机号</span><span>注册</span>
             </div>
@@ -358,8 +464,9 @@
     <div class="footer">
       <p>🎨 设计主题：铜官窑窑火红 + 古铜金，呼应古镇文化底蕴</p>
       <p>📐 移动端 375px 宽度，模拟微信小程序原生 UI 体验</p>
-      <p>📦 共 <strong>13 个页面</strong>，覆盖短剧 / 教学 / 景区 / 会员 / 支付全业务流程</p>
-      <p style="margin-top:12px;">📍 长沙铜官窑古镇 · 短剧拍摄基地 © 2026 竖店短剧</p>
+      <p>📦 共 <strong>21 个页面</strong>，覆盖短剧/教学/兼职/原创/景区/会员/支付全业务流程</p>
+      <p>✨ V1.0 首期上线版本 · 新增兼职任务、原创作品、VR选景、实名认证 4大模块</p>
+      <p style="margin-top:12px;">📍 长沙铜官窑古镇 · 影视城产业融合平台 © 2026 竖店</p>
     </div>
   </div>
 </body>

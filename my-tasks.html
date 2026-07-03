@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>我的任务 - 竖店</title>
+  <link rel="stylesheet" href="css/common.css">
+  <style>
+    /* Tab切换 */
+    .task-tabs {
+      background: var(--bg-card);
+      display: flex;
+      border-bottom: 0.5px solid var(--line-soft);
+      position: relative;
+    }
+    .task-tab {
+      flex: 1;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: var(--text-3);
+      position: relative;
+    }
+    .task-tab.active {
+      color: var(--primary);
+      font-weight: 600;
+    }
+    .task-tab.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 24px;
+      height: 3px;
+      border-radius: 2px;
+      background: var(--primary);
+    }
+    .task-tab .tab-badge {
+      position: absolute;
+      top: 8px;
+      right: calc(50% - 30px);
+      min-width: 14px;
+      height: 14px;
+      padding: 0 4px;
+      border-radius: 7px;
+      background: var(--primary);
+      color: #fff;
+      font-size: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* 任务项 */
+    .my-task-card {
+      background: var(--bg-card);
+      margin: 10px 12px 0;
+      border-radius: var(--r-lg);
+      padding: 14px 16px;
+      box-shadow: var(--shadow-card);
+    }
+    .my-task-card .task-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .my-task-card .task-header .task-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-1);
+    }
+    .my-task-card .task-header .task-status {
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+    }
+    .status-pending {
+      background: var(--gold-soft);
+      color: var(--gold-dark);
+    }
+    .status-accepted {
+      background: #E4F5EC;
+      color: #2BA471;
+    }
+    .status-ongoing {
+      background: var(--primary-soft);
+      color: var(--primary);
+    }
+    .status-completed {
+      background: #F2F2F2;
+      color: var(--text-3);
+    }
+    .my-task-card .task-body {
+      font-size: 12px;
+      color: var(--text-3);
+      line-height: 1.5;
+    }
+    .my-task-card .task-meta {
+      display: flex;
+      gap: 12px;
+      margin-top: 8px;
+      font-size: 11px;
+      color: var(--text-3);
+    }
+    .my-task-card .task-meta .meta-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .my-task-card .task-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 0.5px solid var(--line-soft);
+    }
+    .my-task-card .task-footer .pay {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .my-task-card .task-footer .pay .unit {
+      font-size: 11px;
+    }
+    .my-task-card .task-footer .action-btn {
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .action-btn.red {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: #fff;
+    }
+    .action-btn.green {
+      background: #2BA471;
+      color: #fff;
+    }
+    .action-btn.gray {
+      background: #F2F2F2;
+      color: var(--text-3);
+    }
+
+    /* 空状态 */
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    .empty-tip {
+      padding: 40px 20px;
+      text-align: center;
+      color: var(--text-3);
+      font-size: 13px;
+    }
+    .empty-tip .empty-icon { font-size: 40px; opacity: 0.3; margin-bottom: 8px; }
+  </style>
+</head>
+<body>
+  <div class="phone-wrap">
+    <div class="nav-bar">
+      <a class="nav-back" href="profile.html" onclick="goBack()">←</a>
+      <span class="nav-title">我的任务</span>
+      <span class="nav-right"></span>
+    </div>
+
+    <!-- Tab切换 -->
+    <div class="task-tabs">
+      <div class="task-tab active" data-tab="pending">
+        报名中
+        <span class="tab-badge">2</span>
+      </div>
+      <div class="task-tab" data-tab="accepted">已录用</div>
+      <div class="task-tab" data-tab="ongoing">进行中</div>
+      <div class="task-tab" data-tab="completed">已完成</div>
+    </div>
+
+    <div class="page-content no-tabbar">
+      <!-- 报名中 -->
+      <div class="tab-content active" id="tab-pending">
+        <a class="my-task-card" href="task-detail.html">
+          <div class="task-header">
+            <span class="task-name">古装群演 — 《长安花录》</span>
+            <span class="task-status status-pending">待确认</span>
+          </div>
+          <div class="task-body">大型宴会场景群演，需配合拍摄3天</div>
+          <div class="task-meta">
+            <span class="meta-item">📍 铜官窑古镇</span>
+            <span class="meta-item">📅 7/5-7/7</span>
+          </div>
+          <div class="task-footer">
+            <span class="pay">¥200<span class="unit">/天</span></span>
+            <span class="action-btn gray">等待确认</span>
+          </div>
+        </a>
+
+        <a class="my-task-card" href="task-detail.html">
+          <div class="task-header">
+            <span class="task-name">摄影助理（跟组拍摄）</span>
+            <span class="task-status status-pending">待筛选</span>
+          </div>
+          <div class="task-body">协助摄影师完成跟组拍摄，负责器材搬运和布光调整</div>
+          <div class="task-meta">
+            <span class="meta-item">📍 铜官窑影视基地</span>
+            <span class="meta-item">📅 7/10-7/20</span>
+          </div>
+          <div class="task-footer">
+            <span class="pay">¥300<span class="unit">/天</span></span>
+            <span class="action-btn gray">等待筛选</span>
+          </div>
+        </a>
+      </div>
+
+      <!-- 已录用 -->
+      <div class="tab-content" id="tab-accepted">
+        <a class="my-task-card" href="task-detail.html">
+          <div class="task-header">
+            <span class="task-name">民国剧有台词角色 — 《千金归来》</span>
+            <span class="task-status status-accepted">✓ 已录用</span>
+          </div>
+          <div class="task-body">饰演丫鬟角色，有3段台词，需参加妆造培训</div>
+          <div class="task-meta">
+            <span class="meta-item">📍 铜官窑民国街</span>
+            <span class="meta-item">📅 7/15-7/25</span>
+            <span class="meta-item">📞 张导 138****5678</span>
+          </div>
+          <div class="task-footer">
+            <span class="pay">¥500<span class="unit">/天</span></span>
+            <span class="action-btn green">查看集合信息</span>
+          </div>
+        </a>
+      </div>
+
+      <!-- 进行中 -->
+      <div class="tab-content" id="tab-ongoing">
+        <div class="my-task-card">
+          <div class="task-header">
+            <span class="task-name">景区宣传短视频拍摄</span>
+            <span class="task-status status-ongoing">进行中</span>
+          </div>
+          <div class="task-body">为景区拍摄系列宣传短视频，已拍摄2组，还剩1组</div>
+          <div class="task-meta">
+            <span class="meta-item">📍 铜官窑古镇</span>
+            <span class="meta-item">📅 7/3-7/5</span>
+          </div>
+          <div class="task-footer">
+            <span class="pay">¥500<span class="unit">/组</span></span>
+            <span class="action-btn red">提交成果</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 已完成 -->
+      <div class="tab-content" id="tab-completed">
+        <div class="my-task-card">
+          <div class="task-header">
+            <span class="task-name">服化道助理（古装剧组）</span>
+            <span class="task-status status-completed">已结算 ✓</span>
+          </div>
+          <div class="task-body">协助化妆师完成古装造型，任务已完成并结算</div>
+          <div class="task-meta">
+            <span class="meta-item">📍 铜官窑古镇</span>
+            <span class="meta-item">📅 6/28-7/5</span>
+            <span class="meta-item">💰 已结算 ¥1750</span>
+          </div>
+          <div class="task-footer">
+            <span class="pay">¥250<span class="unit">/天</span></span>
+            <span class="action-btn gray">查看结算明细</span>
+          </div>
+        </div>
+        <div class="empty-tip">
+          <div class="empty-icon">📋</div>
+          更多历史任务记录
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/common.js"></script>
+  <script>
+    // Tab切换
+    document.querySelectorAll('.task-tab').forEach(tab => {
+      tab.addEventListener('click', function() {
+        document.querySelectorAll('.task-tab').forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+        const tabName = this.dataset.tab;
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        document.getElementById('tab-' + tabName).classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>上传作品 - 竖店</title>
+  <link rel="stylesheet" href="css/common.css">
+  <style>
+    .upload-form {
+      padding: 16px;
+    }
+    .form-section {
+      background: var(--bg-card);
+      border-radius: var(--r-lg);
+      padding: 14px 16px;
+      margin-bottom: 12px;
+      box-shadow: var(--shadow-card);
+    }
+    .form-section .sec-label {
+      font-size: 13px;
+      color: var(--text-2);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .form-section .sec-label .required {
+      color: var(--primary);
+      font-size: 10px;
+    }
+    .form-section input,
+    .form-section textarea,
+    .form-section select {
+      width: 100%;
+      font-size: 14px;
+      color: var(--text-1);
+    }
+    .form-section input {
+      height: 40px;
+      padding: 0 12px;
+      border: 0.5px solid var(--line);
+      border-radius: var(--r-md);
+      background: var(--bg);
+    }
+    .form-section textarea {
+      height: 80px;
+      padding: 10px 12px;
+      border: 0.5px solid var(--line);
+      border-radius: var(--r-md);
+      background: var(--bg);
+      resize: none;
+      line-height: 1.5;
+    }
+    .form-section select {
+      height: 40px;
+      padding: 0 12px;
+      border: 0.5px solid var(--line);
+      border-radius: var(--r-md);
+      background: var(--bg);
+    }
+
+    /* 文件上传区 */
+    .upload-area {
+      width: 100%;
+      height: 120px;
+      border: 1px dashed var(--line);
+      border-radius: var(--r-md);
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 8px;
+      color: var(--text-3);
+      font-size: 13px;
+    }
+    .upload-area .upload-icon {
+      font-size: 32px;
+      opacity: 0.4;
+    }
+    .upload-area .upload-tip {
+      font-size: 11px;
+      color: var(--text-4);
+    }
+
+    /* 封面上传 */
+    .cover-upload {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border: 1px dashed var(--line);
+      border-radius: var(--r-md);
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 6px;
+      color: var(--text-3);
+    }
+    .cover-upload .icon { font-size: 24px; opacity: 0.4; }
+    .cover-upload .tip { font-size: 11px; color: var(--text-4); }
+
+    /* 标签选择 */
+    .tag-select {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+    .tag-option {
+      padding: 4px 10px;
+      border-radius: 14px;
+      font-size: 12px;
+      background: var(--bg);
+      color: var(--text-2);
+      border: 0.5px solid var(--line);
+    }
+    .tag-option.selected {
+      background: var(--primary-soft);
+      color: var(--primary);
+      border-color: var(--primary);
+    }
+
+    /* 提交按钮 */
+    .submit-bar {
+      padding: 16px;
+    }
+    .submit-btn {
+      width: 100%;
+      height: 44px;
+      border-radius: 22px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: #fff;
+      font-size: 15px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .submit-note {
+      font-size: 11px;
+      color: var(--text-3);
+      text-align: center;
+      margin-top: 8px;
+    }
+
+    /* 会员提示 */
+    .member-tip-box {
+      background: linear-gradient(135deg, #2B2B3A, #1A1A28);
+      padding: 12px 16px;
+      border-radius: var(--r-md);
+      color: #fff;
+      font-size: 13px;
+      margin: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .member-tip-box .icon { color: #D4A24C; font-size: 18px; }
+    .member-tip-box .text { flex: 1; }
+    .member-tip-box .text .gold { color: #FCE6A2; font-weight: 600; }
+    .member-tip-box .btn {
+      padding: 4px 12px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      color: #fff;
+      border-radius: 12px;
+      font-size: 11px;
+    }
+  </style>
+</head>
+<body>
+  <div class="phone-wrap">
+    <div class="nav-bar">
+      <a class="nav-back" href="original.html" onclick="goBack()">←</a>
+      <span class="nav-title">上传作品</span>
+      <span class="nav-right"></span>
+    </div>
+
+    <div class="page-content no-tabbar">
+      <!-- 会员提示 -->
+      <div class="member-tip-box">
+        <span class="icon">👑</span>
+        <span class="text">开通<span class="gold">会员</span>后可上传原创作品</span>
+        <a class="btn" href="member.html">开通会员</a>
+      </div>
+
+      <div class="upload-form">
+        <!-- 视频文件上传 -->
+        <div class="form-section">
+          <div class="sec-label">视频文件 <span class="required">*</span></div>
+          <div class="upload-area" onclick="showToast('选择视频文件')">
+            <span class="upload-icon">🎬</span>
+            <span>点击上传视频文件</span>
+            <span class="upload-tip">支持 MP4/MOV，最大 500MB，时长 3-30分钟</span>
+          </div>
+        </div>
+
+        <!-- 封面图 -->
+        <div class="form-section">
+          <div class="sec-label">封面图 <span class="required">*</span></div>
+          <div class="cover-upload" onclick="showToast('选择封面图片')">
+            <span class="icon">🖼</span>
+            <span>点击上传封面图</span>
+            <span class="tip">建议 3:4 比例，清晰美观</span>
+          </div>
+        </div>
+
+        <!-- 作品名称 -->
+        <div class="form-section">
+          <div class="sec-label">作品名称 <span class="required">*</span></div>
+          <input type="text" placeholder="如：铜官窑之恋、民国日记">
+        </div>
+
+        <!-- 作品简介 -->
+        <div class="form-section">
+          <div class="sec-label">作品简介</div>
+          <textarea placeholder="简要介绍你的作品内容、创作背景、特色亮点"></textarea>
+        </div>
+
+        <!-- 作品分类 -->
+        <div class="form-section">
+          <div class="sec-label">作品分类 <span class="required">*</span></div>
+          <select>
+            <option value="">请选择分类</option>
+            <option>真人短剧</option>
+            <option>AI创作短片</option>
+            <option>纪录片</option>
+            <option>教学作品</option>
+          </select>
+        </div>
+
+        <!-- 作品标签 -->
+        <div class="form-section">
+          <div class="sec-label">作品标签（多选）</div>
+          <div class="tag-select">
+            <span class="tag-option" onclick="toggleTag(this)">古装</span>
+            <span class="tag-option" onclick="toggleTag(this)">民国</span>
+            <span class="tag-option" onclick="toggleTag(this)">现代</span>
+            <span class="tag-option" onclick="toggleTag(this)">悬疑</span>
+            <span class="tag-option" onclick="toggleTag(this)">甜宠</span>
+            <span class="tag-option" onclick="toggleTag(this)">励志</span>
+            <span class="tag-option" onclick="toggleTag(this)">纪实</span>
+            <span class="tag-option selected" onclick="toggleTag(this)">铜官窑</span>
+          </div>
+        </div>
+
+        <!-- 所属赛事 -->
+        <div class="form-section">
+          <div class="sec-label">关联赛事（选填）</div>
+          <select>
+            <option value="">不关联赛事</option>
+            <option>🏆 童话主题剧本拍摄大赛</option>
+            <option>🎬 春季短剧创作大赛</option>
+          </select>
+          <div style="font-size:11px; color:var(--text-3); margin-top:6px;">
+            参赛作品将额外展示在赛事专区，有机会获得推荐和奖金
+          </div>
+        </div>
+
+        <!-- 提交按钮 -->
+        <div class="submit-bar">
+          <div class="submit-btn" onclick="submitWork()">提交审核</div>
+          <div class="submit-note">⚠️ 作品提交后将由平台审核，审核通过后在前台展示<br>仅会员可上传作品，请确保已开通会员</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/common.js"></script>
+  <script>
+    function toggleTag(el) {
+      el.classList.toggle('selected');
+    }
+    function submitWork() {
+      showToast('作品已提交审核，预计1-3个工作日内完成审核');
+    }
+  </script>
+</body>
+</html>
