@@ -10,7 +10,7 @@
     .phone-wrap { background: #0F0F12; color: #fff; }
     .member-hero {
       background: linear-gradient(180deg, #1A1A28 0%, #2B2B3A 50%, #0F0F12 100%);
-      padding: 0 16px 30px;
+      padding: 0 16px 20px;
       position: relative;
       overflow: hidden;
     }
@@ -28,36 +28,78 @@
     }
     .member-hero .nav-bar .nav-back,
     .member-hero .nav-bar .nav-right { color: #fff; }
-    .member-hero .hero-content {
+    .hero-content {
       position: relative; z-index: 2;
       text-align: center;
-      padding: 20px 0 0;
+      padding: 16px 0 0;
     }
     .crown-icon {
-      font-size: 56px;
+      font-size: 48px;
       filter: drop-shadow(0 4px 12px rgba(212, 162, 76, 0.5));
     }
     .member-name {
-      font-size: 22px;
+      font-size: 20px;
       font-weight: 800;
       background: linear-gradient(135deg, #FCE6A2 0%, #D4A24C 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      margin-top: 8px;
+      margin-top: 6px;
     }
     .member-subtitle {
-      font-size: 13px;
+      font-size: 12px;
       color: rgba(255, 255, 255, 0.6);
       margin-top: 4px;
     }
 
-    /* 权益展示 6项 */
+    /* 会员类型切换Tab */
+    .member-tabs {
+      display: flex;
+      margin: 16px 12px 0;
+      background: #1A1A20;
+      border-radius: var(--r-md);
+      padding: 4px;
+      position: relative;
+      z-index: 2;
+    }
+    .member-tab {
+      flex: 1;
+      text-align: center;
+      padding: 10px 0;
+      font-size: 14px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.4);
+      border-radius: 10px;
+      transition: all 0.25s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+    .member-tab .tab-icon {
+      font-size: 18px;
+    }
+    .member-tab .tab-label {
+      font-size: 13px;
+    }
+    .member-tab .tab-price {
+      font-size: 10px;
+      color: rgba(255, 255, 255, 0.3);
+    }
+    .member-tab.active {
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+      color: #5B3A00;
+    }
+    .member-tab.active .tab-price {
+      color: rgba(91, 58, 0, 0.6);
+    }
+
+    /* 权益展示 */
     .benefits-row {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 8px;
-      margin-top: 20px;
+      margin-top: 16px;
       position: relative; z-index: 2;
     }
     .benefit-cell {
@@ -65,16 +107,20 @@
       color: rgba(255, 255, 255, 0.85);
     }
     .benefit-cell .bi-icon {
-      width: 40px; height: 40px;
+      width: 38px; height: 38px;
       border-radius: 50%;
       background: rgba(212, 162, 76, 0.15);
       border: 1px solid rgba(212, 162, 76, 0.3);
       display: flex; align-items: center; justify-content: center;
-      font-size: 18px;
+      font-size: 17px;
       margin: 0 auto 4px;
     }
     .benefit-cell .bi-label {
       font-size: 11px;
+    }
+    .benefit-cell.crew-only .bi-icon {
+      background: rgba(200, 37, 44, 0.15);
+      border-color: rgba(200, 37, 44, 0.3);
     }
 
     /* 实名认证提示 */
@@ -113,6 +159,10 @@
       position: relative;
       overflow: hidden;
     }
+    .plan-item.crew-plan {
+      background: linear-gradient(135deg, rgba(200, 37, 44, 0.12) 0%, rgba(212, 162, 76, 0.08) 100%);
+      border-color: var(--primary);
+    }
     .plan-item::before {
       content: '推荐';
       position: absolute;
@@ -123,6 +173,10 @@
       border-radius: 0 0 6px 6px;
       font-size: 10px;
       font-weight: 700;
+    }
+    .plan-item.crew-plan::before {
+      background: linear-gradient(135deg, var(--primary), #E84D54);
+      color: #fff;
     }
     .plan-info { flex: 1; }
     .plan-name {
@@ -154,10 +208,59 @@
       font-weight: 700;
       color: var(--gold);
     }
+    .plan-item.crew-plan .plan-price .price {
+      color: #FF6B6B;
+    }
     .plan-price .origin {
       font-size: 12px;
       color: rgba(255, 255, 255, 0.4);
       text-decoration: line-through;
+    }
+
+    /* 剧组特权说明 */
+    .crew-perks {
+      margin: 0 12px 16px;
+      background: #1A1A20;
+      border-radius: var(--r-md);
+      padding: 14px 16px;
+    }
+    .crew-perks .cp-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 12px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .crew-perks .cp-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .crew-perks .cp-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .crew-perks .cp-icon {
+      width: 32px; height: 32px;
+      border-radius: 8px;
+      background: rgba(200, 37, 44, 0.15);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+    .crew-perks .cp-text {
+      flex: 1;
+    }
+    .crew-perks .cp-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: #fff;
+    }
+    .crew-perks .cp-desc {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.5);
+      margin-top: 2px;
     }
 
     /* 权益对比 */
@@ -171,28 +274,61 @@
       font-size: 14px;
       font-weight: 600;
       color: #fff;
-      margin-bottom: 12px;
+      margin-bottom: 4px;
       display: flex; align-items: center; gap: 6px;
     }
-    .compare-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 0;
-      border-top: 0.5px solid rgba(255, 255, 255, 0.05);
-      font-size: 13px;
+    .compare-sub {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.4);
+      margin-bottom: 12px;
     }
-    .compare-row .feature {
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .compare-table th {
+      font-size: 11px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.5);
+      padding: 8px 4px;
+      text-align: center;
+      border-bottom: 0.5px solid rgba(255, 255, 255, 0.08);
+    }
+    .compare-table th:first-child {
+      text-align: left;
+      color: rgba(255, 255, 255, 0.7);
+      width: 40%;
+    }
+    .compare-table th.col-normal {
+      color: rgba(255, 255, 255, 0.4);
+    }
+    .compare-table th.col-vip {
+      color: var(--gold);
+    }
+    .compare-table th.col-crew {
+      color: #FF6B6B;
+    }
+    .compare-table td {
+      font-size: 12px;
+      padding: 9px 4px;
+      text-align: center;
+      border-top: 0.5px solid rgba(255, 255, 255, 0.05);
+      color: rgba(255, 255, 255, 0.7);
+    }
+    .compare-table td:first-child {
+      text-align: left;
       color: rgba(255, 255, 255, 0.8);
     }
-    .compare-row .normal {
-      color: rgba(255, 255, 255, 0.4);
-      font-size: 12px;
-    }
-    .compare-row .vip {
+    .compare-table td.yes {
       color: var(--gold);
       font-weight: 600;
-      display: flex; align-items: center; gap: 4px;
+    }
+    .compare-table td.crew-yes {
+      color: #FF6B6B;
+      font-weight: 600;
+    }
+    .compare-table td.no {
+      color: rgba(255, 255, 255, 0.25);
     }
 
     /* 协议 */
@@ -211,6 +347,7 @@
       display: flex; align-items: center; justify-content: center;
       color: var(--gold);
       font-size: 10px;
+      flex-shrink: 0;
     }
     .agreement .check-box.checked {
       background: var(--gold);
@@ -243,6 +380,9 @@
       font-weight: 700;
       color: var(--gold);
     }
+    .pay-bar.crew-mode .price-info .price {
+      color: #FF6B6B;
+    }
     .pay-bar .pay-btn {
       padding: 0 28px;
       height: 44px;
@@ -254,6 +394,9 @@
       display: flex;
       align-items: center;
       gap: 4px;
+    }
+    .pay-bar.crew-mode .pay-btn {
+      background: linear-gradient(135deg, var(--primary) 0%, #E84D54 100%);
     }
   </style>
 </head>
@@ -271,27 +414,22 @@
       </div>
 
       <div class="hero-content">
-        <div class="crown-icon">👑</div>
-        <div class="member-name">黄金会员</div>
-        <div class="member-subtitle">全年畅享 · 短剧免广告 · 景区不限次入园 · 课程全解锁</div>
+        <div class="crown-icon" id="heroIcon">👑</div>
+        <div class="member-name" id="heroName">个人会员</div>
+        <div class="member-subtitle" id="heroSub">全年畅享 · 短剧免广告 · 景区不限次入园 · 课程全解锁</div>
+      </div>
 
-        <div class="benefits-row">
-          <div class="benefit-cell">
-            <div class="bi-icon">🏯</div>
-            <div class="bi-label">景区全年入园</div>
-          </div>
-          <div class="benefit-cell">
-            <div class="bi-icon">🎬</div>
-            <div class="bi-label">短剧免广告</div>
-          </div>
-          <div class="benefit-cell">
-            <div class="bi-icon">📚</div>
-            <div class="bi-label">全部课程</div>
-          </div>
-          <div class="benefit-cell">
-            <div class="bi-icon">💼</div>
-            <div class="bi-label">兼职联系</div>
-          </div>
+      <!-- 会员类型切换 -->
+      <div class="member-tabs">
+        <div class="member-tab active" data-type="personal">
+          <span class="tab-icon">👤</span>
+          <span class="tab-label">个人会员</span>
+          <span class="tab-price">¥128/年</span>
+        </div>
+        <div class="member-tab" data-type="crew">
+          <span class="tab-icon">🎬</span>
+          <span class="tab-label">剧组会员</span>
+          <span class="tab-price">¥998/年</span>
         </div>
       </div>
     </div>
@@ -304,48 +442,174 @@
         <a class="auth-btn" href="auth.html">去认证</a>
       </div>
 
-      <!-- 会员套餐 -->
-      <div class="plan-list">
-        <div class="plan-item selected" data-plan="year">
-          <div class="plan-info">
-            <div class="plan-name">年卡会员 <span class="discount-tag">首期特惠</span></div>
-            <div class="plan-desc">有效期1年 · 平均每天 ¥0.35 · 景区全年不限次入园</div>
+      <!-- ============ 个人会员面板 ============ -->
+      <div class="panel-personal">
+        <!-- 权益展示 -->
+        <div style="padding: 16px 12px 0;">
+          <div class="benefits-row">
+            <div class="benefit-cell">
+              <div class="bi-icon">🏯</div>
+              <div class="bi-label">景区全年入园</div>
+            </div>
+            <div class="benefit-cell">
+              <div class="bi-icon">🎬</div>
+              <div class="bi-label">短剧免广告</div>
+            </div>
+            <div class="benefit-cell">
+              <div class="bi-icon">📚</div>
+              <div class="bi-label">全部课程</div>
+            </div>
+            <div class="benefit-cell">
+              <div class="bi-icon">💼</div>
+              <div class="bi-label">兼职联系</div>
+            </div>
           </div>
-          <div class="plan-price">
-            <div class="price">¥128</div>
-            <div class="origin">原价 ¥456</div>
+        </div>
+
+        <!-- 套餐 -->
+        <div class="plan-list">
+          <div class="plan-item">
+            <div class="plan-info">
+              <div class="plan-name">个人年卡 <span class="discount-tag">首期特惠</span></div>
+              <div class="plan-desc">有效期1年 · 平均每天 ¥0.35 · 景区全年不限次入园</div>
+            </div>
+            <div class="plan-price">
+              <div class="price">¥128</div>
+              <div class="origin">原价 ¥456</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ 剧组会员面板 ============ -->
+      <div class="panel-crew" style="display:none;">
+        <!-- 权益展示 -->
+        <div style="padding: 16px 12px 0;">
+          <div class="benefits-row">
+            <div class="benefit-cell">
+              <div class="bi-icon">🎥</div>
+              <div class="bi-label">景区拍摄短剧</div>
+            </div>
+            <div class="benefit-cell">
+              <div class="bi-icon">📋</div>
+              <div class="bi-label">发布兼职任务</div>
+            </div>
+            <div class="benefit-cell">
+              <div class="bi-icon">🏯</div>
+              <div class="bi-label">景区全年入园</div>
+            </div>
+            <div class="benefit-cell">
+              <div class="bi-icon">🎬</div>
+              <div class="bi-label">短剧免广告</div>
+            </div>
+            <div class="benefit-cell">
+              <div class="bi-icon">📚</div>
+              <div class="bi-label">全部课程</div>
+            </div>
+            <div class="benefit-cell">
+              <div class="bi-icon">💼</div>
+              <div class="bi-label">兼职联系</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 套餐 -->
+        <div class="plan-list">
+          <div class="plan-item crew-plan">
+            <div class="plan-info">
+              <div class="plan-name">剧组年卡 <span class="discount-tag">企业/工作室</span></div>
+              <div class="plan-desc">有效期1年 · 含个人会员全部权益 · 景区拍摄 + 兼职发布</div>
+            </div>
+            <div class="plan-price">
+              <div class="price">¥998</div>
+              <div class="origin">原价 ¥1998</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 剧组特权说明 -->
+        <div class="crew-perks">
+          <div class="cp-title">🎬 剧组专属特权</div>
+          <div class="cp-list">
+            <div class="cp-item">
+              <div class="cp-icon">🎥</div>
+              <div class="cp-text">
+                <div class="cp-name">景区拍摄短剧</div>
+                <div class="cp-desc">在铜官窑古镇影视城取景拍摄，享拍摄场地协调支持</div>
+              </div>
+            </div>
+            <div class="cp-item">
+              <div class="cp-icon">📋</div>
+              <div class="cp-text">
+                <div class="cp-name">发布兼职任务</div>
+                <div class="cp-desc">在平台发布群演、摄影、服化道等剧组招聘信息，触达全部用户</div>
+              </div>
+            </div>
+            <div class="cp-item">
+              <div class="cp-icon">✅</div>
+              <div class="cp-text">
+                <div class="cp-name">含个人会员全部权益</div>
+                <div class="cp-desc">短剧免广告、全部课程、景区全年入园、兼职联系方式</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
       <!-- 权益对比 -->
       <div class="compare-section">
-        <div class="compare-title">📊 会员专属权益对比</div>
-        <div class="compare-row" style="border-top:none;">
-          <div class="feature">🏯 景区入园</div>
-          <div class="normal">原价购票</div>
-          <div class="vip">✓ 全年不限次</div>
-        </div>
-        <div class="compare-row">
-          <div class="feature">🎬 短剧观看</div>
-          <div class="normal">每集看广告</div>
-          <div class="vip">✓ 全免广告</div>
-        </div>
-        <div class="compare-row">
-          <div class="feature">📚 教学课程</div>
-          <div class="normal">仅试看入门课</div>
-          <div class="vip">✓ 全部免费看</div>
-        </div>
-        <div class="compare-row">
-          <div class="feature">💼 兼职联系</div>
-          <div class="normal">不可查看联系方式</div>
-          <div class="vip">✓ 可查看联系方式</div>
-        </div>
-        <div class="compare-row">
-          <div class="feature">🛡️ 实名入园</div>
-          <div class="normal">—</div>
-          <div class="vip">✓ 身份证/刷脸</div>
-        </div>
+        <div class="compare-title">📊 权益对比</div>
+        <div class="compare-sub">非会员 / 个人会员 / 剧组会员</div>
+        <table class="compare-table">
+          <tr>
+            <th>权益</th>
+            <th class="col-normal">非会员</th>
+            <th class="col-vip">个人会员</th>
+            <th class="col-crew">剧组会员</th>
+          </tr>
+          <tr>
+            <td>🏯 景区入园</td>
+            <td class="no">原价购票</td>
+            <td class="yes">✓ 全年</td>
+            <td class="crew-yes">✓ 全年</td>
+          </tr>
+          <tr>
+            <td>🎬 短剧观看</td>
+            <td class="no">看广告</td>
+            <td class="yes">✓ 免广告</td>
+            <td class="crew-yes">✓ 免广告</td>
+          </tr>
+          <tr>
+            <td>📚 教学课程</td>
+            <td class="no">仅试看</td>
+            <td class="yes">✓ 全部</td>
+            <td class="crew-yes">✓ 全部</td>
+          </tr>
+          <tr>
+            <td>💼 兼职联系</td>
+            <td class="no">不可查看</td>
+            <td class="yes">✓ 可查看</td>
+            <td class="crew-yes">✓ 可查看</td>
+          </tr>
+          <tr>
+            <td>🎥 景区拍摄</td>
+            <td class="no">—</td>
+            <td class="no">—</td>
+            <td class="crew-yes">✓ 可拍摄</td>
+          </tr>
+          <tr>
+            <td>📋 发布兼职</td>
+            <td class="no">—</td>
+            <td class="no">—</td>
+            <td class="crew-yes">✓ 可发布</td>
+          </tr>
+          <tr>
+            <td>🛡️ 实名认证</td>
+            <td class="no">—</td>
+            <td class="yes">✓</td>
+            <td class="crew-yes">✓</td>
+          </tr>
+        </table>
       </div>
 
       <!-- 协议 -->
@@ -359,18 +623,57 @@
     </div>
 
     <!-- 底部支付 -->
-    <div class="pay-bar">
+    <div class="pay-bar" id="payBar">
       <div class="price-info">
         <div class="label">实付金额</div>
-        <div class="price">¥128.00</div>
+        <div class="price" id="payPrice">¥128.00</div>
       </div>
-      <div class="pay-btn" onclick="showToast('请先完成实名认证')">立即开通</div>
+      <div class="pay-btn" onclick="handlePay()">立即开通</div>
     </div>
   </div>
 
   <script src="js/common.js"></script>
   <script>
-    // 年卡唯一套餐，无需选择逻辑
+    var currentType = 'personal';
+    var plans = {
+      personal: { price: 128, name: '个人会员', icon: '👑', sub: '全年畅享 · 短剧免广告 · 景区不限次入园 · 课程全解锁' },
+      crew: { price: 998, name: '剧组会员', icon: '🎬', sub: '含个人会员全部权益 · 景区拍摄短剧 · 发布兼职任务' }
+    };
+
+    document.querySelectorAll('.member-tab').forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        var type = this.dataset.type;
+        currentType = type;
+        var plan = plans[type];
+
+        // Tab active
+        document.querySelectorAll('.member-tab').forEach(function(t) { t.classList.remove('active'); });
+        this.classList.add('active');
+
+        // Hero
+        document.getElementById('heroIcon').textContent = plan.icon;
+        document.getElementById('heroName').textContent = plan.name;
+        document.getElementById('heroSub').textContent = plan.sub;
+
+        // Panel
+        document.querySelector('.panel-personal').style.display = type === 'personal' ? '' : 'none';
+        document.querySelector('.panel-crew').style.display = type === 'crew' ? '' : 'none';
+
+        // Pay bar
+        document.getElementById('payPrice').textContent = '¥' + plan.price + '.00';
+        var payBar = document.getElementById('payBar');
+        if (type === 'crew') {
+          payBar.classList.add('crew-mode');
+        } else {
+          payBar.classList.remove('crew-mode');
+        }
+      });
+    });
+
+    function handlePay() {
+      showToast('请先完成实名认证');
+    }
+
     document.querySelector('.agreement .check-box').addEventListener('click', function() {
       this.classList.toggle('checked');
       if (this.classList.contains('checked')) {

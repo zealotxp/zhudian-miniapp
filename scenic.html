@@ -13,6 +13,7 @@
       background: linear-gradient(135deg, #1A2530 0%, #C8252C 50%, #D4A24C 100%);
       overflow: hidden;
       padding: 0 16px;
+      flex-shrink: 0;
     }
     .scenic-hero::before {
       content: '';
@@ -49,23 +50,29 @@
       opacity: 0.8;
     }
 
+    /* 资讯容器（Tab + 列表一体白色卡片） */
+    .news-container {
+      background: var(--bg-card);
+      margin: -20px 0 0;
+      border-radius: var(--r-lg) var(--r-lg) 0 0;
+      position: relative;
+      z-index: 3;
+      padding-bottom: 12px;
+    }
+
     /* 资讯分类Tab */
     .news-tabs {
       display: flex;
       gap: 0;
       padding: 0 12px;
-      background: var(--bg-card);
-      margin: -20px 12px 0;
-      border-radius: var(--r-lg) var(--r-lg) 0 0;
-      position: relative;
-      z-index: 3;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
+      border-bottom: 0.5px solid var(--line-soft);
     }
     .news-tabs::-webkit-scrollbar { display: none; }
     .news-tab {
       flex-shrink: 0;
-      padding: 12px 14px;
+      padding: 14px 14px 12px;
       font-size: 13px;
       color: var(--text-3);
       position: relative;
@@ -86,18 +93,11 @@
       background: var(--primary);
     }
 
-    /* 资讯列表容器 */
-    .news-list-wrap {
-      background: var(--bg-card);
-      margin: 0 12px;
-      border-radius: 0 0 var(--r-lg) var(--r-lg);
-      padding: 4px 0 12px;
-    }
-
     /* 头条资讯 */
     .news-feature {
-      margin: 0 12px 12px;
-      border-radius: var(--r-lg);
+      display: block;
+      margin: 12px 12px 14px;
+      border-radius: var(--r-md);
       overflow: hidden;
       box-shadow: var(--shadow-card);
       position: relative;
@@ -116,6 +116,7 @@
       font-weight: 600;
       color: #fff;
       background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      z-index: 2;
     }
     .news-feature-cover .nf-gradient {
       position: absolute;
@@ -150,13 +151,12 @@
 
     /* 普通资讯卡片 */
     .news-card {
-      background: var(--bg-card);
-      margin: 0 12px 10px;
-      border-radius: var(--r-md);
-      padding: 12px;
       display: flex;
       gap: 12px;
-      box-shadow: var(--shadow-card);
+      padding: 12px;
+      margin: 0 12px 10px;
+      background: var(--bg);
+      border-radius: var(--r-md);
     }
     .news-thumb {
       width: 100px; height: 72px;
@@ -220,44 +220,44 @@
 
     /* 加载更多 */
     .load-more {
-      padding: 20px;
+      padding: 16px;
       text-align: center;
-      color: var(--text-3);
-      font-size: 13px;
+      color: var(--text-4);
+      font-size: 12px;
     }
   </style>
 </head>
 <body>
   <div class="phone-wrap">
-    <!-- 景区头图 -->
-    <div class="scenic-hero">
-      <div class="status-bar">
-        <span class="time">9:41</span>
-        <span class="icons"><span style="margin-right:4px">●●●●</span><span style="margin-right:4px">📶</span><span>🔋</span></span>
-      </div>
-      <div class="scenic-hero-content">
-        <div class="title">🏯 铜官窑古镇景区</div>
-        <div class="subtitle">新华联铜官窑古建筑片场 · 短剧拍摄基地</div>
-        <div class="meta">
-          <span>📍 长沙市望城区</span>
-          <span>⭐ 4.8分</span>
-          <span>👀 12.8w 关注</span>
+    <div class="page-content" style="padding-top:0;">
+      <!-- 景区头图 -->
+      <div class="scenic-hero">
+        <div class="status-bar">
+          <span class="time">9:41</span>
+          <span class="icons"><span style="margin-right:4px">●●●●</span><span style="margin-right:4px">📶</span><span>🔋</span></span>
+        </div>
+        <div class="scenic-hero-content">
+          <div class="title">🏯 铜官窑古镇景区</div>
+          <div class="subtitle">新华联铜官窑古建筑片场 · 短剧拍摄基地</div>
+          <div class="meta">
+            <span>📍 长沙市望城区</span>
+            <span>⭐ 4.8分</span>
+            <span>👀 12.8w 关注</span>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="page-content" style="padding-top: 20px;">
-      <!-- 资讯分类Tab -->
-      <div class="news-tabs">
-        <div class="news-tab active" data-cat="all">全部</div>
-        <div class="news-tab" data-cat="dynamic">景区动态</div>
-        <div class="news-tab" data-cat="start">开机信息</div>
-        <div class="news-tab" data-cat="activity">活动赛事</div>
-        <div class="news-tab" data-cat="notice">通知公告</div>
-      </div>
+      <!-- 资讯容器：Tab + 列表一体的白色卡片 -->
+      <div class="news-container">
+        <!-- 资讯分类Tab -->
+        <div class="news-tabs">
+          <div class="news-tab active" data-cat="all">全部</div>
+          <div class="news-tab" data-cat="dynamic">景区动态</div>
+          <div class="news-tab" data-cat="start">开机信息</div>
+          <div class="news-tab" data-cat="activity">活动赛事</div>
+          <div class="news-tab" data-cat="notice">通知公告</div>
+        </div>
 
-      <!-- 资讯列表 -->
-      <div class="news-list-wrap">
         <!-- 头条资讯 -->
         <a class="news-feature" href="news-detail.html">
           <div class="news-feature-cover cover-1">
@@ -406,7 +406,7 @@
     <!-- 底部 TabBar -->
     <div class="tab-bar">
       <a class="tab-item" href="index.html">
-        <span class="tab-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5L12 3l9 7.5"/><path d="M5.5 9.5V20a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1V9.5"/><path d="M9.5 21v-6h5v6"/></svg></span><span>发现</span>
+        <span class="tab-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg></span><span>发现</span>
       </a>
       <a class="tab-item" href="teach.html">
         <span class="tab-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l10-4.5L22 9l-10 4.5z"/><path d="M6 11v5c0 1.2 2.7 2.5 6 2.5s6-1.3 6-2.5v-5"/><path d="M22 9v5.5"/></svg></span><span>教学</span>
@@ -427,7 +427,6 @@
       tab.addEventListener('click', function() {
         document.querySelectorAll('.news-tab').forEach(t => t.classList.remove('active'));
         this.classList.add('active');
-        // 实际项目中这里会请求对应分类的数据
         showToast('切换至「' + this.textContent.trim() + '」');
       });
     });
