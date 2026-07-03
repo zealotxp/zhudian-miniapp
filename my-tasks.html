@@ -3,19 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>我的任务 - 竖店</title>
+  <title>我的收藏 - 竖店</title>
   <link rel="stylesheet" href="css/common.css">
   <style>
-    /* Tab切换 */
-    .task-tabs {
+    .sub-tabs {
       background: var(--bg-card);
       display: flex;
       border-bottom: 0.5px solid var(--line-soft);
-      position: relative;
     }
-    .task-tab {
+    .sub-tab {
       flex: 1;
-      height: 44px;
+      height: 42px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -23,11 +21,11 @@
       color: var(--text-3);
       position: relative;
     }
-    .task-tab.active {
+    .sub-tab.active {
       color: var(--primary);
       font-weight: 600;
     }
-    .task-tab.active::after {
+    .sub-tab.active::after {
       content: '';
       position: absolute;
       bottom: 0;
@@ -38,123 +36,95 @@
       border-radius: 2px;
       background: var(--primary);
     }
-    .task-tab .tab-badge {
-      position: absolute;
-      top: 8px;
-      right: calc(50% - 30px);
-      min-width: 14px;
-      height: 14px;
-      padding: 0 4px;
-      border-radius: 7px;
-      background: var(--primary);
-      color: #fff;
-      font-size: 9px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
 
-    /* 任务项 */
-    .my-task-card {
+    /* 收藏任务卡片 */
+    .fav-card {
       background: var(--bg-card);
       margin: 10px 12px 0;
       border-radius: var(--r-lg);
       padding: 14px 16px;
       box-shadow: var(--shadow-card);
-    }
-    .my-task-card .task-header {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 8px;
+      gap: 12px;
     }
-    .my-task-card .task-header .task-name {
-      font-size: 15px;
+    .fav-card .type-icon {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+    .fav-card .card-info { flex: 1; }
+    .fav-card .card-info .card-title {
+      font-size: 14px;
       font-weight: 600;
       color: var(--text-1);
     }
-    .my-task-card .task-header .task-status {
-      padding: 2px 8px;
-      border-radius: 4px;
-      font-size: 11px;
-    }
-    .status-pending {
-      background: var(--gold-soft);
-      color: var(--gold-dark);
-    }
-    .status-accepted {
-      background: #E4F5EC;
-      color: #2BA471;
-    }
-    .status-ongoing {
-      background: var(--primary-soft);
-      color: var(--primary);
-    }
-    .status-completed {
-      background: #F2F2F2;
-      color: var(--text-3);
-    }
-    .my-task-card .task-body {
+    .fav-card .card-info .card-desc {
       font-size: 12px;
       color: var(--text-3);
-      line-height: 1.5;
+      margin-top: 4px;
+      line-height: 1.4;
     }
-    .my-task-card .task-meta {
+    .fav-card .card-info .card-meta {
       display: flex;
-      gap: 12px;
-      margin-top: 8px;
+      gap: 8px;
+      margin-top: 6px;
       font-size: 11px;
       color: var(--text-3);
     }
-    .my-task-card .task-meta .meta-item {
+    .fav-card .card-info .card-meta .meta-item {
       display: inline-flex;
       align-items: center;
-      gap: 3px;
+      gap: 2px;
     }
-    .my-task-card .task-footer {
+    .fav-card .card-right {
       display: flex;
+      flex-direction: column;
+      align-items: flex-end;
       justify-content: space-between;
-      align-items: center;
-      margin-top: 10px;
-      padding-top: 10px;
-      border-top: 0.5px solid var(--line-soft);
+      min-width: 60px;
     }
-    .my-task-card .task-footer .pay {
+    .fav-card .card-right .pay {
       font-size: 16px;
       font-weight: 700;
       color: var(--primary);
     }
-    .my-task-card .task-footer .pay .unit {
+    .fav-card .card-right .pay .unit {
       font-size: 11px;
+      font-weight: 500;
     }
-    .my-task-card .task-footer .action-btn {
-      padding: 4px 12px;
-      border-radius: 12px;
+    .fav-card .card-right .unfav-btn {
       font-size: 11px;
-      font-weight: 600;
+      color: var(--text-4);
+      padding: 2px 8px;
+      border: 0.5px solid var(--line);
+      border-radius: 10px;
     }
-    .action-btn.red {
-      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-      color: #fff;
+    .fav-card .card-info .card-badges {
+      display: flex;
+      gap: 6px;
+      margin-top: 6px;
     }
-    .action-btn.green {
-      background: #2BA471;
-      color: #fff;
+    .fav-card .card-info .card-badges .badge {
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 10px;
     }
-    .action-btn.gray {
-      background: #F2F2F2;
-      color: var(--text-3);
+    .badge-vip {
+      background: var(--gold-soft);
+      color: var(--gold-dark);
+    }
+    .badge-type {
+      background: #E4F5EC;
+      color: #2BA471;
     }
 
     /* 空状态 */
-    .tab-content {
-      display: none;
-    }
-    .tab-content.active {
-      display: block;
-    }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
     .empty-tip {
-      padding: 40px 20px;
+      padding: 50px 20px;
       text-align: center;
       color: var(--text-3);
       font-size: 13px;
@@ -166,117 +136,137 @@
   <div class="phone-wrap">
     <div class="nav-bar">
       <a class="nav-back" href="profile.html" onclick="goBack()">←</a>
-      <span class="nav-title">我的任务</span>
+      <span class="nav-title">我的收藏</span>
       <span class="nav-right"></span>
     </div>
 
-    <!-- Tab切换 -->
-    <div class="task-tabs">
-      <div class="task-tab active" data-tab="pending">
-        报名中
-        <span class="tab-badge">2</span>
-      </div>
-      <div class="task-tab" data-tab="accepted">已录用</div>
-      <div class="task-tab" data-tab="ongoing">进行中</div>
-      <div class="task-tab" data-tab="completed">已完成</div>
+    <!-- 子分类 -->
+    <div class="sub-tabs">
+      <div class="sub-tab active" data-tab="tasks">兼职任务</div>
+      <div class="sub-tab" data-tab="dramas">短剧</div>
+      <div class="sub-tab" data-tab="courses">课程</div>
     </div>
 
     <div class="page-content no-tabbar">
-      <!-- 报名中 -->
-      <div class="tab-content active" id="tab-pending">
-        <a class="my-task-card" href="task-detail.html">
-          <div class="task-header">
-            <span class="task-name">古装群演 — 《长安花录》</span>
-            <span class="task-status status-pending">待确认</span>
+      <!-- 收藏的兼职任务 -->
+      <div class="tab-content active" id="tab-tasks">
+        <a class="fav-card" href="task-detail.html">
+          <div class="type-icon" style="background:linear-gradient(135deg,#C8252C,#E84D54)">🎬</div>
+          <div class="card-info">
+            <div class="card-title">古装群演招募 — 《长安花录》</div>
+            <div class="card-desc">大型宴会场景群演，需配合拍摄3天</div>
+            <div class="card-meta">
+              <span class="meta-item">📍 铜官窑古镇</span>
+              <span class="meta-item">📅 7/5-7/7</span>
+            </div>
+            <div class="card-badges">
+              <span class="badge badge-vip">联系方式会员可见</span>
+              <span class="badge badge-type">群演</span>
+            </div>
           </div>
-          <div class="task-body">大型宴会场景群演，需配合拍摄3天</div>
-          <div class="task-meta">
-            <span class="meta-item">📍 铜官窑古镇</span>
-            <span class="meta-item">📅 7/5-7/7</span>
-          </div>
-          <div class="task-footer">
-            <span class="pay">¥200<span class="unit">/天</span></span>
-            <span class="action-btn gray">等待确认</span>
+          <div class="card-right">
+            <div class="pay">¥200<span class="unit">/天</span></div>
+            <span class="unfav-btn">取消收藏</span>
           </div>
         </a>
 
-        <a class="my-task-card" href="task-detail.html">
-          <div class="task-header">
-            <span class="task-name">摄影助理（跟组拍摄）</span>
-            <span class="task-status status-pending">待筛选</span>
+        <a class="fav-card" href="task-detail.html">
+          <div class="type-icon" style="background:linear-gradient(135deg,#FF8F1F,#FFD700)">📢</div>
+          <div class="card-info">
+            <div class="card-title">景区宣传短视频拍摄</div>
+            <div class="card-desc">为景区拍摄系列宣传短视频，需自带设备</div>
+            <div class="card-meta">
+              <span class="meta-item">📍 铜官窑古镇</span>
+              <span class="meta-item">📅 7/3-7/5</span>
+            </div>
+            <div class="card-badges">
+              <span class="badge badge-vip">联系方式会员可见</span>
+              <span class="badge badge-type">营销</span>
+            </div>
           </div>
-          <div class="task-body">协助摄影师完成跟组拍摄，负责器材搬运和布光调整</div>
-          <div class="task-meta">
-            <span class="meta-item">📍 铜官窑影视基地</span>
-            <span class="meta-item">📅 7/10-7/20</span>
+          <div class="card-right">
+            <div class="pay">¥500<span class="unit">/组</span></div>
+            <span class="unfav-btn">取消收藏</span>
           </div>
-          <div class="task-footer">
-            <span class="pay">¥300<span class="unit">/天</span></span>
-            <span class="action-btn gray">等待筛选</span>
+        </a>
+
+        <a class="fav-card" href="task-detail.html">
+          <div class="type-icon" style="background:linear-gradient(135deg,#C8252C,#A81B22)">🎭</div>
+          <div class="card-info">
+            <div class="card-title">民国剧有台词角色</div>
+            <div class="card-desc">《千金归来》剧组招募2名有台词角色</div>
+            <div class="card-meta">
+              <span class="meta-item">📍 铜官窑民国街</span>
+              <span class="meta-item">📅 7/15-7/25</span>
+            </div>
+            <div class="card-badges">
+              <span class="badge badge-vip">联系方式会员可见</span>
+              <span class="badge badge-type">表演</span>
+            </div>
+          </div>
+          <div class="card-right">
+            <div class="pay">¥500<span class="unit">/天</span></div>
+            <span class="unfav-btn">取消收藏</span>
           </div>
         </a>
       </div>
 
-      <!-- 已录用 -->
-      <div class="tab-content" id="tab-accepted">
-        <a class="my-task-card" href="task-detail.html">
-          <div class="task-header">
-            <span class="task-name">民国剧有台词角色 — 《千金归来》</span>
-            <span class="task-status status-accepted">✓ 已录用</span>
+      <!-- 收藏的短剧 -->
+      <div class="tab-content" id="tab-dramas">
+        <a class="fav-card" href="drama-detail.html">
+          <div class="type-icon" style="background:linear-gradient(135deg,#C8252C,#E84D54)">🎭</div>
+          <div class="card-info">
+            <div class="card-title">长安花录</div>
+            <div class="card-desc">古装权谋 · 30集 · 更新至第18集</div>
+            <div class="card-meta">
+              <span class="meta-item">⭐ 4.9</span>
+              <span class="meta-item">👥 2.3w追剧</span>
+            </div>
           </div>
-          <div class="task-body">饰演丫鬟角色，有3段台词，需参加妆造培训</div>
-          <div class="task-meta">
-            <span class="meta-item">📍 铜官窑民国街</span>
-            <span class="meta-item">📅 7/15-7/25</span>
-            <span class="meta-item">📞 张导 138****5678</span>
+          <div class="card-right">
+            <div class="pay" style="font-size:12px; color:var(--gold-dark);">会员免广告</div>
+            <span class="unfav-btn">取消收藏</span>
           </div>
-          <div class="task-footer">
-            <span class="pay">¥500<span class="unit">/天</span></span>
-            <span class="action-btn green">查看集合信息</span>
+        </a>
+
+        <a class="fav-card" href="drama-detail.html">
+          <div class="type-icon" style="background:linear-gradient(135deg,#4FACFE,#00F2FE)">🤖</div>
+          <div class="card-info">
+            <div class="card-title">千金归来</div>
+            <div class="card-desc">民国逆袭 · 24集 · 已完结</div>
+            <div class="card-meta">
+              <span class="meta-item">⭐ 4.7</span>
+              <span class="meta-item">👥 1.8w追剧</span>
+            </div>
+          </div>
+          <div class="card-right">
+            <div class="pay" style="font-size:12px; color:var(--gold-dark);">会员免广告</div>
+            <span class="unfav-btn">取消收藏</span>
           </div>
         </a>
       </div>
 
-      <!-- 进行中 -->
-      <div class="tab-content" id="tab-ongoing">
-        <div class="my-task-card">
-          <div class="task-header">
-            <span class="task-name">景区宣传短视频拍摄</span>
-            <span class="task-status status-ongoing">进行中</span>
+      <!-- 收藏的课程 -->
+      <div class="tab-content" id="tab-courses">
+        <a class="fav-card" href="course-detail.html">
+          <div class="type-icon" style="background:linear-gradient(135deg,#2BA471,#4FD896)">🎭</div>
+          <div class="card-info">
+            <div class="card-title">表演基础：从观察到呈现</div>
+            <div class="card-desc">表演专业入门课 · 8章节 · 王老师</div>
+            <div class="card-meta">
+              <span class="meta-item">⭐ 4.9</span>
+              <span class="meta-item">👥 2.3w学员</span>
+            </div>
           </div>
-          <div class="task-body">为景区拍摄系列宣传短视频，已拍摄2组，还剩1组</div>
-          <div class="task-meta">
-            <span class="meta-item">📍 铜官窑古镇</span>
-            <span class="meta-item">📅 7/3-7/5</span>
+          <div class="card-right">
+            <div class="pay" style="font-size:12px; color:var(--success);">免费试看</div>
+            <span class="unfav-btn">取消收藏</span>
           </div>
-          <div class="task-footer">
-            <span class="pay">¥500<span class="unit">/组</span></span>
-            <span class="action-btn red">提交成果</span>
-          </div>
-        </div>
-      </div>
+        </a>
 
-      <!-- 已完成 -->
-      <div class="tab-content" id="tab-completed">
-        <div class="my-task-card">
-          <div class="task-header">
-            <span class="task-name">服化道助理（古装剧组）</span>
-            <span class="task-status status-completed">已结算 ✓</span>
-          </div>
-          <div class="task-body">协助化妆师完成古装造型，任务已完成并结算</div>
-          <div class="task-meta">
-            <span class="meta-item">📍 铜官窑古镇</span>
-            <span class="meta-item">📅 6/28-7/5</span>
-            <span class="meta-item">💰 已结算 ¥1750</span>
-          </div>
-          <div class="task-footer">
-            <span class="pay">¥250<span class="unit">/天</span></span>
-            <span class="action-btn gray">查看结算明细</span>
-          </div>
-        </div>
         <div class="empty-tip">
-          <div class="empty-icon">📋</div>
-          更多历史任务记录
+          <div class="empty-icon">📚</div>
+          暂无更多收藏课程
         </div>
       </div>
     </div>
@@ -285,13 +275,21 @@
   <script src="js/common.js"></script>
   <script>
     // Tab切换
-    document.querySelectorAll('.task-tab').forEach(tab => {
+    document.querySelectorAll('.sub-tab').forEach(tab => {
       tab.addEventListener('click', function() {
-        document.querySelectorAll('.task-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.sub-tab').forEach(t => t.classList.remove('active'));
         this.classList.add('active');
         const tabName = this.dataset.tab;
         document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
         document.getElementById('tab-' + tabName).classList.add('active');
+      });
+    });
+    // 取消收藏
+    document.querySelectorAll('.unfav-btn').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        showToast('已取消收藏');
       });
     });
   </script>

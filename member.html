@@ -106,76 +106,58 @@
       padding: 16px 12px;
     }
     .plan-item {
-      background: #1A1A20;
-      border: 1px solid #2A2A35;
+      background: linear-gradient(135deg, rgba(212, 162, 76, 0.12) 0%, rgba(200, 37, 44, 0.08) 100%);
+      border: 1.5px solid var(--gold);
       border-radius: var(--r-md);
-      padding: 14px;
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
+      padding: 16px;
       position: relative;
-      transition: all 0.2s;
+      overflow: hidden;
     }
-    .plan-item.selected {
-      border-color: var(--gold);
-      background: rgba(212, 162, 76, 0.08);
-    }
-    .plan-item .check {
-      width: 20px; height: 20px;
-      border-radius: 50%;
-      border: 1.5px solid rgba(255, 255, 255, 0.3);
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-    }
-    .plan-item.selected .check {
-      background: var(--gold);
-      border-color: var(--gold);
-      color: #fff;
-      font-size: 12px;
-    }
-    .plan-info { flex: 1; }
-    .plan-name {
-      font-size: 15px;
-      font-weight: 600;
-      color: #fff;
-      display: flex; align-items: center; gap: 6px;
-    }
-    .plan-name .discount-tag {
-      background: var(--primary);
-      color: #fff;
-      padding: 1px 6px;
-      border-radius: 4px;
-      font-size: 10px;
-    }
-    .plan-desc {
-      font-size: 11px;
-      color: rgba(255, 255, 255, 0.5);
-      margin-top: 4px;
-    }
-    .plan-price {
-      text-align: right;
-    }
-    .plan-price .price {
-      font-size: 22px;
-      font-weight: 700;
-      color: var(--gold);
-    }
-    .plan-price .origin {
-      font-size: 11px;
-      color: rgba(255, 255, 255, 0.4);
-      text-decoration: line-through;
-    }
-    .plan-item.recommend::before {
-      content: '首推';
+    .plan-item::before {
+      content: '推荐';
       position: absolute;
       top: 0; right: 16px;
       background: linear-gradient(135deg, var(--gold), var(--gold-dark));
       color: #5B3A00;
-      padding: 2px 8px;
+      padding: 3px 10px;
       border-radius: 0 0 6px 6px;
       font-size: 10px;
       font-weight: 700;
+    }
+    .plan-info { flex: 1; }
+    .plan-name {
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .plan-name .discount-tag {
+      background: var(--primary);
+      color: #fff;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 10px;
+    }
+    .plan-desc {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.6);
+      margin-top: 6px;
+    }
+    .plan-price {
+      text-align: right;
+      margin-top: 10px;
+    }
+    .plan-price .price {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--gold);
+    }
+    .plan-price .origin {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.4);
+      text-decoration: line-through;
     }
 
     /* 权益对比 */
@@ -308,15 +290,7 @@
           </div>
           <div class="benefit-cell">
             <div class="bi-icon">💼</div>
-            <div class="bi-label">兼职接单</div>
-          </div>
-          <div class="benefit-cell">
-            <div class="bi-icon">✨</div>
-            <div class="bi-label">原创上传</div>
-          </div>
-          <div class="benefit-cell">
-            <div class="bi-icon">🎭</div>
-            <div class="bi-label">群演体验</div>
+            <div class="bi-label">兼职联系</div>
           </div>
         </div>
       </div>
@@ -330,52 +304,16 @@
         <a class="auth-btn" href="auth.html">去认证</a>
       </div>
 
-      <!-- 套餐选择 -->
+      <!-- 会员套餐 -->
       <div class="plan-list">
-        <div class="plan-item" data-plan="once">
-          <div class="check"></div>
+        <div class="plan-item selected" data-plan="year">
           <div class="plan-info">
-            <div class="plan-name">次卡 · 体验尝鲜</div>
-            <div class="plan-desc">单次入园+1周会员权益</div>
-          </div>
-          <div class="plan-price">
-            <div class="price">¥19</div>
-          </div>
-        </div>
-
-        <div class="plan-item" data-plan="month">
-          <div class="check"></div>
-          <div class="plan-info">
-            <div class="plan-name">月卡</div>
-            <div class="plan-desc">1个月畅享 · 平均每天 ¥1.27</div>
-          </div>
-          <div class="plan-price">
-            <div class="price">¥38</div>
-            <div class="origin">¥58</div>
-          </div>
-        </div>
-
-        <div class="plan-item" data-plan="quarter">
-          <div class="check"></div>
-          <div class="plan-info">
-            <div class="plan-name">季卡 <span class="discount-tag">省30元</span></div>
-            <div class="plan-desc">3个月畅享 · 平均每天 ¥0.73</div>
-          </div>
-          <div class="plan-price">
-            <div class="price">¥68</div>
-            <div class="origin">¥174</div>
-          </div>
-        </div>
-
-        <div class="plan-item selected recommend" data-plan="year">
-          <div class="check">✓</div>
-          <div class="plan-info">
-            <div class="plan-name">年卡 <span class="discount-tag">最划算</span></div>
-            <div class="plan-desc">全年不限次入园+全平台免广告 · 平均每天 ¥0.35</div>
+            <div class="plan-name">年卡会员 <span class="discount-tag">首期特惠</span></div>
+            <div class="plan-desc">有效期1年 · 平均每天 ¥0.35 · 景区全年不限次入园</div>
           </div>
           <div class="plan-price">
             <div class="price">¥128</div>
-            <div class="origin">¥456</div>
+            <div class="origin">原价 ¥456</div>
           </div>
         </div>
       </div>
@@ -399,19 +337,9 @@
           <div class="vip">✓ 全部免费看</div>
         </div>
         <div class="compare-row">
-          <div class="feature">💼 兼职接单</div>
-          <div class="normal">不可报名</div>
-          <div class="vip">✓ 可报名接单</div>
-        </div>
-        <div class="compare-row">
-          <div class="feature">✨ 原创上传</div>
-          <div class="normal">不可上传</div>
-          <div class="vip">✓ 可上传作品</div>
-        </div>
-        <div class="compare-row">
-          <div class="feature">🎭 群演体验</div>
-          <div class="normal">付费参与</div>
-          <div class="vip">✓ 赠送1-2次</div>
+          <div class="feature">💼 兼职联系</div>
+          <div class="normal">不可查看联系方式</div>
+          <div class="vip">✓ 可查看联系方式</div>
         </div>
         <div class="compare-row">
           <div class="feature">🛡️ 实名入园</div>
@@ -442,18 +370,7 @@
 
   <script src="js/common.js"></script>
   <script>
-    document.querySelectorAll('.plan-item').forEach(item => {
-      item.addEventListener('click', function() {
-        document.querySelectorAll('.plan-item').forEach(i => {
-          i.classList.remove('selected');
-          i.querySelector('.check').textContent = '';
-        });
-        this.classList.add('selected');
-        this.querySelector('.check').textContent = '✓';
-        const price = this.querySelector('.plan-price .price').textContent;
-        document.querySelector('.pay-bar .price').textContent = price + '.00';
-      });
-    });
+    // 年卡唯一套餐，无需选择逻辑
     document.querySelector('.agreement .check-box').addEventListener('click', function() {
       this.classList.toggle('checked');
       if (this.classList.contains('checked')) {

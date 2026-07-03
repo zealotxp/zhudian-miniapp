@@ -169,7 +169,7 @@
     .contact-row .contact-info { flex: 1; color: var(--gold-dark); }
     .contact-row .contact-label { font-weight: 600; }
 
-    /* 报名信息 */
+    /* 联系方式区域 */
     .apply-info {
       display: flex;
       align-items: center;
@@ -310,7 +310,7 @@
       <!-- 会员提示 -->
       <div class="member-tip-bar">
         <span class="tip-icon">👑</span>
-        <span class="tip-text">开通<span class="gold">会员</span>后可查看联系方式并报名接单</span>
+        <span class="tip-text">开通<span class="gold">会员</span>后可查看任务联系方式</span>
         <a class="tip-btn" href="member.html">开通会员</a>
       </div>
 
@@ -322,7 +322,7 @@
           <div class="req-item"><span class="dot"></span><span>无需专业表演经验，服从导演安排即可</span></div>
           <div class="req-item"><span class="dot"></span><span>能按时到岗，配合剧组工作时间</span></div>
           <div class="req-item"><span class="dot"></span><span>自带舒适鞋履，现场提供古装服饰</span></div>
-          <div class="req-item"><span class="dot"></span><span>群演类岗位可直接报名，无需筛选</span></div>
+          <div class="req-item"><span class="dot"></span><span>群演类岗位可直接联系，无需筛选</span></div>
         </div>
       </div>
 
@@ -348,7 +348,8 @@
         <!-- 联系方式（会员可见） -->
         <div class="contact-row">
           <span class="contact-icon">📞</span>
-          <span class="contact-info"><span class="contact-label">联系人：</span>张导 138****5678（仅会员可见完整号码）</span>
+          <span class="contact-info"><span class="contact-label">联系人：</span>张导 138****5678</span>
+          <a href="member.html" style="font-size:11px; color:var(--gold-dark); white-space:nowrap;">开通会员查看</a>
         </div>
         <div class="contact-row">
           <span class="contact-icon">📍</span>
@@ -366,58 +367,15 @@
           <div class="req-item"><span class="dot"></span><span>天气炎热请自带防晒用品和水杯</span></div>
         </div>
       </div>
-
-      <!-- 报名情况 -->
-      <div class="info-section">
-        <div class="sec-title"><span class="icon">👥</span> 报名情况</div>
-        <div class="apply-info">
-          <span class="apply-count">已报名 <strong>18</strong> 人</span>
-          <span class="remain">还剩 12 个名额</span>
-        </div>
-      </div>
     </div>
 
     <!-- 底部操作栏 -->
     <div class="bottom-bar">
       <div class="bar-btn ghost" onclick="showToast('已收藏该任务')">☆ 收藏</div>
-      <div class="bar-btn primary" onclick="openApplyModal()">立即报名</div>
-    </div>
-
-    <!-- 报名弹窗 -->
-    <div class="modal-overlay" id="applyModal">
-      <div class="modal-content">
-        <div class="modal-title">报名接单</div>
-        <div class="form-group">
-          <label>可到岗时间</label>
-          <input type="text" placeholder="如：7月5日全天可到岗">
-        </div>
-        <div class="form-group">
-          <label>相关经历（选填）</label>
-          <textarea placeholder="如：曾参与XX剧组群演、有表演基础等"></textarea>
-        </div>
-        <div class="form-group">
-          <label>备注（选填）</label>
-          <input type="text" placeholder="其他说明">
-        </div>
-        <div class="modal-btn" onclick="submitApply()">提交报名</div>
-        <div class="modal-note">⚠️ 仅会员可报名接单 · 酬劳由平台担保结算</div>
-      </div>
+      <div class="bar-btn primary" onclick="showToast('开通会员后可查看联系方式')">开通会员查看联系方式</div>
     </div>
   </div>
 
   <script src="js/common.js"></script>
-  <script>
-    function openApplyModal() {
-      document.getElementById('applyModal').classList.add('show');
-    }
-    function submitApply() {
-      document.getElementById('applyModal').classList.remove('show');
-      showToast('报名已提交，等待剧组确认');
-    }
-    // 点击遮罩关闭
-    document.getElementById('applyModal').addEventListener('click', function(e) {
-      if (e.target === this) this.classList.remove('show');
-    });
-  </script>
 </body>
 </html>
