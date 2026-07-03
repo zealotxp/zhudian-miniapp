@@ -170,90 +170,6 @@
       color: var(--text-3);
     }
 
-    /* 资产栏 */
-    .asset-card {
-      background: var(--bg-card);
-      margin: 12px 12px 0;
-      border-radius: var(--r-lg);
-      padding: 18px 16px;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      box-shadow: var(--shadow-card);
-    }
-    .asset-item {
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-    }
-    .asset-item .num {
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--text-1);
-    }
-    .asset-item .label {
-      font-size: 11px;
-      color: var(--text-3);
-    }
-
-    /* 我的订单 */
-    .order-section {
-      background: var(--bg-card);
-      margin: 10px 12px;
-      border-radius: var(--r-lg);
-      padding: 14px 16px 18px;
-    }
-    .order-header {
-      display: flex; justify-content: space-between;
-      align-items: center;
-      margin-bottom: 16px;
-    }
-    .order-header .title {
-      font-size: 15px; font-weight: 600;
-      color: var(--text-1);
-    }
-    .order-header .more {
-      font-size: 12px; color: var(--text-3);
-    }
-    .order-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-    }
-    .order-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      position: relative;
-      padding: 6px 0;
-    }
-    .order-item .icon {
-      font-size: 28px;
-      width: 44px; height: 44px;
-      display: flex; align-items: center; justify-content: center;
-      background: var(--bg);
-      border-radius: 12px;
-    }
-    .order-item .label {
-      font-size: 12px;
-      color: var(--text-2);
-    }
-    .order-item .badge {
-      position: absolute;
-      top: 0; right: calc(50% - 22px);
-      min-width: 16px; height: 16px;
-      padding: 0 4px;
-      border-radius: 8px;
-      background: var(--primary);
-      color: #fff;
-      font-size: 10px;
-      display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 0 0 2px var(--bg-card);
-    }
-
     /* 工具栏 */
     .tool-section {
       background: var(--bg-card);
@@ -434,22 +350,6 @@
         <span class="auth-btn authed">已认证</span>
       </div>
 
-      <!-- 资产栏 -->
-      <div class="asset-card">
-        <a class="asset-item" href="recharge.html">
-          <div class="num">¥128</div>
-          <div class="label">余额</div>
-        </a>
-        <a class="asset-item" href="orders.html">
-          <div class="num">3</div>
-          <div class="label">优惠券</div>
-        </a>
-        <a class="asset-item" href="orders.html">
-          <div class="num">12</div>
-          <div class="label">订单</div>
-        </a>
-      </div>
-
       <!-- 观看历史 -->
       <div class="section-header">
         <div class="title"><span class="bar"></span>📺 观看历史</div>
@@ -500,33 +400,6 @@
         </div>
       </div>
 
-      <!-- 我的订单 -->
-      <div class="order-section">
-        <div class="order-header">
-          <div class="title">📦 我的订单</div>
-          <a class="more" href="orders.html">查看全部 ›</a>
-        </div>
-        <div class="order-grid">
-          <a class="order-item" href="orders.html?tab=pay">
-            <span class="icon">💳</span>
-            <span class="label">待付款</span>
-            <span class="badge">1</span>
-          </a>
-          <a class="order-item" href="orders.html?tab=using">
-            <span class="icon">🎬</span>
-            <span class="label">观看中</span>
-          </a>
-          <a class="order-item" href="orders.html?tab=done">
-            <span class="icon">✅</span>
-            <span class="label">已完成</span>
-          </a>
-          <a class="order-item" href="orders.html?tab=refund">
-            <span class="icon">↩️</span>
-            <span class="label">退款</span>
-          </a>
-        </div>
-      </div>
-
       <!-- 学习与任务 -->
       <div class="tool-section">
         <div class="tool-cell" onclick="navigate('course-detail.html')">
@@ -541,12 +414,6 @@
           <span class="t-tag red">3个收藏</span>
           <span class="t-arrow">›</span>
         </div>
-        <div class="tool-cell" onclick="navigate('original.html')">
-          <div class="t-icon" style="background:linear-gradient(135deg,#4FACFE,#00F2FE)">🎬</div>
-          <div class="t-label">我的作品</div>
-          <span class="t-tag gold">已上传5部</span>
-          <span class="t-arrow">›</span>
-        </div>
       </div>
 
       <!-- 景区权益 -->
@@ -557,12 +424,6 @@
           <span class="t-value">年卡 · 全年不限次</span>
           <span class="t-arrow">›</span>
         </div>
-        <div class="tool-cell" onclick="navigate('vr-scene.html')">
-          <div class="t-icon" style="background:linear-gradient(135deg,#D4A24C,#B8862E)">🔭</div>
-          <div class="t-label">VR选景收藏</div>
-          <span class="t-value">已收藏8个</span>
-          <span class="t-arrow">›</span>
-        </div>
       </div>
 
       <!-- 其他工具 -->
@@ -571,12 +432,6 @@
           <div class="t-icon" style="background:linear-gradient(135deg,#888,#555)">⭐</div>
           <div class="t-label">我的收藏</div>
           <span class="t-value">28 个</span>
-          <span class="t-arrow">›</span>
-        </div>
-        <div class="tool-cell" onclick="showToast('邀请好友')">
-          <div class="t-icon" style="background:linear-gradient(135deg,#888,#555)">👥</div>
-          <div class="t-label">邀请好友</div>
-          <span class="t-tag red">得红包</span>
           <span class="t-arrow">›</span>
         </div>
         <div class="tool-cell" onclick="showToast('联系客服')">
